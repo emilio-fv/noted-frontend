@@ -1,0 +1,3 @@
+const registerFormValidator = (name, value) => {
+
+}
