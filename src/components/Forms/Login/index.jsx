@@ -23,7 +23,6 @@ const LoginForm = ({ setOpenModal }) => {
     setOpenModal('register');
   };
 
-
   // Form helpers
   const [formData, setFormData] = useState(initialState);
   const [formErrors, setFormErrors] = useState({});

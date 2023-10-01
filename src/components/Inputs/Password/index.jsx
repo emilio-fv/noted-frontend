@@ -1,5 +1,10 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import React, { useState } from 'react';
 
 const PasswordInput = ({ sx, name, label, value, handleChange, error }) => {

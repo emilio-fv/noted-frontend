@@ -13,10 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 import LogoLink from '../Links/Logo';
 import ActionButton from '../Buttons/Action';
 import NavLink from '../Links/Nav';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NavButton from '../Buttons/Nav';
-import { Modal } from '@mui/material';
-import LoginForm from '../Forms/Login';
 
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
@@ -34,7 +32,7 @@ const Navbar = ({ setOpenModal }) => {
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   // TODO: Logged in user check
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   // Login form modal helpers
   // const setOpenModal = useOutletContext();
@@ -46,6 +44,11 @@ const Navbar = ({ setOpenModal }) => {
   const handleLoginButton = () => {
     setOpenModal('login');
   };
+
+  // Handle log review button 
+  const handleLogReviewButton = () => {
+    setOpenModal('review');
+  }
 
   return (
     <>
@@ -136,7 +139,22 @@ const Navbar = ({ setOpenModal }) => {
             </Box>
             {/* Account Icon / Login Button */}
             {loggedIn
-              ? <Box sx={{ flexGrow: 0 }}>
+              ? <Box 
+                  sx={{ 
+                    flexGrow: 0, 
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4, 
+                  }}
+                >
+                    <ActionButton 
+                      handleClick={handleLogReviewButton}
+                      sx={{
+                        fontSize: '.75rem',
+                        maxHeight: '20px',
+                      }}
+                      text={'Log Review'}
+                    />
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <AccountCircleIcon fontSize='large' htmlColor='white'/>
@@ -170,32 +188,6 @@ const Navbar = ({ setOpenModal }) => {
           </Toolbar>
         </Container>
       </AppBar>
-      {/* <Modal
-        open={openLoginFormModal}
-        onClose={() => handleCloseLoginFormModal()}
-        aria-labelledby='Login to account'
-        aria-describedby='Form to login to an account'
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            maxWidth: '400px',
-            width: '70vw',
-            backgroundColor: 'background.card',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: 2,
-            borderRadius: '2.5%'
-          }}
-        >
-          <LoginForm />
-        </Box>
-      </Modal> */}
     </>
   )
 };

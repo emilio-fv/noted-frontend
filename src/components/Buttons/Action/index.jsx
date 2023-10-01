@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const ActionButton = ({ handleClick, sx, text }) => {
   return (
@@ -12,7 +12,6 @@ const ActionButton = ({ handleClick, sx, text }) => {
         paddingX: 3,
         color: 'text.dark',
         fontWeight: 600,
-        // // TODO handle on hover styling
         '&:hover': {
           backgroundColor: 'primary.main',
           border: '.5px solid white'

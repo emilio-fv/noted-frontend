@@ -1,9 +1,13 @@
-import { Typography } from '@mui/material';
 import React from 'react';
+import ReviewsSearchForm from '../../components/Forms/ReviewsSearch';
+import ReviewsSearchResults from '../../components/SearchResults/Reviews';
 
 const ReviewsPage = () => {
   return (
-    <Typography>Reviews</Typography>
+    <>
+      <ReviewsSearchForm  />
+      <ReviewsSearchResults />
+    </>
   )
 };
 
