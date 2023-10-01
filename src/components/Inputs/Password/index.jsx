@@ -24,10 +24,35 @@ const PasswordInput = ({ sx, name, label, value, handleChange, error }) => {
       sx={{
         ...sx,
         // TODO styling
+
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: '#66A9A9',
+          },
+          '&:hover fieldset': {
+            borderColor: '#66A9A9',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: '#83d6d6',
+          },
+          '&.Mui-focused': {
+            borderColor: '#83d6d6',
+          },
+        }
       }}
     >
       <InputLabel htmlFor={name}>{label}</InputLabel>
       <OutlinedInput 
+        // notched
+        label={label}
+        sx={{
+          '& fieldset': {
+            borderColor: '#66A9A9',
+          },
+          '&:hover fieldset': {
+            borderColor: '#83d6d6'
+          }
+        }}
         id={name}
         type={showPassword ? 'text' : 'password'}
         name={name}

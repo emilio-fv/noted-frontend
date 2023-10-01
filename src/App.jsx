@@ -14,7 +14,7 @@ const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
-        {/* <Route index element={<LandingPage />}/> */}        
+        <Route index element={<LandingPage />}/>
       {/* TODO: handle protected routes */}
         {/* <Route path='/home' element={<Dashboard />}/> */}
         {/* <Route path='/music' element={<MusicPage />}/> */}
@@ -23,8 +23,6 @@ const App = () => {
         {/* <Route path='/user' element={<UserProfile />}/> */}
         {/* <Route path='/artist' element={<ArtistProfile />}/> */}
         {/* <Route path='/album' element={<AlbumProfile />}/> */}
-
-
       </Route>
     )
   );

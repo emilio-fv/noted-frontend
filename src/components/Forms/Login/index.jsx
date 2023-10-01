@@ -122,7 +122,9 @@ const LoginForm = ({ setOpenModal }) => {
       </Box>
       <Typography
         sx={{
-
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 1,
         }}
       >
         Don't have an account?

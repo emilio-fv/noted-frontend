@@ -183,7 +183,9 @@ const RegisterForm = ({ setOpenModal }) => {
       </Box>
       <Typography
         sx={{
-          
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 1,
         }}
       >
         Already have an account? 
