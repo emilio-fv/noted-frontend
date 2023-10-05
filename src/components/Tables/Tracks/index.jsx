@@ -52,7 +52,7 @@ const TracksTable = ({ tracks }) => {
                       height: '100%',
                       width: 'auto'
                     }}
-                    src={require('../../../assets/album-demo.png')}
+                    src={require('../../../assets/data/constants')}
                   />
                   Track Name
                 </TableCell>

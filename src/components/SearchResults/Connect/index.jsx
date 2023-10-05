@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import UserCard from '../../Cards/User';
-import { sampleUsers } from '../../../assets/constants';
+import { sampleUsers } from '../../../assets/data/constants';
 
 const UserSearchResults = () => {
   return (

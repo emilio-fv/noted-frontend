@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import ArtistCard from '../../Cards/Music/Artist';
 import AlbumCard from '../../Cards/Music/Album';
 import TracksTable from '../../Tables/Tracks';
-import { sampleAlbums, sampleArtists, sampleTracks } from '../../../assets/constants';
+import { sampleAlbums, sampleArtists, sampleTracks } from '../../../assets/data/constants';
 
 const MusicSearchResults = () => {
   return (

@@ -6,7 +6,7 @@ import AlbumCard from '../../Cards/Music/Album';
 import ReviewCard from '../../Cards/Reviews/SearchResult';
 import ArtistCard from '../../Cards/Music/Artist';
 import UserCard from '../../Cards/User';
-import { sampleReviews } from '../../../assets/constants';
+import { sampleReviews } from '../../../assets/data/constants';
 
 const ReviewsSearchResults = () => {
   const [category, setCategory] = useState('user');

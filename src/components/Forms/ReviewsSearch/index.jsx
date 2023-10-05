@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextInput from '../../Inputs/Text';
 import SelectInput from '../../Inputs/Select';
+import { reviewsSearcHCategories } from '../../../assets/data/constants';
 
 const ReviewsSearchForm = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,6 +50,7 @@ const ReviewsSearchForm = () => {
         sx={{
           flex: 1
         }}
+        categories={reviewsSearcHCategories}
         value={searchCategory}
         handleChange={handleCategoryChange}
       />

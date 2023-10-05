@@ -21,7 +21,7 @@ const UserReviewCard = () => {
           width: '100%',
           height: 'auto'
         }}
-        src={require('../../../../assets/album-demo.png')}
+        src={require('../../../../assets/images/album-demo.png')}
       />
       <Typography
         sx={{

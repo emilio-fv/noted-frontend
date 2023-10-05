@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './assets/index.css';
+import './assets/css/index.css';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -84,3 +84,7 @@ root.render(
     </ThemeProvider>
   </StrictMode>
 );
+
+if (module.hot) {
+  module.hot.accept();
+}

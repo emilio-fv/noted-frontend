@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import ActionButton from '../../components/Buttons/Action';
-import { sampleFavorites, sampleReviews } from '../../assets/constants';
+import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import FavoriteCard from '../../components/Cards/Favorite';
 import UserProfileReviewCard from '../../components/Cards/Reviews/UserProfile';
 

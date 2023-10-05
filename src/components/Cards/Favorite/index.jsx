@@ -21,7 +21,7 @@ const FavoriteCard = () => {
       {/* Album cover */}
       <Box 
         component='img'
-        src={require('../../../assets/album-demo.png')}
+        src={require('../../../assets/images/album-demo.png')}
         sx={{
           maxWidth: { xs: '50px', md: '100px'},
         }}

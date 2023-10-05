@@ -23,7 +23,7 @@ const AlbumCard = ({ maxWidth, profileCard=false }) => {
           height: 'auto',
           borderRadius: '5%'
         }}
-        src={require('../../../../assets/album-demo.png')}
+        src={require('../../../../assets/images/album-demo.png')}
       />
       <Typography 
         sx={{ 

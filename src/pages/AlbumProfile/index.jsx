@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import AlbumProfileReviewCard from '../../components/Cards/Reviews/AlbumProfile';
-import { sampleFavorites } from '../../assets/constants';
+import { sampleFavorites } from '../../assets/data/constants';
 import ActionButton from '../../components/Buttons/Action';
 import { useOutletContext } from 'react-router-dom';
 

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import UserReviewCard from '../../components/Cards/Dashboard/UserReview';
 import LoggedInUserReviewCard from '../../components/Cards/Dashboard/LoggedInUserReview';
-import { sampleReviews } from '../../assets/constants';
+import { sampleReviews } from '../../assets/data/constants';
 import { welcomeMessage } from '../../utils/welcomeMessage';
 
 const Dashboard = () => {

@@ -3,7 +3,6 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { reviewsSearcHCategories } from '../../../assets/constants';
 import styled from '@emotion/styled';
 
 const StyledSelect = styled(Select)(({ theme }) => ({
@@ -22,7 +21,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 
-const SelectInput = ({ sx, label=null, value, handleChange }) => {
+const SelectInput = ({ sx, label=null, value, handleChange, categories }) => {
   return (
     <FormControl 
       fullWidth 
@@ -38,7 +37,7 @@ const SelectInput = ({ sx, label=null, value, handleChange }) => {
         variant='outlined'
         onChange={handleChange}
       >
-        {reviewsSearcHCategories.map((category) => {
+        {categories.map((category) => {
           return (
             <MenuItem 
               value={category.value}

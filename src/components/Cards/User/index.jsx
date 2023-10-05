@@ -23,7 +23,7 @@ const UserCard = ({ maxWidth }) => {
           height: 'auto',
           borderRadius: '50%'
         }}
-        src={require('../../../assets/album-demo.png')}
+        src={require('../../../assets/images/album-demo.png')}
       />
       <Typography
         sx={{

@@ -48,7 +48,7 @@ const Hero = () => {
             bottom: { xs: '20%', sm: 0 },
             zIndex: -2
           }}
-          src={require('../../assets/album-demo.png')}
+          src={require('../../assets/images/album-demo.png')}
         />
         <Box 
           component='img'
@@ -60,7 +60,7 @@ const Hero = () => {
             zIndex: -1,
             left: { xs: '15%', sm: '5%'},
           }}
-          src={require('../../assets/album-demo.png')}
+          src={require('../../assets/images/album-demo.png')}
         />
         {/* Middle */}
         <Box 
@@ -71,7 +71,7 @@ const Hero = () => {
             maxWidth: { xs: '150px', sm: '200px', md: '100%' },
             marginTop: { xs: 8, sm: 0 }
           }}
-          src={require('../../assets/album-demo.png')}
+          src={require('../../assets/images/album-demo.png')}
         />
         <Box 
           component='img'
@@ -83,7 +83,7 @@ const Hero = () => {
             right: { xs: '15%', sm: '5%'},
             zIndex: -1
           }}
-          src={require('../../assets/album-demo.png')}
+          src={require('../../assets/images/album-demo.png')}
         />
         <Box 
           component='img'
@@ -96,7 +96,7 @@ const Hero = () => {
             right: { xs: '30%', sm: '5%'},
             bottom: { xs: '20%', sm: 0 },
           }}
-          src={require('../../assets/album-demo.png')}
+          src={require('../../assets/images/album-demo.png')}
         />
       </Box>
       <Box
@@ -136,7 +136,7 @@ const Hero = () => {
           text={'Join Noted'}
         />
         <Typography sx={{ ...textStyles }} fontSize={'1rem'}>
-          The social network for music enthusiasts
+          A social network for music enthusiasts
         </Typography>
       </Box>
     </Box>

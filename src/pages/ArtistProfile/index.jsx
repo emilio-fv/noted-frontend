@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { sampleFavorites, sampleReviews } from '../../assets/constants';
+import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import AlbumCard from '../../components/Cards/Music/Album';
 import ArtistProfileReviewCard from '../../components/Cards/Reviews/ArtistProfile';
 
