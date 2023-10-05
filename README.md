@@ -20,8 +20,3 @@ Dependencies
 - css-loader 
 - style-loader 
 
-
-CSS Helpers
-style={{ border: '2px solid red' }}
-
-
