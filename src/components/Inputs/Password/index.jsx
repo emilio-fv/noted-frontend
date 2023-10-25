@@ -67,7 +67,7 @@ const PasswordInput = ({ sx, name, label, value, handleChange, error }) => {
               onMouseDown={handleMouseDownPassword}
               edge='end'
             >
-              {showPassword ? <VisibilityOff /> : <Visibility />}
+              {showPassword ? <VisibilityOff htmlColor='#dbdbdb'/> : <Visibility htmlColor='#dbdbdb'/>}
             </IconButton>
           </InputAdornment>
         }

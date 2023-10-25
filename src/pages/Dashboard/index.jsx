@@ -5,12 +5,15 @@ import UserReviewCard from '../../components/Cards/Dashboard/UserReview';
 import LoggedInUserReviewCard from '../../components/Cards/Dashboard/LoggedInUserReview';
 import { sampleReviews } from '../../assets/data/constants';
 import { welcomeMessage } from '../../utils/welcomeMessage';
+import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
+  const user = useSelector((state) => state.auth.user);
+
   return (
     <>
       <Typography variant='h6'>
-        {welcomeMessage()}, username!
+        {welcomeMessage()}, {user.username}!
       </Typography>
       {/* Reviews from friends */}
       <Typography variant='subtitle1'>

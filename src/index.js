@@ -5,6 +5,8 @@ import './assets/css/index.css';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { Provider } from 'react-redux';
+import { store } from '../src/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -43,18 +45,12 @@ let theme = createTheme({
         }
       }
     },
-    MuiTableRow: {
-      styleOverrides: {
-        root: {
-          borderColor: 'red'
-        }
-      }
-    },
     MuiTextField: {
       styleOverrides: {
         root: {
           '& label.Mui-focused': {
-            color: '#83d6d6'
+            // color: '#83d6d6',
+            color: '#dbdbdb',
           },
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
@@ -79,7 +75,9 @@ root.render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </LocalizationProvider>
     </ThemeProvider>
   </StrictMode>

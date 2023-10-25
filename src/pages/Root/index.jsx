@@ -25,7 +25,7 @@ const modalStyles = {
 };
 
 const Root = () => {
-  // Handle all modals
+  // Handle modals
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = (modalInfo) => setOpenModal(modalInfo);
   const handleCloseModal = () => setOpenModal(false);

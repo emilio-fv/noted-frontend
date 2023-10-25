@@ -1,9 +1,7 @@
 # Noted Frontend
 
-
 Technologies
+- React
 - Webpack
 - Babel
-- React
-- react-router-dom
-- Matier UI
+- Material UI

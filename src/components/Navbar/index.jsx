@@ -15,11 +15,17 @@ import ActionButton from '../Buttons/Action';
 import NavLink from '../Links/Nav';
 import { useNavigate } from 'react-router-dom';
 import NavButton from '../Buttons/Nav';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../features/auth/authSlice';
 
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
 
 const Navbar = ({ setOpenModal }) => {
+  // Auth helpers
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+
   // Navigation helpers
   const navigate = useNavigate();
 
@@ -29,16 +35,16 @@ const Navbar = ({ setOpenModal }) => {
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
-
-  // TODO: Logged in user check
-  const [loggedIn, setLoggedIn] = useState(true);
-
-  // Login form modal helpers
-  // const setOpenModal = useOutletContext();
-  // const [openLoginFormModal, setOpenLoginFormModal] = useState(false);
-  // const handleOpenLoginFormModal = () => setOpenLoginFormModal(true);
-  // const handleCloseLoginFormModal = () => setOpenLoginFormModal(false);
+  const handleCloseUserMenu = (setting) => {
+    switch (setting) {
+      case 'Profile':
+        break;
+      case 'Logout':
+        dispatch(logout())
+        break;
+    }
+    setAnchorElUser(null)
+  };
 
   // Handle login button
   const handleLoginButton = () => {
@@ -138,7 +144,7 @@ const Navbar = ({ setOpenModal }) => {
               ))}
             </Box>
             {/* Account Icon / Login Button */}
-            {loggedIn
+            {isLoggedIn
               ? <Box 
                   sx={{ 
                     flexGrow: 0, 
@@ -177,7 +183,7 @@ const Navbar = ({ setOpenModal }) => {
                     onClose={handleCloseUserMenu}
                   >
                     {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>
                     ))}

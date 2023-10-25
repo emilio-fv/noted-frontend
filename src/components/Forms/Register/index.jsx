@@ -5,8 +5,9 @@ import TextInput from '../../Inputs/Text';
 import EmailInput from '../../Inputs/Email';
 import PasswordInput from '../../Inputs/Password';
 import ActionButton from '../../Buttons/Action';
-import { useOutletContext } from 'react-router-dom';
 import { Link } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { register } from '../../../features/auth/authSlice';
 
 const labels = {
   firstName: 'First Name',
@@ -27,6 +28,10 @@ const initialState = {
 };
 
 const RegisterForm = ({ setOpenModal }) => {
+  // Handle API call
+  const dispatch = useDispatch();
+
+  // Modal helper
   const handleLoginHereClick = () => {
     setOpenModal('login');
   }
@@ -90,7 +95,8 @@ const RegisterForm = ({ setOpenModal }) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     validateFormData(formData);
-    // TODO: Backend API call
+    // TODO: Update API call
+    dispatch(register());
   }
 
   return (

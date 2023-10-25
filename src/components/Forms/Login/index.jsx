@@ -4,8 +4,9 @@ import Typography from '@mui/material/Typography';
 import ActionButton from '../../Buttons/Action';
 import EmailInput from '../../Inputs/Email';
 import PasswordInput from '../../Inputs/Password';
-import { useOutletContext } from 'react-router-dom';
 import { Link } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../features/auth/authSlice';
 
 const labels = {
   email: 'Email',
@@ -18,7 +19,10 @@ const initialState = {
 };
 
 const LoginForm = ({ setOpenModal }) => {
-  // Modal helpers
+  // Handle API call
+  const dispatch = useDispatch();
+
+  // Modal helper
   const handleRegisterHereClick = () => {
     setOpenModal('register');
   };
@@ -70,6 +74,8 @@ const LoginForm = ({ setOpenModal }) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     validateFormData(formData);
+    // TODO: Update API call
+    dispatch(login());
   }
 
   return (
