@@ -4,13 +4,15 @@
   "description": "The frontend client for the application Noted",
   "private": true,
   "scripts": {
-    "test": "jest",
+    "start": "npm run docker:build && npm run docker:start",
+    "stop": "npm run docker:stop && npm run docker:remove",
     "dev": "webpack serve --config ./webpack.dev.js",
+    "test": "jest",
     "build": "webpack --config ./webpack.prod.js",
-    "docker:build": "docker build -t noted-frontend .",
-    "docker:start": "docker run -p 3000:3000 -v ${PWD}:/app -v /app/node_modules -d --name noted-client-dev noted-frontend",
-    "docker:stop": "docker stop noted-client",
-    "docker:remove": "docker rm noted-client"
+    "docker:build": "docker build -t noted-client .",
+    "docker:start": "docker run -p 3000:3000 -v ${PWD}:/app -v /app/node_modules -d --name noted-client-dev noted-client",
+    "docker:stop": "docker stop noted-client-dev",
+    "docker:remove": "docker rm noted-client-dev && docker image rm noted-client"
   },
   "author": "",
   "license": "ISC",
