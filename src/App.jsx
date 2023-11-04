@@ -10,13 +10,16 @@ import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
 import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useSelector } from 'react-redux';
 
 const App = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
       <Route index element={<LandingPage />}/>
-        <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
           <Route path='/home' element={<Dashboard />}/>
           <Route path='/music' element={<MusicPage />}/>
           <Route path='/connect' element={<ConnectPage />}/>

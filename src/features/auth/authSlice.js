@@ -1,39 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { authApi } from "../../services/auth/authService";
 
 const initialState = {
     isLoggedIn: false,
-    user: null,
+    loggedInUser: null,
 };
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {
-        register: (state) => {
-            state.isLoggedIn = true;
-            state.user = {
-                firstName: 'John',
-                lastName: 'Smith',
-                username: 'johnSmith7',
-                email: 'john@smith.com'
-            }
-        },
-        login: (state) => {
-            state.isLoggedIn = true;
-            state.user = {
-                firstName: 'John',
-                lastName: 'Smith',
-                username: 'johnSmith7',
-                email: 'john@smith.com'
-            }
-        },
-        logout: (state) => {
-            state.isLoggedIn = false;
-            state.user = null;
-        },
-    },
+    reducers: {},
+    extraReducers: builder => {
+        builder
+            .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
+                const { loggedInUser } = action.payload
+                state.isLoggedIn = true
+                state.loggedInUser = loggedInUser
+            })
+            .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
+                const { loggedInUser } = action.payload
+                state.isLoggedIn = true
+                state.loggedInUser = loggedInUser
+            })
+            .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+                state.isLoggedIn = false
+                state.loggedInUser = null
+            })
+    }
 });
 
-export const { register, login, logout } = authSlice.actions;
+export const {  } = authSlice.actions;
 
 export default authSlice.reducer;

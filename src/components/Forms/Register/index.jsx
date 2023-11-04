@@ -5,9 +5,9 @@ import TextInput from '../../Inputs/Text';
 import EmailInput from '../../Inputs/Email';
 import PasswordInput from '../../Inputs/Password';
 import ActionButton from '../../Buttons/Action';
-import { Link } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { register } from '../../../features/auth/authSlice';
+import Link from '@mui/material/Link';
+import { useRegisterMutation } from '../../../services/auth/authService';
+import { useNavigate } from 'react-router-dom';
 
 const labels = {
   firstName: 'First Name',
@@ -28,8 +28,11 @@ const initialState = {
 };
 
 const RegisterForm = ({ setOpenModal }) => {
+  // Navigation helper
+  const navigate = useNavigate();
+
   // Handle API call
-  const dispatch = useDispatch();
+  const [register, { status, error }] = useRegisterMutation();
 
   // Modal helper
   const handleLoginHereClick = () => {
@@ -40,6 +43,7 @@ const RegisterForm = ({ setOpenModal }) => {
   const [formData, setFormData] = useState(initialState);
   const [formErrors, setFormErrors] = useState({});
 
+  // Form data validator
   const validateFormData = (data) => {
     let errors = {};
 
@@ -86,17 +90,32 @@ const RegisterForm = ({ setOpenModal }) => {
     setFormErrors(errors);
   }
 
+  // Handle failed register
+  if (status === 'failed') {
+    console.log(error);
+    setFormErrors(error);
+  }
+
+  // Handle successful register
+  if (status === 'success') {
+    navigate('/home');
+  }
+
+  // Handle form changes
   const handleFormChanges = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
 
-  
+  // Handle form submit
   const handleFormSubmit = (event) => {
     event.preventDefault();
+
     validateFormData(formData);
-    // TODO: Update API call
-    dispatch(register());
+
+    if (Object.keys(formErrors).length === 0) {
+      register(formData)
+    }
   }
 
   return (

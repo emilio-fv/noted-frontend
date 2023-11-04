@@ -5,8 +5,8 @@ import ActionButton from '../../Buttons/Action';
 import EmailInput from '../../Inputs/Email';
 import PasswordInput from '../../Inputs/Password';
 import { Link } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../../services/auth/authService';
 
 const labels = {
   email: 'Email',
@@ -19,8 +19,11 @@ const initialState = {
 };
 
 const LoginForm = ({ setOpenModal }) => {
+  // Navigation helper
+  const navigate = useNavigate();
+
   // Handle API call
-  const dispatch = useDispatch();
+  const [login, { status, error }] = useLoginMutation();
 
   // Modal helper
   const handleRegisterHereClick = () => {
@@ -42,7 +45,7 @@ const LoginForm = ({ setOpenModal }) => {
           [name]: labels[name] + ' is required.'
         };
       }
-  
+
       // Handle valid email format
       if (name === 'email') {
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
@@ -66,16 +69,31 @@ const LoginForm = ({ setOpenModal }) => {
     setFormErrors(errors);
   }
 
+  // TODO: Handle failed login
+  if (status === 'failed') {
+    console.log(error);
+    setFormErrors(error);
+  }
+
+  // TODO: Handle successful login
+  if (status === 'success') {
+    navigate('/home');
+  }
+
+  // Handle form changes
   const handleFormChanges = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
 
+  // Handle form submit
   const handleFormSubmit = (event) => {
     event.preventDefault();
     validateFormData(formData);
-    // TODO: Update API call
-    dispatch(login());
+
+    if (Object.keys(formData).length === 0) {
+      login(formData);
+    }
   }
 
   return (

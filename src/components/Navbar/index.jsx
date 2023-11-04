@@ -15,16 +15,15 @@ import ActionButton from '../Buttons/Action';
 import NavLink from '../Links/Nav';
 import { useNavigate } from 'react-router-dom';
 import NavButton from '../Buttons/Nav';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../features/auth/authSlice';
+import { useLogoutMutation } from '../../services/auth/authService';
 
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
 
 const Navbar = ({ setOpenModal }) => {
   // Auth helpers
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const dispatch = useDispatch();
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [ logout ] = useLogoutMutation();
 
   // Navigation helpers
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Navbar = ({ setOpenModal }) => {
       case 'Profile':
         break;
       case 'Logout':
-        dispatch(logout())
+        logout();
         break;
     }
     setAnchorElUser(null)

@@ -5,17 +5,25 @@ import UserReviewCard from '../../components/Cards/Dashboard/UserReview';
 import LoggedInUserReviewCard from '../../components/Cards/Dashboard/LoggedInUserReview';
 import { sampleReviews } from '../../assets/data/constants';
 import { welcomeMessage } from '../../utils/welcomeMessage';
-import { useSelector } from 'react-redux';
+
+const user = {
+  username: 'milz6525',
+  firstName: 'Emilio',
+  lastName: 'Vazquez',
+}
 
 const Dashboard = () => {
-  const user = useSelector((state) => state.auth.user);
+  // TODO: get user data
+  // TODO: get reviews from friends
+  // TODO: get popular reviews
+  // TODO: get user's reviews
 
   return (
     <>
       <Typography variant='h6'>
         {welcomeMessage()}, {user.username}!
       </Typography>
-      {/* Reviews from friends */}
+      {/* Reviews From Friends */}
       <Typography variant='subtitle1'>
         New from friends
       </Typography>
@@ -35,7 +43,7 @@ const Dashboard = () => {
           )
         })}
       </Box>
-      {/* Popular reviews */}
+      {/* Popular Reviews */}
       <Typography variant='subtitle1'>
         Popular reviews
       </Typography>
@@ -55,7 +63,7 @@ const Dashboard = () => {
           )
         })}
       </Box>
-      {/* Logged in user's reviews */}
+      {/* Users Reviews */}
       <Typography variant='subtitle1'>
         Your recent reviews
       </Typography>

@@ -1,4 +1,3 @@
-# Base image build
 FROM node:18-alpine
 
 WORKDIR /app
@@ -9,6 +8,6 @@ RUN npm ci
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD [ "npm", "run", "dev" ]
