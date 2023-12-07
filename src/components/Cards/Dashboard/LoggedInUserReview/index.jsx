@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const LoggedInUserReviewCard = () => {
+const LoggedInUserReviewCard = ({ review }) => {
   return (
     <Box
       sx={{
@@ -35,7 +35,7 @@ const LoggedInUserReviewCard = () => {
           marginTop: 1,
         }}
       >
-        Renaissance
+        {review.album}
       </Typography>
       <Typography
         sx={{
@@ -44,7 +44,7 @@ const LoggedInUserReviewCard = () => {
           textOverflow: 'ellipsis',
         }}
       >
-        Beyoncé
+        {review.artist}
       </Typography>
       <Box
         sx={{
@@ -59,7 +59,7 @@ const LoggedInUserReviewCard = () => {
             fontSize: { md: '.75rem'},
           }}
         >
-          9/3/23
+          {review.createdAt}
         </Typography>
         <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
           <EditIcon fontSize='inherit'/>

@@ -9,11 +9,14 @@ export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
         auth: authReducer,
-        [musicApi.reducerPath]: musicApi.reducer,
-        music: musicReducer,
-        [reviewsApi.reducerPath]: reviewsApi.reducer,
+        // [musicApi.reducerPath]: musicApi.reducer,
+        // music: musicReducer,
+        // [reviewsApi.reducerPath]: reviewsApi.reducer,
     },
     devTools: process.env.NODE_ENV === 'development',
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat(authApi.middleware, musicApi.middleware)
+        getDefaultMiddleware().concat(
+            authApi.middleware, 
+            // musicApi.middleware,
+        )
 });

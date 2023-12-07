@@ -1,4 +1,8 @@
 module.exports = {
     testEnvironment: 'jsdom',
-    setUpFilesAfterEnv: ['<rootDir>/src/setupTests.js']
+    setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+    setupFiles: ['./jest.polyfills.js'],
+    testEnvironmentOptions: {
+        customExportConditions: [''],
+      },
 }

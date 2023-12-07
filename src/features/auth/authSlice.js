@@ -13,12 +13,12 @@ export const authSlice = createSlice({
     extraReducers: builder => {
         builder
             .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
-                const { loggedInUser } = action.payload
+                const loggedInUser = action.payload
                 state.isLoggedIn = true
                 state.loggedInUser = loggedInUser
             })
             .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
-                const { loggedInUser } = action.payload
+                const loggedInUser = action.payload
                 state.isLoggedIn = true
                 state.loggedInUser = loggedInUser
             })

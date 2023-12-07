@@ -2,13 +2,12 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const baseUrl = isProduction ? '' : 'http://localhost:8000';
+const baseUrl = isProduction ? 'https://noted-backend.vercel.app/api' : 'http://localhost:3000/api';
 
 const customBaseQuery = fetchBaseQuery({
     baseUrl: baseUrl,
     credentials: 'include'
 });
-
 
 export const reauthBaseQuery = async (args, api, extraOptions) => {
     // Step 1 Attempts the api request
@@ -28,5 +27,7 @@ export const reauthBaseQuery = async (args, api, extraOptions) => {
             await customBaseQuery('/auth/logout', api, extraOptions);
         }
     }
+
+    return result;
 }
 

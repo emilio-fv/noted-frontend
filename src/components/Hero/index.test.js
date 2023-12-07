@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Hero from '.';
 
 describe('Tests for hero component', () => {
-    test('Test that images render', async () => {
+    test('Test that images render correctly', async () => {
         const fakeAlbumCovers = [
             {
                 src: 'https://fastly.picsum.photos/id/336/200/200.jpg?hmac=VZ7MzNM30jINYNf5Oj_8zqPLTDAyKDk6eXWTGnNb4bU',

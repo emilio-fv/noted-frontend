@@ -1,3 +1,17 @@
+const registerFormLabels = {
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  username: 'Username',
+  email: 'Email',
+  password: 'Password',
+  confirmPassword: 'Confirm Password '
+};
+
+const loginFormLabels = {
+  email: 'Email',
+  password: 'Password'
+}
+
 const sampleArtists = [
   {
     name: 'Artist Name'
@@ -143,6 +157,7 @@ module.exports = {
   reviewsSearcHCategories,
   sampleUsers,
   sampleFavorites,
-  sampleReviews
+  sampleReviews,
+  registerFormLabels,
+  loginFormLabels,
 };
-

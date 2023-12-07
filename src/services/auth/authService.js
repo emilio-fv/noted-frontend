@@ -11,6 +11,15 @@ export const authApi = createApi({
                 method: 'POST',
                 body: data,
             }),
+            transformErrorResponse: (response, meta, arg) => {
+                let errors = {};
+
+                for (let key in response.data) {
+                    errors[key] = response.data[key].message;
+                }
+
+                return errors;
+            },
         }),
         login: builder.mutation({
             query: data => ({
@@ -18,6 +27,9 @@ export const authApi = createApi({
                 method: 'POST',
                 body: data,
             }),
+            transformErrorResponse: (response, meta, arg) => {
+                return response.data
+            },
         }),
         logout: builder.mutation({
             query: () => ({

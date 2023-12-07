@@ -2,24 +2,28 @@
 import { render, fireEvent } from '@testing-library/react';
 import ActionButton from '.';
 
-describe('Tests for action button component', () => {
-    test('Action button displays text that is passed as a prop.', async () => {
-        const textToRender = 'Hello, world';
+describe('Unit tests for action button component', () => {
+    test('If action button renders correctly', async () => {
+        const buttonText = 'Hello, world';
         const mockFunction = jest.fn(console.log('Hello, world'));
     
-        const { getByText } = render(<ActionButton text={textToRender} handleClick={mockFunction}/>);
+        const { getByText } = render(<ActionButton text={buttonText} handleClick={mockFunction}/>);
     
         expect(getByText('Hello, world')).toBeDefined();
     });
-    
-    test('Action button calls function passed as a prop when button is clicked.', async () => {
-        const textToRender = 'Hello, world';
+
+    test('If handleClick function is called when button is clicked.', async () => {
+        const buttonText = 'Hello, world';
         const mockFunction = jest.fn(console.log('Hello, world'));
 
-        const { getByText } = render(<ActionButton text={textToRender} handleClick={mockFunction}/>);
+        const { getByText } = render(<ActionButton text={buttonText} handleClick={mockFunction}/>);
 
         fireEvent.click(getByText('Hello, world'));
     
         expect(mockFunction).toHaveBeenCalled();
     })
 });
+
+// Unit tests
+    // Renders correctly
+    // Calls handleClick function when button is clicked

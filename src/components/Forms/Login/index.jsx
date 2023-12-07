@@ -1,28 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ActionButton from '../../Buttons/Action';
-import EmailInput from '../../Inputs/Email';
 import PasswordInput from '../../Inputs/Password';
 import { Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useLoginMutation } from '../../../services/auth/authService';
-
-const labels = {
-  email: 'Email',
-  password: 'Password'
-};
-
-const initialState = {
-  email: '',
-  password: ''
-};
+import { loginFormLabels } from '../../../assets/data/constants';
+import { validateLoginForm } from '../../../utils/formValidators';
+import TextInput from '../../Inputs/Text';
 
 const LoginForm = ({ setOpenModal }) => {
-  // Navigation helper
-  const navigate = useNavigate();
-
-  // Handle API call
+  // Handle API request
   const [login, { status, error }] = useLoginMutation();
 
   // Modal helper
@@ -31,54 +20,25 @@ const LoginForm = ({ setOpenModal }) => {
   };
 
   // Form helpers
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
   const [formErrors, setFormErrors] = useState({});
 
-  const validateFormData = (data) => {
-    let errors = {};
-
-    for (const [name, value] of Object.entries(data)) {
-      // Handle required fields
-      if (value.length === 0) {
-        errors = {
-          ...errors,
-          [name]: labels[name] + ' is required.'
-        };
-      }
-
-      // Handle valid email format
-      if (name === 'email') {
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
-          errors = {
-            ...errors,
-            email: 'Email invalid.'
-          };
-        }
-      }
-
-      if (name === 'password') {
-        if (value.length < 8) {
-          errors = {
-            ...errors,
-            [name]: 'Password must be at least 8 characters.'
-          }
-        }
-      }
+  // Handle login status
+  useEffect(() => {
+    if (status === 'rejected') {
+      setFormErrors({
+        backend: error
+      });
     }
 
-    setFormErrors(errors);
-  }
-
-  // TODO: Handle failed login
-  if (status === 'failed') {
-    console.log(error);
-    setFormErrors(error);
-  }
-
-  // TODO: Handle successful login
-  if (status === 'success') {
-    navigate('/home');
-  }
+    if (status === 'succeeded') {
+      return <Navigate to='/home' replace={true} />
+    }
+  }, [status]);
 
   // Handle form changes
   const handleFormChanges = (event) => {
@@ -89,10 +49,12 @@ const LoginForm = ({ setOpenModal }) => {
   // Handle form submit
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    validateFormData(formData);
-
-    if (Object.keys(formData).length === 0) {
+    const errors = validateLoginForm(formData);
+    
+    if (Object.keys(errors).length === 0) {
       login(formData);
+    } else {
+      setFormErrors(errors);
     }
   }
 
@@ -117,9 +79,9 @@ const LoginForm = ({ setOpenModal }) => {
         }}
         onSubmit={(event) => handleFormSubmit(event)}
       >
-        <EmailInput 
+        <TextInput 
           name={'email'}
-          label={labels.email}
+          label={loginFormLabels.email}
           value={formData.email}
           handleChange={handleFormChanges}
           error={formErrors?.email}
@@ -129,7 +91,7 @@ const LoginForm = ({ setOpenModal }) => {
         />
         <PasswordInput
           name={'password'}
-          label={labels.password}
+          label={loginFormLabels.password}
           value={formData.password}
           handleChange={handleFormChanges}
           error={formErrors?.password}
@@ -143,6 +105,13 @@ const LoginForm = ({ setOpenModal }) => {
           }}
           text={'Login'}
         />
+      {/*  */}
+        {formErrors?.backend 
+          ? <Typography>
+            {formErrors.backend}
+          </Typography>
+          : null
+        }
       </Box>
       <Typography
         sx={{

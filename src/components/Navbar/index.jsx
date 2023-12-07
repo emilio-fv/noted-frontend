@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,16 +14,15 @@ import MenuItem from '@mui/material/MenuItem';
 import LogoLink from '../Links/Logo';
 import ActionButton from '../Buttons/Action';
 import NavLink from '../Links/Nav';
-import { useNavigate } from 'react-router-dom';
 import NavButton from '../Buttons/Nav';
 import { useLogoutMutation } from '../../services/auth/authService';
+import { connect } from 'react-redux';
 
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
 
-const Navbar = ({ setOpenModal }) => {
+const Navbar = ({ setOpenModal, isLoggedIn }) => {
   // Auth helpers
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ logout ] = useLogoutMutation();
 
   // Navigation helpers
@@ -79,6 +79,7 @@ const Navbar = ({ setOpenModal }) => {
             {/* Mobile Pages Menu */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
+                data-testid="menu-icon"
                 size="large"
                 aria-label="navigation menu"
                 aria-controls="menu-appbar"
@@ -112,7 +113,7 @@ const Navbar = ({ setOpenModal }) => {
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <NavLink 
                       sx={{
-                        color: 'text.dark'
+                        color: 'text.light'
                       }}
                       path={`/${page}`}
                       text={page.toUpperCase()}
@@ -122,8 +123,8 @@ const Navbar = ({ setOpenModal }) => {
               </Menu>
             </Box>
             {/* Mobile Logo */}
-            <LogoLink 
-              variant={'h5'}
+            <LogoLink
+              variant={'h4'}
               sx={{
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
@@ -161,7 +162,7 @@ const Navbar = ({ setOpenModal }) => {
                       text={'Log Review'}
                     />
                   <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <IconButton data-testid='account-button' onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <AccountCircleIcon fontSize='large' htmlColor='white'/>
                     </IconButton>
                   </Tooltip>
@@ -197,4 +198,10 @@ const Navbar = ({ setOpenModal }) => {
   )
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.auth.isLoggedIn,
+  }
+};
+
+export default connect(mapStateToProps)(Navbar);

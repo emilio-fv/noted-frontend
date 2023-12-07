@@ -1,18 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import UserReviewCard from '../../components/Cards/Dashboard/UserReview';
 import LoggedInUserReviewCard from '../../components/Cards/Dashboard/LoggedInUserReview';
-import { sampleReviews } from '../../assets/data/constants';
 import { welcomeMessage } from '../../utils/welcomeMessage';
 
-const user = {
-  username: 'milz6525',
-  firstName: 'Emilio',
-  lastName: 'Vazquez',
-}
-
-const Dashboard = () => {
+const Dashboard = ({ loggedInUser }) => {
   // TODO: get user data
   // TODO: get reviews from friends
   // TODO: get popular reviews
@@ -21,10 +15,10 @@ const Dashboard = () => {
   return (
     <>
       <Typography variant='h6'>
-        {welcomeMessage()}, {user.username}!
+        {welcomeMessage()}, {loggedInUser?.username}!
       </Typography>
-      {/* Reviews From Friends */}
-      <Typography variant='subtitle1'>
+
+      {/* <Typography variant='subtitle1'>
         New from friends
       </Typography>
       <Box
@@ -43,7 +37,7 @@ const Dashboard = () => {
           )
         })}
       </Box>
-      {/* Popular Reviews */}
+
       <Typography variant='subtitle1'>
         Popular reviews
       </Typography>
@@ -63,7 +57,7 @@ const Dashboard = () => {
           )
         })}
       </Box>
-      {/* Users Reviews */}
+
       <Typography variant='subtitle1'>
         Your recent reviews
       </Typography>
@@ -82,9 +76,15 @@ const Dashboard = () => {
             <LoggedInUserReviewCard />
           )
         })}
-      </Box>
+      </Box> */}
     </>
   )
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUser: state.auth.loggedInUser,
+  }
+};
+
+export default connect(mapStateToProps)(Dashboard);

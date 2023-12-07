@@ -3,10 +3,9 @@ import TextField from '@mui/material/TextField';
 
 const TextInput = ({ sx=null, name, label, value, multiline=false, rows=1, placeholder='', handleChange, error=null }) => {
   return (
-    <TextField 
+    <TextField
       sx={{
         ...sx,
-        // TODO: styling
       }}
       size='small'
       multiline={multiline}

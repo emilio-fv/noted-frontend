@@ -7,7 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import React, { useState } from 'react';
 
-const PasswordInput = ({ sx, name, label, value, handleChange, error }) => {
+const PasswordInput = ({ sx=null, name, label, value, handleChange, error }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -24,7 +24,6 @@ const PasswordInput = ({ sx, name, label, value, handleChange, error }) => {
       sx={{
         ...sx,
         // TODO styling
-
         '& .MuiOutlinedInput-root': {
           '& fieldset': {
             borderColor: '#66A9A9',
@@ -63,6 +62,7 @@ const PasswordInput = ({ sx, name, label, value, handleChange, error }) => {
           <InputAdornment position='end'>
             <IconButton
               aria-label='toggle password visibility'
+              data-testid='toggle-password-visibility'
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
               edge='end'

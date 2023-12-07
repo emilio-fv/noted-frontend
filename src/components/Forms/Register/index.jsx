@@ -1,38 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 import TextInput from '../../Inputs/Text';
-import EmailInput from '../../Inputs/Email';
 import PasswordInput from '../../Inputs/Password';
 import ActionButton from '../../Buttons/Action';
-import Link from '@mui/material/Link';
 import { useRegisterMutation } from '../../../services/auth/authService';
-import { useNavigate } from 'react-router-dom';
-
-const labels = {
-  firstName: 'First Name',
-  lastName: 'Last Name',
-  username: 'Username',
-  email: 'Email',
-  password: 'Password',
-  confirmPassword: 'Confirm Password '
-};
-
-const initialState = {
-  firstName: '',
-  lastName: '',
-  username: '',
-  email: '',
-  password: '',
-  confirmPassword: ''
-};
+import { validateRegisterForm } from '../../../utils/formValidators';
+import { registerFormLabels } from '../../../assets/data/constants';
 
 const RegisterForm = ({ setOpenModal }) => {
-  // Navigation helper
-  const navigate = useNavigate();
-
-  // Handle API call
-  const [register, { status, error }] = useRegisterMutation();
+  // Handle API request
+  const [register, { status, error  }] = useRegisterMutation();
 
   // Modal helper
   const handleLoginHereClick = () => {
@@ -40,83 +20,47 @@ const RegisterForm = ({ setOpenModal }) => {
   }
 
   // Form helpers
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
   const [formErrors, setFormErrors] = useState({});
 
-  // Form data validator
-  const validateFormData = (data) => {
-    let errors = {};
-
-    for (const [name, value] of Object.entries(data)) {
-      // Required fields validation
-      if (value.length === 0) {
-        errors = {
-          ...errors,
-          [name]: labels[name] + ' is required.'
-        };
-      } 
-
-      // Email validation
-      if (name === 'email') {
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) {
-          errors = {
-            ...errors,
-            [name]: 'Invalid email format'
-          };
-        } 
-      }
-
-      // Password length validation
-      if (name === 'password') {
-        if (value.length < 8) {
-          errors = {
-            ...errors,
-            [name]: 'Password must be at least 8 characters.'
-          };
-        }
-      }
-
-      // Matching password & confirm password validation
-      if (name === 'confirmPassword') {
-        if (value !== data.password) {
-          errors = {
-            ...errors,
-            [name]: 'Passwords must match'
-          };
-        }
-      }
+  // Handle register status
+  useEffect(() => {
+    if (status === 'rejected') {
+      setFormErrors({
+        ...error
+      });
     }
 
-    setFormErrors(errors);
-  }
-
-  // Handle failed register
-  if (status === 'failed') {
-    console.log(error);
-    setFormErrors(error);
-  }
-
-  // Handle successful register
-  if (status === 'success') {
-    navigate('/home');
-  }
+    if (status === 'succeeded') {
+      return <Navigate to='/home' replace={true} />
+    }
+  }, [status]);
 
   // Handle form changes
   const handleFormChanges = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-  }
+  };
 
   // Handle form submit
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    const errors = validateRegisterForm(formData);
 
-    validateFormData(formData);
-
-    if (Object.keys(formErrors).length === 0) {
-      register(formData)
+    if (Object.keys(errors).length === 0) {
+      register(formData);
+    } else {
+      setFormErrors(errors);
     }
-  }
+  };
 
   return (
     <>
@@ -141,7 +85,7 @@ const RegisterForm = ({ setOpenModal }) => {
       >
         <TextInput 
           name={'firstName'}
-          label={labels.firstName}
+          label={registerFormLabels.firstName}
           value={formData.firstName}
           handleChange={handleFormChanges}
           error={formErrors?.firstName}
@@ -151,7 +95,7 @@ const RegisterForm = ({ setOpenModal }) => {
         />
         <TextInput 
           name={'lastName'}
-          label={labels.lastName}
+          label={registerFormLabels.lastName}
           value={formData.lastName}
           handleChange={handleFormChanges}
           error={formErrors?.lastName}
@@ -161,7 +105,7 @@ const RegisterForm = ({ setOpenModal }) => {
         />
         <TextInput 
           name={'username'}
-          label={labels.username}
+          label={registerFormLabels.username}
           value={formData.username}
           handleChange={handleFormChanges}
           error={formErrors?.username}
@@ -169,9 +113,9 @@ const RegisterForm = ({ setOpenModal }) => {
             marginBottom: formErrors?.username ? 1 : 3
           }}
         />
-        <EmailInput 
+        <TextInput 
           name={'email'}
-          label={labels.email}
+          label={registerFormLabels.email}
           value={formData.email}
           handleChange={handleFormChanges}
           error={formErrors?.email}
@@ -181,7 +125,7 @@ const RegisterForm = ({ setOpenModal }) => {
         />
         <PasswordInput 
           name={'password'}
-          label={labels.password}
+          label={registerFormLabels.password}
           value={formData.password}
           handleChange={handleFormChanges}
           error={formErrors?.password}
@@ -191,7 +135,7 @@ const RegisterForm = ({ setOpenModal }) => {
         />
         <PasswordInput 
           name={'confirmPassword'}
-          label={labels.confirmPassword}
+          label={registerFormLabels.confirmPassword}
           value={formData.confirmPassword}
           handleChange={handleFormChanges}
           error={formErrors?.confirmPassword}
