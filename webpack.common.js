@@ -8,9 +8,10 @@ module.exports = {
   entry: path.join(__dirname, 'src/index.js'),
   target: 'web',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './public'),
     filename: 'bundle.js',
     clean: true,
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -48,10 +49,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Noted',
       template: path.join(__dirname, 'public', 'index.html'),
-      filename: 'index.html',
-      inject: true,
     }),
   ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
   optimization: {
