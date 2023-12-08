@@ -19,15 +19,15 @@ const App = () => {
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
       <Route index element={<LandingPage />}/>
-          <Route path='/home' element={<Dashboard />}/>
-          {/* <Route path='/music' element={<MusicPage />}/>
-          <Route path='/connect' element={<ConnectPage />}/>
-          <Route path='/reviews' element={<ReviewsPage />}/>
-          <Route path='/user' element={<UserProfile />}/>
-          <Route path='/artist' element={<ArtistProfile />}/>
-          <Route path='/album' element={<AlbumProfile />}/>
-        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}> */}
-        </Route>
+          {/* <Route path='/home' element={<Dashboard />}/> */}
+          {/* <Route path='/music' element={<MusicPage />}/> */}
+          {/* <Route path='/connect' element={<ConnectPage />}/> */}
+          {/* <Route path='/reviews' element={<ReviewsPage />}/> */}
+          {/* <Route path='/user' element={<UserProfile />}/> */}
+          {/* <Route path='/artist' element={<ArtistProfile />}/> */}
+          {/* <Route path='/album' element={<AlbumProfile />}/> */}
+        {/* <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
+        </Route> */}
       </Route>
     )
   );
