@@ -19,6 +19,7 @@ const App = () => {
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
         <Route index element={<LandingPage />}/>
+        <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
           <Route path='/home' element={<Dashboard />}/>
           {/* <Route path='/music' element={<MusicPage />}/> */}
           {/* <Route path='/connect' element={<ConnectPage />}/> */}
@@ -26,8 +27,7 @@ const App = () => {
           {/* <Route path='/user' element={<UserProfile />}/> */}
           {/* <Route path='/artist' element={<ArtistProfile />}/> */}
           {/* <Route path='/album' element={<AlbumProfile />}/> */}
-        {/* <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
-        </Route> */}
+        </Route>
       </Route>
     )
   );
