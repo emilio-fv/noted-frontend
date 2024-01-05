@@ -36,7 +36,7 @@ const LoginForm = ({ setOpenModal }) => {
       });
     }
 
-    if (status === 'succeeded') {
+    if (status === 'fulfilled') {
       setOpenModal(false);
       return <Navigate to='/home' replace={true} />
     }
