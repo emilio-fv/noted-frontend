@@ -41,7 +41,7 @@ const RegisterForm = ({ setOpenModal }) => {
 
     if (status === 'succeeded') {
       setOpenModal(false);
-      return <Navigate to='/home' replace={true} />
+      return <Navigate to='/home' />
     }
   }, [status]);
 
