@@ -66,9 +66,10 @@ describe("Unit tests for login form component", () => {
     });
 
     test("If auth state is updated when user submits form with valid.", async () => {
+        const mockModalFunction = jest.fn();
         const { getByLabelText, getByText, getAllByText } = render(
             <Provider store={store}>
-                <LoginForm />
+                <LoginForm setOpenModal={mockModalFunction}/>
             </Provider>
         );
 
