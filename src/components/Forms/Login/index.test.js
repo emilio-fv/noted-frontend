@@ -1,4 +1,4 @@
-// Imports
+State// Imports
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import LoginForm from '.';
 import { Provider } from 'react-redux';
@@ -66,7 +66,7 @@ describe("Unit tests for login form component", () => {
     });
 
     test("If auth state is updated when user submits form with valid.", async () => {
-        const mockModalFunction = jest.fn();
+        const mockModalFunction = jest.fn(x => console.log(x));
         const { getByLabelText, getByText, getAllByText } = render(
             <Provider store={store}>
                 <LoginForm setOpenModal={mockModalFunction}/>
