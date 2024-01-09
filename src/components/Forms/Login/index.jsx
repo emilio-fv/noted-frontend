@@ -29,7 +29,6 @@ const LoginForm = ({ setOpenModal }) => {
 
   // Handle login status
   useEffect(() => {
-    console.log(status);
     if (status === 'rejected') {
       setFormErrors({
         backend: error
