@@ -1,4 +1,4 @@
-State// Imports
+// Imports
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import LoginForm from '.';
 import { Provider } from 'react-redux';
