@@ -15,7 +15,8 @@ const Dashboard = ({ loggedInUser }) => {
   return (
     <>
       <Typography variant='h6'>
-        {welcomeMessage()}, {loggedInUser?.username}!
+        Welcome!
+        {/* {welcomeMessage()}, {loggedInUser?.username}! */}
       </Typography>
 
       {/* <Typography variant='subtitle1'>

@@ -35,8 +35,8 @@ const LoginForm = ({ setOpenModal }) => {
       });
     }
 
-    if (status === 'succeeded') {
-      return <Navigate to='/home' replace={true} />
+    if (status === 'fulfilled') { 
+      setOpenModal(false);
     }
   }, [status]);
 
@@ -56,80 +56,86 @@ const LoginForm = ({ setOpenModal }) => {
     } else {
       setFormErrors(errors);
     }
+
   }
 
-  return (
-    <>
-      <Typography 
-        variant='h6' 
-        sx={{ 
-          color: 'text.light',
-          marginBottom: 1
-        }}
-      >
-        Login
-      </Typography>
-      <Box
-        component={'form'}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        onSubmit={(event) => handleFormSubmit(event)}
-      >
-        <TextInput 
-          name={'email'}
-          label={loginFormLabels.email}
-          value={formData.email}
-          handleChange={handleFormChanges}
-          error={formErrors?.email}
-          sx={{
-            marginBottom: formErrors?.email ? 1 : 3
+  if (status === 'fulfilled') {
+    return <Navigate to='/home' replace={true} />
+  } else {
+    return (
+      <>
+        <Typography 
+          variant='h6' 
+          sx={{ 
+            color: 'text.light',
+            marginBottom: 1
           }}
-        />
-        <PasswordInput
-          name={'password'}
-          label={loginFormLabels.password}
-          value={formData.password}
-          handleChange={handleFormChanges}
-          error={formErrors?.password}
-          sx={{
-            marginBottom: formErrors?.password ? 1 : 3
-          }}
-        />
-        <ActionButton
-          sx={{
-            marginBottom: 2
-          }}
-          text={'Login'}
-        />
-      {/*  */}
-        {formErrors?.backend 
-          ? <Typography>
-            {formErrors.backend}
-          </Typography>
-          : null
-        }
-      </Box>
-      <Typography
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1,
-        }}
-      >
-        Don't have an account?
-        <Link
-          component={'a'}
-          onClick={() => handleRegisterHereClick()}
         >
-          Register here.
-        </Link>
-      </Typography>
-    </>
-  )
+          Login
+        </Typography>
+        <Box
+          component={'form'}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onSubmit={(event) => handleFormSubmit(event)}
+        >
+          <TextInput 
+            name={'email'}
+            label={loginFormLabels.email}
+            value={formData.email}
+            handleChange={handleFormChanges}
+            error={formErrors?.email}
+            sx={{
+              marginBottom: formErrors?.email ? 1 : 3
+            }}
+          />
+          <PasswordInput
+            name={'password'}
+            label={loginFormLabels.password}
+            value={formData.password}
+            handleChange={handleFormChanges}
+            error={formErrors?.password}
+            sx={{
+              marginBottom: formErrors?.password ? 1 : 3
+            }}
+          />
+          <ActionButton
+            sx={{
+              marginBottom: 2
+            }}
+            text={'Login'}
+          />
+        {/*  */}
+          {formErrors?.backend 
+            ? <Typography>
+              {formErrors.backend}
+            </Typography>
+            : null
+          }
+        </Box>
+        <Typography
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 1,
+          }}
+        >
+          Don't have an account?
+          <Link
+            component={'a'}
+            onClick={() => handleRegisterHereClick()}
+          >
+            Register here.
+          </Link>
+        </Typography>
+      </>
+    )
+  }
+
 };
 
 export default LoginForm;

@@ -10,15 +10,14 @@ import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
 import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
-const App = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+const App = ({ loggedInUser }) => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
         <Route index element={<LandingPage />}/>
+        <Route element={<ProtectedRoute loggedInUser={loggedInUser}/>}>
           <Route path='/home' element={<Dashboard />}/>
           {/* <Route path='/music' element={<MusicPage />}/> */}
           {/* <Route path='/connect' element={<ConnectPage />}/> */}
@@ -26,8 +25,7 @@ const App = () => {
           {/* <Route path='/user' element={<UserProfile />}/> */}
           {/* <Route path='/artist' element={<ArtistProfile />}/> */}
           {/* <Route path='/album' element={<AlbumProfile />}/> */}
-        {/* <Route element={<ProtectedRoute isLoggedIn={isLoggedIn}/>}>
-        </Route> */}
+        </Route>
       </Route>
     )
   );
@@ -37,4 +35,10 @@ const App = () => {
   )
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUser: state.auth.loggedInUser,
+  }
+};
+
+export default connect(mapStateToProps)(App);
