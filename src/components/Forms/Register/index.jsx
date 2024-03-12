@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useOutletContext } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
@@ -10,14 +10,14 @@ import { useRegisterMutation } from '../../../services/auth/authService';
 import { validateRegisterForm } from '../../../utils/formValidators';
 import { registerFormLabels } from '../../../assets/data/constants';
 
-const RegisterForm = ({ setOpenModal }) => {
+const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
   // Handle API request
-  const [register, { status, error  }] = useRegisterMutation();
+  const [register, { status, error }] = useRegisterMutation();
 
-  // Modal helper
+  // Modal helpers
   const handleLoginHereClick = () => {
-    setOpenModal('login');
-  }
+    handleOpenModal('login');
+  };
 
   // Form helpers
   const [formData, setFormData] = useState({
@@ -39,8 +39,8 @@ const RegisterForm = ({ setOpenModal }) => {
       });
     }
 
-    if (status === 'succeeded') {
-      return <Navigate to='/home' replace={true} />
+    if (status === 'fulfilled') {
+      handleCloseModal();
     }
   }, [status]);
 
@@ -62,111 +62,115 @@ const RegisterForm = ({ setOpenModal }) => {
     }
   };
 
-  return (
-    <>
-        <Typography 
-          variant='h6' 
-          sx={{ 
-            color: 'text.light',
-            marginBottom: 1
+  if (status === 'fulfilled') {
+      return <Navigate to='/home' replace={true} />
+  } else {
+    return (
+      <>
+          <Typography 
+            variant='h6' 
+            sx={{ 
+              color: 'text.light',
+              marginBottom: 1
+            }}
+          >
+            Create An Account
+          </Typography>
+        <Box
+          component={'form'}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onSubmit={(event) => handleFormSubmit(event)}
+        >
+          <TextInput 
+            name={'firstName'}
+            label={registerFormLabels.firstName}
+            value={formData.firstName}
+            handleChange={handleFormChanges}
+            error={formErrors?.firstName}
+            sx={{
+              marginBottom: formErrors?.firstName ? 1 : 3
+            }}
+          />
+          <TextInput 
+            name={'lastName'}
+            label={registerFormLabels.lastName}
+            value={formData.lastName}
+            handleChange={handleFormChanges}
+            error={formErrors?.lastName}
+            sx={{
+              marginBottom: formErrors?.lastName ? 1 : 3
+            }}
+          />
+          <TextInput 
+            name={'username'}
+            label={registerFormLabels.username}
+            value={formData.username}
+            handleChange={handleFormChanges}
+            error={formErrors?.username}
+            sx={{
+              marginBottom: formErrors?.username ? 1 : 3
+            }}
+          />
+          <TextInput 
+            name={'email'}
+            label={registerFormLabels.email}
+            value={formData.email}
+            handleChange={handleFormChanges}
+            error={formErrors?.email}
+            sx={{
+              marginBottom: formErrors?.email ? 1 : 3
+            }}
+          />
+          <PasswordInput 
+            name={'password'}
+            label={registerFormLabels.password}
+            value={formData.password}
+            handleChange={handleFormChanges}
+            error={formErrors?.password}
+            sx={{
+              marginBottom: formErrors?.password ? 1 : 3
+            }}
+          />
+          <PasswordInput 
+            name={'confirmPassword'}
+            label={registerFormLabels.confirmPassword}
+            value={formData.confirmPassword}
+            handleChange={handleFormChanges}
+            error={formErrors?.confirmPassword}
+            sx={{
+              marginBottom: formErrors?.confirmPassword ? 1 : 3
+            }}
+          />
+          <ActionButton
+            sx={{
+              marginBottom: 2
+            }}
+            text={'Create Account'}
+          />
+        </Box>
+        <Typography
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 1,
           }}
         >
-          Create An Account
+          Already have an account? 
+          <Link
+            component={'a'}
+            onClick={() => handleLoginHereClick()}
+          >
+            Login here.
+          </Link>
         </Typography>
-      <Box
-        component={'form'}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        onSubmit={(event) => handleFormSubmit(event)}
-      >
-        <TextInput 
-          name={'firstName'}
-          label={registerFormLabels.firstName}
-          value={formData.firstName}
-          handleChange={handleFormChanges}
-          error={formErrors?.firstName}
-          sx={{
-            marginBottom: formErrors?.firstName ? 1 : 3
-          }}
-        />
-        <TextInput 
-          name={'lastName'}
-          label={registerFormLabels.lastName}
-          value={formData.lastName}
-          handleChange={handleFormChanges}
-          error={formErrors?.lastName}
-          sx={{
-            marginBottom: formErrors?.lastName ? 1 : 3
-          }}
-        />
-        <TextInput 
-          name={'username'}
-          label={registerFormLabels.username}
-          value={formData.username}
-          handleChange={handleFormChanges}
-          error={formErrors?.username}
-          sx={{
-            marginBottom: formErrors?.username ? 1 : 3
-          }}
-        />
-        <TextInput 
-          name={'email'}
-          label={registerFormLabels.email}
-          value={formData.email}
-          handleChange={handleFormChanges}
-          error={formErrors?.email}
-          sx={{
-            marginBottom: formErrors?.email ? 1 : 3
-          }}
-        />
-        <PasswordInput 
-          name={'password'}
-          label={registerFormLabels.password}
-          value={formData.password}
-          handleChange={handleFormChanges}
-          error={formErrors?.password}
-          sx={{
-            marginBottom: formErrors?.password ? 1 : 3
-          }}
-        />
-        <PasswordInput 
-          name={'confirmPassword'}
-          label={registerFormLabels.confirmPassword}
-          value={formData.confirmPassword}
-          handleChange={handleFormChanges}
-          error={formErrors?.confirmPassword}
-          sx={{
-            marginBottom: formErrors?.confirmPassword ? 1 : 3
-          }}
-        />
-        <ActionButton
-          sx={{
-            marginBottom: 2
-          }}
-          text={'Create Account'}
-        />
-      </Box>
-      <Typography
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1,
-        }}
-      >
-        Already have an account? 
-        <Link
-          component={'a'}
-          onClick={() => handleLoginHereClick()}
-        >
-          Login here.
-        </Link>
-      </Typography>
-    </>
-  )
+      </>
+    )
+  }
 };
 
 export default RegisterForm;

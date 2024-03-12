@@ -10,13 +10,13 @@ import { loginFormLabels } from '../../../assets/data/constants';
 import { validateLoginForm } from '../../../utils/formValidators';
 import TextInput from '../../Inputs/Text';
 
-const LoginForm = ({ setOpenModal }) => {
+const LoginForm = ({ handleOpenModal, handleCloseModal }) => {
   // Handle API request
   const [login, { status, error }] = useLoginMutation();
 
   // Modal helper
   const handleRegisterHereClick = () => {
-    setOpenModal('register');
+    handleOpenModal('register');
   };
 
   // Form helpers
@@ -36,7 +36,7 @@ const LoginForm = ({ setOpenModal }) => {
     }
 
     if (status === 'fulfilled') { 
-      setOpenModal(false);
+      handleCloseModal(false);
     }
   }, [status]);
 

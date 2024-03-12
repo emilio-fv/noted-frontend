@@ -6,7 +6,7 @@ export const welcomeMessage = () => {
   let message;
 
   if (time >= 6 && time < 12) {
-    message = 'Good morning,'
+    message = 'Good morning'
   } else if (time >= 12 && time < 18) {
     message = 'Good afternoon'
   } else {
