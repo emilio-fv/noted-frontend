@@ -1,6 +1,7 @@
 // Imports
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import LoginForm from '.';
+import Dashboard from '../../../pages/Dashboard';
 import { Provider } from 'react-redux';
 import { persistor, store } from '../../../store';
 import { MemoryRouter } from 'react-router-dom';

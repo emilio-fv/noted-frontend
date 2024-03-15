@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import ActionButton from '../../Buttons/Action';
 import PasswordInput from '../../Inputs/Password';
 import { Link } from '@mui/material';
-import { Navigate } from 'react-router-dom';
+import { Navigate, redirect } from 'react-router-dom';
 import { useLoginMutation } from '../../../services/auth/authService';
 import { loginFormLabels } from '../../../assets/data/constants';
 import { validateLoginForm } from '../../../utils/formValidators';
