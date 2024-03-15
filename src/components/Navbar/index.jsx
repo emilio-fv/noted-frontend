@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
 
-const Navbar = ({ setOpenModal, isLoggedIn }) => {
+const Navbar = ({ handleOpenModal, isLoggedIn }) => {
   // Auth helpers
   const [ logout ] = useLogoutMutation();
 
@@ -47,12 +47,12 @@ const Navbar = ({ setOpenModal, isLoggedIn }) => {
 
   // Handle login button
   const handleLoginButton = () => {
-    setOpenModal('login');
+    handleOpenModal('login');
   };
 
   // Handle log review button 
   const handleLogReviewButton = () => {
-    setOpenModal('review');
+    handleOpenModal('review');
   }
 
   return (

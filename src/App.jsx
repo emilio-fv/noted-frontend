@@ -10,13 +10,14 @@ import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
 import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
+import { connect, useSelector } from 'react-redux';
 
-const App = () => {
+const App = ({ loggedInUser }) => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
         <Route index element={<LandingPage />}/>
-        <Route element={<ProtectedRoute/>}>
+        <Route element={<ProtectedRoute loggedInUser={loggedInUser}/>}>
           <Route path='/home' element={<Dashboard />}/>
           {/* <Route path='/music' element={<MusicPage />}/> */}
           {/* <Route path='/connect' element={<ConnectPage />}/> */}
@@ -34,4 +35,10 @@ const App = () => {
   )
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUser: state.auth.loggedInUser,
+  }
+};
+
+export default connect(mapStateToProps)(App);

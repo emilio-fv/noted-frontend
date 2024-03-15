@@ -3,7 +3,9 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import LoginForm from '.';
 import Dashboard from '../../../pages/Dashboard';
 import { Provider } from 'react-redux';
-import { store } from '../../../store';
+import { persistor, store } from '../../../store';
+import { MemoryRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 describe("Unit tests for login form component", () => {
     test("If component renders correctly.", async () => {
@@ -66,14 +68,16 @@ describe("Unit tests for login form component", () => {
         });
     });
 
-    test("If auth state is updated when user submits form with valid.", async () => {
-        const mockModalFunction = jest.fn(x => console.log(x));
+    test("If auth state is updated when user submits form with valid credentials.", async () => {
+        const mockHandleOpenModal = jest.fn((x) => console.log('mock handle open modal function called with ', x));
+        const mockHandleCloseModal = jest.fn(() => console.log('mock handle close modal function called.'));
 
-        const { getByLabelText, getByText, getAllByText } = render(
-            <Provider store={store}>
-                <LoginForm setOpenModal={mockModalFunction}/>
-                <Dashboard />
-            </Provider>
+        const { getByLabelText, getAllByText } = render(
+            <MemoryRouter initialEntries={['/']}>
+                <Provider store={store}>
+                    <LoginForm handleCloseModal={mockHandleCloseModal} handleOpenModal={mockHandleOpenModal}/>
+                </Provider>
+            </MemoryRouter>
         );
 
         fireEvent.change(getByLabelText('Email'), { target: { value: 'test@test.com' } });
@@ -84,6 +88,7 @@ describe("Unit tests for login form component", () => {
             const authState = store.getState().auth;
             expect(authState.isLoggedIn).toBeTruthy();
             expect(authState.loggedInUser).toHaveProperty('username', 'test');
+            // TODO test pathname
         })
     });
 });
