@@ -36,7 +36,7 @@ const LoginForm = ({ handleOpenModal, handleCloseModal }) => {
     }
 
     if (status === 'fulfilled') { 
-      handleCloseModal(false);
+      handleCloseModal();
     }
   }, [status]);
 
