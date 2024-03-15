@@ -3,6 +3,7 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import RegisterForm from '.';
 import { store } from '../../../store';
+import { MemoryRouter } from 'react-router-dom';
 
 describe("Unit tests for register form component", () => {
     test("If component renders correctly.", async () => {
@@ -104,11 +105,16 @@ describe("Unit tests for register form component", () => {
         })
     });
 
-    test("If auth state is updated when user submits form with valid.", async () => {
+    test("If auth state is updated when user submits form with valid credentials.", async () => {
+        const mockHandleOpenModal = jest.fn((x) => console.log('mock handle open modal function called with ', x));
+        const mockHandleCloseModal = jest.fn(() => console.log('mock handle close modal function called.'));
+
         const { getByLabelText, getByText } = render(
-            <Provider store={store}>
-                <RegisterForm />
-            </Provider> 
+            <MemoryRouter initialEntries={['/']}>
+                <Provider store={store}>
+                    <RegisterForm handleCloseModal={mockHandleCloseModal} handleOpenModal={mockHandleOpenModal}/>
+                </Provider> 
+            </MemoryRouter>
         );
 
         fireEvent.change(getByLabelText('First Name'), { target: { value: 'Example' } });

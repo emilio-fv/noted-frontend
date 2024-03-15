@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import UserReviewCard from '../../components/Cards/Dashboard/UserReview';
 import LoggedInUserReviewCard from '../../components/Cards/Dashboard/LoggedInUserReview';
 import { welcomeMessage } from '../../utils/welcomeMessage';
+import { useOutletContext } from 'react-router-dom';
 
 const Dashboard = ({ loggedInUser }) => {
   // TODO: get user data
@@ -15,8 +16,7 @@ const Dashboard = ({ loggedInUser }) => {
   return (
     <>
       <Typography variant='h6'>
-        Welcome!
-        {/* {welcomeMessage()}, {loggedInUser?.username}! */}
+        {welcomeMessage()} {loggedInUser?.username}!
       </Typography>
 
       {/* <Typography variant='subtitle1'>

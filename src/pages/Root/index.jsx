@@ -34,15 +34,15 @@ const Root = () => {
 
   if (openModal === 'register') {
     modal = <Box sx={modalStyles} >
-      <RegisterForm setOpenModal={handleOpenModal} />
+      <RegisterForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
     </Box>
   } else if (openModal === 'login') {
     modal = <Box sx={modalStyles} >
-      <LoginForm setOpenModal={handleOpenModal} />
+      <LoginForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
     </Box>
   } else if (openModal === 'review') {
     modal = <Box sx={modalStyles} >
-      <LogReviewForm setOpenModal={handleOpenModal}/>
+      <LogReviewForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
     </Box>
   } else {
     modal = null;
@@ -50,9 +50,9 @@ const Root = () => {
 
   return (
     <Box sx={{ height: '100vh', }} >
-      <Navbar openModal={openModal} setOpenModal={handleOpenModal}/>
+      <Navbar openModal={openModal} handleOpenModal={handleOpenModal}/>
       <Container maxWidth='lg' sx={{ height: '85%' }}>
-        <Outlet context={setOpenModal}/>
+        <Outlet context={[handleOpenModal, handleCloseModal]}/>
       </Container>
       {modal
         ? <Modal

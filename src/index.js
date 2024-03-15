@@ -6,7 +6,8 @@ import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Provider } from 'react-redux';
-import { store } from '../src/store';
+import { persistor, store } from '../src/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -76,7 +77,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Provider store={store}>
-          <App />
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
         </Provider>
       </LocalizationProvider>
     </ThemeProvider>
