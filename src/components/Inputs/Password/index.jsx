@@ -50,6 +50,9 @@ const PasswordInput = ({ sx=null, name, label, value, handleChange, error }) => 
           },
           '&:hover fieldset': {
             borderColor: '#83d6d6'
+          },
+          '& input': {
+            color: 'text.light'
           }
         }}
         id={name}
