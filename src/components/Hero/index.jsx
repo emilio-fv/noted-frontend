@@ -6,52 +6,40 @@ import ActionButton from '../Buttons/Action';
 import Image from 'mui-image';
 
 const imgStyles = {
-  height: 'auto',
-  width: 'auto',
 };
 
 const textStyles = {
-  color: 'text.light'
+  color: 'text.light',
 };
 
-// Styling for album covers - from left to right
+// Styling for album covers (left to right)
 const albumCoverStyling = [
   {
-    maxHeight: '70%',
-    maxWidth: '70%',
     position: 'relative',
     left: '40%',
-    marginTop: { xs: -2, sm: 0 },
+    marginTop: { xs: 0, sm: 0, md: -5, lg: -10 },
     zIndex: -2
   },
   {
-    maxHeight: '85%',
-    maxWidth: '85%',
     position: 'relative',
     zIndex: -1,
     left: '10%',
-    marginTop: { xs: 4, sm: 0 }
+    marginTop: { xs: 5, sm: 10, md: 5, lg: 0 },
   },
   {
-    maxHeight: '100%',
-    maxWidth: '100%',
-    marginTop: { xs: 10, sm: 0 }
+    marginTop: { xs: 10, sm: 20, md: 15, lg: 10 },
   },
   {
-    maxHeight: '85%',
-    maxWidth: '85%',
     position: 'relative',
     zIndex: -1,
     right: '10%',
-    marginTop: { xs: 4, sm: 0 }
+    marginTop: { xs: 5, sm: 10, md: 5, lg: 0 },
   },
   {
-    maxHeight: '70%',
-    maxWidth: '70%',
     position: 'relative',
     zIndex: -2,
     right: '40%',
-    marginTop: { xs: -2, sm: 0 },
+    marginTop: { xs: 0, sm: 0, md: -5, lg: -10 },
   },
 ]
 
@@ -70,14 +58,11 @@ const Hero = ({ albumCovers }) => {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch',
       }}
     >
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
           flex: 2,
         }}
       >
@@ -94,8 +79,6 @@ const Hero = ({ albumCovers }) => {
           src={albumCovers[1].src}
           srcSet={albumCovers[1].srcSet}
           alt={albumCovers[1].alt}
-          // height={'80%'}
-          // width={'100%'}
         />
         <Image
           fit={'contain'}
@@ -121,12 +104,11 @@ const Hero = ({ albumCovers }) => {
       </Box>
       <Box
         sx={{
-          paddingY: { xs: '2.5vh', sm: '5vh', md: 0 },
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          flex: 1.5,
+          flex: 2.5
         }}
       >
         <Box
@@ -137,26 +119,48 @@ const Hero = ({ albumCovers }) => {
             alignItems: 'center',
           }}
         >
-          <Typography variant='h5' sx={{ ...textStyles }}>
-            Track the music you listen to.
-          </Typography>
-          <Typography variant='h5' sx={{ ...textStyles }}
+          <Typography 
+            variant='h5' 
+            sx={{ 
+              ...textStyles, 
+              fontSize: { xs: '.5em', sm: '1em', md: '1.25em' } 
+            }}
           >
-            Rate and review.
+            Track the music you listen to
           </Typography>
-          <Typography variant='h5' sx={{ ...textStyles }}
+          <Typography 
+            variant='h5' 
+            sx={{ 
+              ...textStyles, 
+              fontSize: { xs: '.5em', sm: '1em', md: '1.25em' } 
+            }}
           >
-            Share with your friends.
+            Rate and review
+          </Typography>
+          <Typography 
+            variant='h5' 
+            sx={{ 
+              ...textStyles, 
+              fontSize: { xs: '.5em', sm: '1em', md: '1.25em' } 
+            }}
+          >
+            Share with your friends
           </Typography>
         </Box>
         <ActionButton
           sx={{
             marginY: 3,
+            fontSize: { xs: '.5em', sm: '.75em', md: '1em' }, 
           }}
           handleClick={handleJoinNotedClick}
           text={'Join Noted'}
         />
-        <Typography sx={{ ...textStyles }} fontSize={'1rem'}>
+        <Typography 
+          sx={{ 
+            ...textStyles, 
+            fontSize: { xs: '.5em', sm: '.75em', md: '1em' }, 
+          }} 
+        >
           A social network for music enthusiasts
         </Typography>
       </Box>
