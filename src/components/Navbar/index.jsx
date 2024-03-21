@@ -189,7 +189,13 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
                     ))}
                   </Menu>
                 </Box>
-              : <ActionButton handleClick={handleLoginButton} text={'Login'}/>
+              : <ActionButton 
+                  handleClick={handleLoginButton} 
+                  text={'Login'}
+                  sx={{
+                    fontSize: { xs: '.5em', sm: '.75em', md: '1em' }, 
+                  }}
+                />
             }
           </Toolbar>
         </Container>
