@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import ActionButton from '../../Buttons/Action';
 import PasswordInput from '../../Inputs/Password';
@@ -61,6 +62,8 @@ const LoginForm = ({ handleOpenModal, handleCloseModal }) => {
 
   if (status === 'fulfilled') {
     return <Navigate to='/home' replace={true} />
+  } else if (status === 'pending') {
+    return <CircularProgress />
   } else {
     return (
       <>
@@ -104,6 +107,7 @@ const LoginForm = ({ handleOpenModal, handleCloseModal }) => {
             }}
           />
           <ActionButton
+            fullWidth={true}
             sx={{
               marginBottom: 2
             }}
@@ -118,15 +122,19 @@ const LoginForm = ({ handleOpenModal, handleCloseModal }) => {
           }
         </Box>
         <Typography
+          variant='caption'
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: 1,
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            gap: { sm: .5, md: 1},                      
           }}
         >
           Don't have an account?
           <Link
             component={'a'}
+            variant='inherit'
+            style={{ cursor: 'pointer' }}
             onClick={() => handleRegisterHereClick()}
           >
             Register here.

@@ -7,6 +7,7 @@ const TextInput = ({ sx=null, name, label, value, multiline=false, rows=1, place
       sx={{
         ...sx,
       }}
+      margin='none'
       size='small'
       multiline={multiline}
       inputProps={{ style: { color: '#dbdbdb' }}}
