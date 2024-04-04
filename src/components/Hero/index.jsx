@@ -120,28 +120,25 @@ const Hero = ({ albumCovers }) => {
           }}
         >
           <Typography 
-            variant='h5' 
+            variant='h6'
             sx={{ 
               ...textStyles, 
-              fontSize: { xs: '.5em', sm: '1em', md: '1.25em' } 
             }}
           >
             Track the music you listen to
           </Typography>
           <Typography 
-            variant='h5' 
+            variant='h6'
             sx={{ 
               ...textStyles, 
-              fontSize: { xs: '.5em', sm: '1em', md: '1.25em' } 
             }}
           >
             Rate and review
           </Typography>
           <Typography 
-            variant='h5' 
+            variant='h6'
             sx={{ 
               ...textStyles, 
-              fontSize: { xs: '.5em', sm: '1em', md: '1.25em' } 
             }}
           >
             Share with your friends
@@ -150,18 +147,17 @@ const Hero = ({ albumCovers }) => {
         <ActionButton
           sx={{
             marginY: 3,
-            fontSize: { xs: '.5em', sm: '.75em', md: '1em' }, 
           }}
           handleClick={handleJoinNotedClick}
           text={'Join Noted'}
         />
         <Typography 
+          variant='caption'
           sx={{ 
             ...textStyles, 
-            fontSize: { xs: '.5em', sm: '.75em', md: '1em' }, 
           }} 
         >
-          A social network for music enthusiasts
+          A social network for music lovers
         </Typography>
       </Box>
     </Box>
