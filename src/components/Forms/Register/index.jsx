@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useOutletContext } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import TextInput from '../../Inputs/Text';
@@ -9,6 +10,7 @@ import ActionButton from '../../Buttons/Action';
 import { useRegisterMutation } from '../../../services/auth/authService';
 import { validateRegisterForm } from '../../../utils/formValidators';
 import { registerFormLabels } from '../../../assets/data/constants';
+
 
 const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
   // Handle API request
@@ -64,7 +66,9 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
 
   if (status === 'fulfilled') {
       return <Navigate to='/home' replace={true} />
-  } else {
+  } else if (status === 'pending') {
+    return <CircularProgress />
+  }else {
     return (
       <>
           <Typography 
@@ -74,7 +78,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
               marginBottom: 1
             }}
           >
-            Create An Account
+            Create Account
           </Typography>
         <Box
           component={'form'}
@@ -93,7 +97,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.firstName}
             sx={{
-              marginBottom: formErrors?.firstName ? 1 : 3
+              marginBottom: formErrors?.firstName ? 1 : 2
             }}
           />
           <TextInput 
@@ -103,7 +107,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.lastName}
             sx={{
-              marginBottom: formErrors?.lastName ? 1 : 3
+              marginBottom: formErrors?.lastName ? 1 : 2
             }}
           />
           <TextInput 
@@ -113,7 +117,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.username}
             sx={{
-              marginBottom: formErrors?.username ? 1 : 3
+              marginBottom: formErrors?.username ? 1 : 2
             }}
           />
           <TextInput 
@@ -123,7 +127,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.email}
             sx={{
-              marginBottom: formErrors?.email ? 1 : 3
+              marginBottom: formErrors?.email ? 1 : 2
             }}
           />
           <PasswordInput 
@@ -133,7 +137,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.password}
             sx={{
-              marginBottom: formErrors?.password ? 1 : 3
+              marginBottom: formErrors?.password ? 1 : 2
             }}
           />
           <PasswordInput 
@@ -143,10 +147,11 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.confirmPassword}
             sx={{
-              marginBottom: formErrors?.confirmPassword ? 1 : 3
+              marginBottom: formErrors?.confirmPassword ? 1 : 2
             }}
           />
           <ActionButton
+            fullWidth={true}
             sx={{
               marginBottom: 2
             }}
@@ -154,15 +159,19 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
           />
         </Box>
         <Typography
+          variant='caption'
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            gap: 1,
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            gap: { sm: .5, md: 1},
           }}
         >
           Already have an account? 
           <Link
             component={'a'}
+            variant='inherit'
+            style={{ cursor: 'pointer' }}
             onClick={() => handleLoginHereClick()}
           >
             Login here.

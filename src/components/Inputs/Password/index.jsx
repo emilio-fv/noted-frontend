@@ -40,16 +40,20 @@ const PasswordInput = ({ sx=null, name, label, value, handleChange, error }) => 
         }
       }}
     >
-      <InputLabel htmlFor={name}>{label}</InputLabel>
+      <InputLabel error={error ? true : false} htmlFor={name}>{label}</InputLabel>
       <OutlinedInput 
         // notched
         label={label}
         sx={{
           '& fieldset': {
             borderColor: '#66A9A9',
+            color: error ? 'red' : 'text.light'
           },
           '&:hover fieldset': {
-            borderColor: '#83d6d6'
+            borderColor: '#83d6d6',
+          },
+          '& input': {
+            color: 'text.light'
           }
         }}
         id={name}

@@ -1,15 +1,16 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 
-const ActionButton = ({ handleClick, sx, text }) => {
+const ActionButton = ({ handleClick, sx, text, fullWidth=false }) => {
   return (
     <Button
       type='submit'
       onClick={handleClick}
       variant='contained'
       size='small'
+      fullWidth={fullWidth}
       sx={{
-        paddingX: 3,
+        // paddingX: 1,
         color: 'text.dark',
         fontWeight: 600,
         '&:hover': {

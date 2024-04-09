@@ -13,15 +13,17 @@ const modalStyles = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  maxWidth: '400px',
-  width: '70vw',
+  // maxWidth: { sm: '30%' },
+  maxWidth: '275px',
+  width: '60%',
   backgroundColor: 'background.card',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: 2,
-  borderRadius: '2.5%'
+  padding: 3,
+  borderRadius: '2.5%',
+  overflow: 'scroll'
 };
 
 const Root = () => {
@@ -51,11 +53,12 @@ const Root = () => {
   return (
     <Box sx={{ height: '100vh', }} >
       <Navbar openModal={openModal} handleOpenModal={handleOpenModal}/>
-      <Container maxWidth='lg' sx={{ height: '85%' }}>
+      <Container maxWidth='md' sx={{ height: '85%' }}>
         <Outlet context={[handleOpenModal, handleCloseModal]}/>
       </Container>
       {modal
         ? <Modal
+
             open={openModal ? true : false}
             onClose={() => handleCloseModal()}
           >

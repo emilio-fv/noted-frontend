@@ -17,18 +17,23 @@ import NavLink from '../Links/Nav';
 import NavButton from '../Buttons/Nav';
 import { useLogoutMutation } from '../../services/auth/authService';
 import { connect } from 'react-redux';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
 
 const Navbar = ({ handleOpenModal, isLoggedIn }) => {
+  // Media query helper
+  const desktopScreenSize = useMediaQuery((theme) => theme.breakpoints.up('md'));
+
   // Auth helpers
   const [ logout ] = useLogoutMutation();
 
   // Navigation helpers
   const navigate = useNavigate();
 
-  // Nav Menu & Account Menu Helpers
+  // Nav menu & Account menu helpers
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
@@ -70,7 +75,7 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
           <Toolbar disableGutters>
             {/* Desktop Logo */}
             <LogoLink 
-              variant={'h4'}
+              variant={'h3'}
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -153,14 +158,22 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
                     gap: 4, 
                   }}
                 >
-                    <ActionButton 
-                      handleClick={handleLogReviewButton}
-                      sx={{
-                        fontSize: '.75rem',
-                        maxHeight: '20px',
-                      }}
-                      text={'Log Review'}
-                    />
+                  {/* Log review button */}
+                  {desktopScreenSize 
+                    ? <ActionButton 
+                        handleClick={handleLogReviewButton}
+                        sx={{
+                          fontSize: '.75rem',
+                          maxHeight: '20px',
+                        }}
+                        text={'Log Review'}
+                      />
+                    : <IconButton data-testid='log-review-button' onClick={handleLogReviewButton} sx={{ p: 0, marginRight: -1 }}>
+                      <AddCircleOutlineIcon fontSize='medium' htmlColor='white' />
+                    </IconButton>
+                  }
+
+                  {/* Account menu button */}
                   <Tooltip title="Open settings">
                     <IconButton data-testid='account-button' onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <AccountCircleIcon fontSize='large' htmlColor='white'/>
@@ -189,7 +202,10 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
                     ))}
                   </Menu>
                 </Box>
-              : <ActionButton handleClick={handleLoginButton} text={'Login'}/>
+              : <ActionButton 
+                  handleClick={handleLoginButton} 
+                  text={'Login'}
+                />
             }
           </Toolbar>
         </Container>

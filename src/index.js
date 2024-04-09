@@ -50,7 +50,6 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           '& label.Mui-focused': {
-            // color: '#83d6d6',
             color: '#dbdbdb',
           },
           '& .MuiOutlinedInput-root': {
@@ -88,4 +87,8 @@ root.render(
 
 if (module.hot) {
   module.hot.accept();
+}
+
+export {
+  theme,
 }
