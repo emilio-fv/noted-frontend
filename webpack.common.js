@@ -32,10 +32,11 @@ module.exports = {
       {
         test: /\.css$/i,
         exclude: /node_modules/,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader(), 
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader'],
+        // use: [
+        //   devMode ? 'style-loader' : MiniCssExtractPlugin.loader(), 
+        //   'css-loader'
+        // ]
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,

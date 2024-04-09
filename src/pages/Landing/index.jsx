@@ -1,21 +1,22 @@
 import React from 'react';
 import Hero from '../../components/Hero';
 
+
 const fakeAlbumCovers = [
   {
-    src: require('../../assets/images/album-demo.png'),
+    src: 'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
   },
   {
-    src: require('../../assets/images/album-demo.png'),
+    src: 'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
   },
   {
-    src: require('../../assets/images/album-demo.png'),
+    src: 'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
   },
   {
-    src: require('../../assets/images/album-demo.png'),
+    src: 'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
   },
   {
-    src: require('../../assets/images/album-demo.png'),
+    src: 'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
   },
 ]
 

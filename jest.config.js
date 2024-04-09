@@ -5,4 +5,7 @@ module.exports = {
     testEnvironmentOptions: {
         customExportConditions: [''],
       },
+    moduleNameMapper: {
+      "\\.(css|sass)$": "identity-obj-proxy",
+    },
 }

@@ -88,3 +88,7 @@ root.render(
 if (module.hot) {
   module.hot.accept();
 }
+
+export {
+  theme,
+}
