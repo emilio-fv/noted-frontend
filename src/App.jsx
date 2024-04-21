@@ -11,8 +11,11 @@ import Root from './pages/Root';
 import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import { connect, useSelector } from 'react-redux';
+import { useGetSpotifyAccessTokenQuery } from './services/music/musicService';
 
 const App = ({ loggedInUser }) => {
+  const { isLoading, isSuccess } = useGetSpotifyAccessTokenQuery();
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
@@ -30,9 +33,13 @@ const App = ({ loggedInUser }) => {
     )
   );
 
-  return (
-    <RouterProvider router={router}/>
-  )
+  if (isLoading) {
+    return null;
+  } else if (isSuccess) {
+    return (
+      <RouterProvider router={router}/>
+    )
+  }
 };
 
 const mapStateToProps = (state) => {

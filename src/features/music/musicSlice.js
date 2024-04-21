@@ -9,12 +9,10 @@ export const musicSlice = createSlice({
     name: 'music',
     initialState, 
     reducers: {},
-    extraReducers: builder =>{
-        builder
-            // .addMatcher(musicApi.endpoints.requestSpotifyAccessToken.matchFulfilled, (state, action) => {
-            //     state.accessToken = action.payload
-            // })
-    }
+    // extraReducers: builder =>{
+    //     builder
+    //         .addMatcher(musicApi.endpoints.getFeaturedAlbums.)
+    // }
 });
 
 export const {  } = musicSlice.actions;

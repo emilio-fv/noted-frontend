@@ -52,6 +52,8 @@ const Hero = ({ albumCovers }) => {
     handleOpenModal('register');
   };
 
+  // TODO: API call to get featured albums
+
   return (
     <Box
       sx={{

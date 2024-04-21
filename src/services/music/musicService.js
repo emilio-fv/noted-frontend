@@ -5,45 +5,51 @@ export const musicApi = createApi({
     reducerPath: 'musicApi',
     baseQuery: reauthBaseQuery,
     endpoints: builder => ({
-        requestSpotifyToken: builder.query({
+        getSpotifyAccessToken: builder.query({
             query: () => ({
-                url: '/music/requestToken',
+                url: '/music/getSpotifyAccessToken',
                 method: 'GET',
             })
         }),
-        getNewReleases: builder.query({
+        getFeaturedAlbums: builder.query({
             query: () => ({
-                url: '/music/newReleases',
+                url: '/music/getFeaturedAlbums',
                 method: 'GET'
-            })
+            }),
+            transformResponse: (response, meta, arg) => {
+                // TODO: parse through album data to extract necessary data
+                return response;
+            }
         }),
-        searchSpotify: builder.query({
-            query: data => ({
-                url: '/music/search',
-                method: 'GET',
-                body: data,
-            })
-        }),
-        getArtistData: builder.query({
-            query: artistId => ({
-                url: `/music/${artistId}/artist`,
-                method: 'GET',
-                body: data,
-            })
-        }),
-        getAlbumData: builder.query({
-            query: albumId => ({
-                url: `/music/${albumId}/album`,
-                method: 'GET',
-                body: data,
-            })
-        })
+        // searchSpotify: builder.query({
+        //     query: data => ({
+        //         url: '/music/search',
+        //         method: 'GET',
+        //         body: data,
+        //     })
+        // }),
+        // getArtistData: builder.query({
+        //     query: artistId => ({
+        //         url: `/music/${artistId}/artist`,
+        //         method: 'GET',
+        //         body: data,
+        //     })
+        // }),
+        // getAlbumData: builder.query({
+        //     query: albumId => ({
+        //         url: `/music/${albumId}/album`,
+        //         method: 'GET',
+        //         body: data,
+        //     })
+        // })
     })
 });
 
 export const {
-    useRequestSpotifyTokenQuery,
-    useSearchSpotifyQuery,
-    useGetArtistDataQuery,
-    useGetAlbumDataQuery
+    useGetSpotifyAccessTokenQuery,
+    useGetFeaturedAlbumsQuery,
+    // useRequestSpotifyTokenQuery,
+    // useSearchSpotifyQuery,
+    // useGetArtistDataQuery,
+    // useGetAlbumDataQuery
 } = musicApi;
