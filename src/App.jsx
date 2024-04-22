@@ -1,21 +1,18 @@
 import React from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'; 
-import ArtistProfile from './pages/ArtistProfile';
-import AlbumProfile from './pages/AlbumProfile';
-import ConnectPage from './pages/Connect';
+// import ArtistProfile from './pages/ArtistProfile';
+// import AlbumProfile from './pages/AlbumProfile';
+// import ConnectPage from './pages/Connect';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/Landing';
-import MusicPage from './pages/Music';
-import ReviewsPage from './pages/Reviews';
+// import MusicPage from './pages/Music';
+// import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
-import UserProfile from './pages/UserProfile';
+// import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
-import { connect, useSelector } from 'react-redux';
-import { useGetSpotifyAccessTokenQuery } from './services/music/musicService';
+import { connect } from 'react-redux';
 
 const App = ({ loggedInUser }) => {
-  const { isLoading, isSuccess } = useGetSpotifyAccessTokenQuery();
-
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
@@ -33,13 +30,9 @@ const App = ({ loggedInUser }) => {
     )
   );
 
-  if (isLoading) {
-    return null;
-  } else if (isSuccess) {
-    return (
-      <RouterProvider router={router}/>
-    )
-  }
+  return (
+    <RouterProvider router={router}/>
+  )
 };
 
 const mapStateToProps = (state) => {

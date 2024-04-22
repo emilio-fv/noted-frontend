@@ -5,20 +5,14 @@ export const musicApi = createApi({
     reducerPath: 'musicApi',
     baseQuery: reauthBaseQuery,
     endpoints: builder => ({
-        getSpotifyAccessToken: builder.query({
-            query: () => ({
-                url: '/music/getSpotifyAccessToken',
-                method: 'GET',
-            })
-        }),
         getFeaturedAlbums: builder.query({
             query: () => ({
                 url: '/music/getFeaturedAlbums',
                 method: 'GET'
             }),
             transformResponse: (response, meta, arg) => {
-                // TODO: parse through album data to extract necessary data
-                return response;
+                const featuredAlbums = response.featuredAlbums.albums.items;
+                return featuredAlbums;
             }
         }),
         // searchSpotify: builder.query({
@@ -46,7 +40,6 @@ export const musicApi = createApi({
 });
 
 export const {
-    useGetSpotifyAccessTokenQuery,
     useGetFeaturedAlbumsQuery,
     // useRequestSpotifyTokenQuery,
     // useSearchSpotifyQuery,
