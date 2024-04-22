@@ -1,16 +1,16 @@
 import React from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'; 
-import ArtistProfile from './pages/ArtistProfile';
-import AlbumProfile from './pages/AlbumProfile';
-import ConnectPage from './pages/Connect';
+// import ArtistProfile from './pages/ArtistProfile';
+// import AlbumProfile from './pages/AlbumProfile';
+// import ConnectPage from './pages/Connect';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/Landing';
-import MusicPage from './pages/Music';
-import ReviewsPage from './pages/Reviews';
+// import MusicPage from './pages/Music';
+// import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
-import UserProfile from './pages/UserProfile';
+// import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 const App = ({ loggedInUser }) => {
   const router = createBrowserRouter(

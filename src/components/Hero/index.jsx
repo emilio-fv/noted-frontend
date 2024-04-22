@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ActionButton from '../Buttons/Action';
 import Image from 'mui-image';
+import { useGetFeaturedAlbumsQuery } from '../../services/music/musicService';
+import LoadingScreen from '../LoadingScreen';
 
 const imgStyles = {
 };
@@ -43,7 +45,7 @@ const albumCoverStyling = [
   },
 ]
 
-const Hero = ({ albumCovers }) => {
+const Hero = ({ featuredAlbums }) => {
   // Model helpers
   const [handleOpenModal] = useOutletContext();
 
@@ -69,37 +71,37 @@ const Hero = ({ albumCovers }) => {
         <Image
           fit={'contain'}
           sx={{...imgStyles, ...albumCoverStyling[0]}}
-          src={albumCovers[0].src}
-          srcSet={albumCovers[0].srcSet}
-          alt={albumCovers[0].alt}
+          src={featuredAlbums[4].images[0].url}
+          // srcSet={}
+          // alt={}
         />
         <Image
           fit={'contain'}
           sx={{...imgStyles, ...albumCoverStyling[1]}}
-          src={albumCovers[1].src}
-          srcSet={albumCovers[1].srcSet}
-          alt={albumCovers[1].alt}
+          src={featuredAlbums[2].images[0].url}
+          // srcSet={}
+          // alt={}
         />
         <Image
           fit={'contain'}
           sx={{...imgStyles, ...albumCoverStyling[2]}}
-          src={albumCovers[2].src}
-          srcSet={albumCovers[2].srcSet}
-          alt={albumCovers[2].alt}
+          src={featuredAlbums[0].images[0].url}
+          // srcSet={}
+          // alt={}
         />
         <Image
           fit={'contain'}
           sx={{...imgStyles, ...albumCoverStyling[3]}}
-          src={albumCovers[3].src}
-          srcSet={albumCovers[3].srcSet}
-          alt={albumCovers[3].alt}
+          src={featuredAlbums[1].images[0].url}
+          // srcSet={}
+          // alt={}
         />
         <Image
           fit={'contain'}
           sx={{...imgStyles, ...albumCoverStyling[4]}}
-          src={albumCovers[4].src}
-          srcSet={albumCovers[4].srcSet}
-          alt={albumCovers[4].alt}
+          src={featuredAlbums[3].images[0].url}
+          // srcSet={}
+          // alt={}
         />
       </Box>
       <Box
