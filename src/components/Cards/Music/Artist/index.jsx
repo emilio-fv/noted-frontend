@@ -2,37 +2,47 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { imagePlaceholderURL } from '../../../../assets/data/constants';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
-const ArtistCard = ({ maxWidth }) => {
+const ArtistCard = ({ artist }) => {
   return (
-    <Paper
-      elevation={4}
-      sx={{
-        backgroundColor: 'background.card',
-        paddingY: 2,
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        maxWidth: maxWidth,
-        textAlign: 'center'
-      }}
-    >
-      <Box
-        component={'img'}
+    <Link
+      // TODO link to artist page
+      component={RouterLink}
+      to={null}
+    >    
+      <Paper
+        elevation={4}
         sx={{
-          width: '70%',
-          height: 'auto',
-          borderRadius: '50%'
-        }}
-        src={require('../../../../assets/images/album-demo.png')}
-      />
-      <Typography
-        sx={{
-          marginTop: 2,
+          backgroundColor: 'background.card',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textAlign: 'center',
+          maxHeight: '300px',
         }}
       >
-        Artist Name
-      </Typography>
-    </Paper>
+        <Box
+          component={'img'}
+          sx={{
+            width: '100%',
+            maxHeight: { xs: '200px', sm: '200px', md: '120px' },
+            objectFit: 'cover',
+          }}
+          src={artist.images.length === 0 ? imagePlaceholderURL : artist.images[1].url}
+        />
+        <Typography
+          sx={{
+            marginY: 2,
+            paddingX: 2,
+          }}
+          noWrap
+        >
+          {artist.name}
+        </Typography>
+      </Paper>
+    </Link>
   )
 };
 

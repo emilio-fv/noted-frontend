@@ -5,7 +5,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 // import ConnectPage from './pages/Connect';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/Landing';
-// import MusicPage from './pages/Music';
+import MusicPage from './pages/Music';
 // import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
 // import UserProfile from './pages/UserProfile';
@@ -19,7 +19,7 @@ const App = ({ loggedInUser }) => {
         <Route index element={<LandingPage />}/>
         <Route element={<ProtectedRoute loggedInUser={loggedInUser}/>}>
           <Route path='/home' element={<Dashboard />}/>
-          {/* <Route path='/music' element={<MusicPage />}/> */}
+          <Route path='/music' element={<MusicPage />}/>
           {/* <Route path='/connect' element={<ConnectPage />}/> */}
           {/* <Route path='/reviews' element={<ReviewsPage />}/> */}
           {/* <Route path='/user' element={<UserProfile />}/> */}
