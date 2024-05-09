@@ -10,7 +10,6 @@ import ActionButton from '../../Buttons/Action';
 import { spotifyQueryLimit } from '../../../assets/data/constants';
 import { useGetMoreArtistsMutation, useGetMoreAlbumsMutation, useGetMoreTracksMutation } from '../../../services/music/musicService';
 import { Grid } from '@mui/material';
-import CardLink from '../../Links/Card';
 
 const MusicSearchResults = ({ querySpotifyResults, clearQuerySpotifyResults, offsets, currentQuery }) => {
   const [ getMoreArtists ] = useGetMoreArtistsMutation();
