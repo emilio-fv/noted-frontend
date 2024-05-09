@@ -2,53 +2,78 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { imagePlaceholderURL } from '../../../../assets/data/constants';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
-const AlbumCard = ({ maxWidth, profileCard=false }) => {
+const AlbumCard = ({ album, profileCard=false }) => {
   return (
-    <Paper
-      elevation={4}
-      sx={{
-        backgroundColor: 'background.card',
-        padding: 2,
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        maxWidth: maxWidth,
-        textAlign: 'center'
-      }}
-    >
-      <Box 
-        component={'img'}
+      <Paper
+        elevation={4}
         sx={{
-          width: '100%',
-          height: 'auto',
-          borderRadius: '5%'
-        }}
-        src={require('../../../../assets/images/album-demo.png')}
-      />
-      <Typography 
-        sx={{ 
-          marginTop: 1,
+          backgroundColor: 'background.card',
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          fontStyle: 'italic',
-          marginTop: 1,
+          whiteSpace: 'nowrap',
+          maxWidth: '300px',
+          textAlign: 'center'
         }}
       >
-        Album Name
-      </Typography>
-      {profileCard
-        ? null
-        : <Typography
-            sx={{
-              fontSize: { md: '.75rem'},
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
+        <Link
+          // TODO link to album page
+          component={RouterLink}
+          to={null}
+        >    
+            <Box 
+              component={'img'}
+              sx={{
+                width: '100%',
+                maxHeight: { xs: '200px', sm: '200px', md: '120px' },
+                objectFit: 'cover',
+              }}
+              src={album.images.length === 0 ? imagePlaceholderURL : album.images[1].url}
+            />
+        </Link>
+        <Box
+          sx={{
+            marginY: 2,
+            paddingX: 2,
+          }}
+        >
+          <Link
+            // TODO link to album page
+            component={RouterLink}
+            to={null}
           >
-            Artist Name
-          </Typography>
-      }
-    </Paper>
+            <Typography 
+              noWrap
+              sx={{ 
+                fontStyle: 'italic',
+              }}
+              >
+              {album.name}
+            </Typography>
+          </Link>
+          {profileCard
+            ? 
+              <Link
+                // TODO link to artist page
+                component={RouterLink}
+                to={null}
+              >    
+                <Typography
+                  noWrap
+                  sx={{
+                    fontSize: { md: '.75rem'},
+                  }}
+                >
+                  {album.artist?.name}
+                </Typography>
+              </Link>
+            : null
+          }
+        </Box>
+      </Paper>
+    
   )
 };
 

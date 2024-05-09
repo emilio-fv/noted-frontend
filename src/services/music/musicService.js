@@ -15,13 +15,62 @@ export const musicApi = createApi({
                 return featuredAlbums;
             }
         }),
-        // searchSpotify: builder.query({
-        //     query: data => ({
-        //         url: '/music/search',
-        //         method: 'GET',
-        //         body: data,
-        //     })
-        // }),
+        querySpotify: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.spotifyQuery,
+                    offset: data.offset,
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+        getMoreArtists: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.currentQuery,
+                    offset: data.offset,
+                    type: 'artist',
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+        getMoreAlbums: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.currentQuery,
+                    offset: data.offset,
+                    type: 'album',
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+        getMoreTracks: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.currentQuery,
+                    offset: data.offset,
+                    type: 'track',
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+
         // getArtistData: builder.query({
         //     query: artistId => ({
         //         url: `/music/${artistId}/artist`,
@@ -41,8 +90,8 @@ export const musicApi = createApi({
 
 export const {
     useGetFeaturedAlbumsQuery,
-    // useRequestSpotifyTokenQuery,
-    // useSearchSpotifyQuery,
-    // useGetArtistDataQuery,
-    // useGetAlbumDataQuery
+    useQuerySpotifyMutation,
+    useGetMoreArtistsMutation,
+    useGetMoreAlbumsMutation,
+    useGetMoreTracksMutation,
 } = musicApi;
