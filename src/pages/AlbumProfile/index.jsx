@@ -5,14 +5,25 @@ import Typography from '@mui/material/Typography';
 import AlbumProfileReviewCard from '../../components/Cards/Reviews/AlbumProfile';
 import { sampleFavorites } from '../../assets/data/constants';
 import ActionButton from '../../components/Buttons/Action';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { useGetAlbumsDataQuery } from '../../services/music/musicService';
 
 const AlbumProfile = () => {
+  const { albumId } = useParams();
+  const { data: album, isLoading, isError } = useGetAlbumsDataQuery(albumId);
   const setOpenModal = useOutletContext();
 
   const handleLogReviewButton = () => {
     setOpenModal('review');
   };
+
+  if (isLoading) {
+    return 'Loading';
+  }
+
+  if (isError) {
+    return 'Error loading page...';
+  }
 
   return (
   <Container
@@ -43,8 +54,7 @@ const AlbumProfile = () => {
             }}
           >
             <Box 
-              // TODO:
-              // component={}
+              // component={'img'}
               // src={}
               sx={{
                 height: '125px',
@@ -65,20 +75,18 @@ const AlbumProfile = () => {
         >
           <Typography 
             sx={{
-              // textAlign: 'center'
               fontSize: '1.5rem',
               fontStyle: 'italic'
             }}
           >
-            Album Name
+            {album.name}
           </Typography>
           <Typography 
             sx={{
-              // textAlign: 'center'
               fontSize: '1rem'
             }}
           >
-            Artist Name
+            {album.artists[0].name}
           </Typography>
           <ActionButton 
             handleClick={handleLogReviewButton}
@@ -142,11 +150,11 @@ const AlbumProfile = () => {
             paddingY: 2,
           }}
         >
-          {sampleFavorites.map((favorite, index) => {
+          {/* {sampleFavorites.map((favorite, index) => {
             return (
               <Typography>Track {index++}</Typography>
             )
-          })}
+          })} */}
         </Box>
       </Box>
       <Box
@@ -165,11 +173,11 @@ const AlbumProfile = () => {
             gap: 2,
           }}
         >
-          {sampleFavorites.map((review) => {
+          {/* {sampleFavorites.map((review) => {
             return (
               <AlbumProfileReviewCard />
             )
-          })}
+          })} */}
         </Box>
       </Box>
     </Container>

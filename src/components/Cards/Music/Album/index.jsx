@@ -19,9 +19,8 @@ const AlbumCard = ({ album, profileCard=false }) => {
         }}
       >
         <Link
-          // TODO link to album page
           component={RouterLink}
-          to={null}
+          to={`/${album.id}/album`}
         >    
             <Box 
               component={'img'}
@@ -40,9 +39,8 @@ const AlbumCard = ({ album, profileCard=false }) => {
           }}
         >
           <Link
-            // TODO link to album page
             component={RouterLink}
-            to={null}
+            to={`/${album.id}/album`}
           >
             <Typography 
               noWrap
@@ -56,9 +54,8 @@ const AlbumCard = ({ album, profileCard=false }) => {
           {profileCard
             ? 
               <Link
-                // TODO link to artist page
                 component={RouterLink}
-                to={null}
+                to={`/${album.artist?.id}/artist`}
               >    
                 <Typography
                   noWrap

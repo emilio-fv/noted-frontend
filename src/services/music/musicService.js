@@ -79,13 +79,15 @@ export const musicApi = createApi({
                 return response.artistData;
             }
         }),
-        // getAlbumData: builder.query({
-        //     query: albumId => ({
-        //         url: `/music/${albumId}/album`,
-        //         method: 'GET',
-        //         body: data,
-        //     })
-        // })
+        getAlbumsData: builder.query({
+            query: albumId => ({
+                url: `/music/${albumId}/getAlbumsData`,
+                method: 'GET',
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.albumData;
+            }
+        }),
     })
 });
 
@@ -95,5 +97,6 @@ export const {
     useGetMoreArtistsMutation,
     useGetMoreAlbumsMutation,
     useGetMoreTracksMutation,
-    useGetArtistsDataQuery
+    useGetArtistsDataQuery,
+    useGetAlbumsDataQuery,
 } = musicApi;
