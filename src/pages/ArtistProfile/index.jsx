@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
+import { imagePlaceholderURL, sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import AlbumCard from '../../components/Cards/Music/Album';
 import ArtistProfileReviewCard from '../../components/Cards/Reviews/ArtistProfile';
 import { useGetArtistsDataQuery } from '../../services/music/musicService';
@@ -33,7 +33,7 @@ const ArtistProfile = () => {
         gap: 3,
       }}
     >
-      {/* Header */}
+      {/* ======= Header ======= */}
       <Box
           sx={{
             gridArea: 'header',
@@ -42,16 +42,15 @@ const ArtistProfile = () => {
             gap: 3,
           }}
       >
-        {/* Artist Picture */}
+        {/* ======= Artist Picture ======= */}
         <Box
             sx={{
               flex: 1,
             }}
           >
             <Box 
-              // TODO:
-              // component={}
-              // src={}
+              component={'img'}
+              src={artist.images?.length === 0 ? imagePlaceholderURL : artist.images[0].url}
               sx={{
                 height: '125px',
                 width: '125px',
@@ -60,7 +59,7 @@ const ArtistProfile = () => {
               }}
             />
           </Box>
-        {/* Artist Name */}
+        {/* ======= Artist Name ======= */}
         <Box
           sx={{
             flex: 3,
@@ -70,14 +69,13 @@ const ArtistProfile = () => {
         >
           <Typography 
             sx={{
-              // textAlign: 'center'
               fontSize: '1.5rem'
             }}
           >
             {artist.name}
           </Typography>
         </Box>
-        {/* Stats */}
+        {/* ======= Stats ======= */}
         <Box
           sx={{
             flex: 8, 
@@ -109,8 +107,7 @@ const ArtistProfile = () => {
           </Box>
         </Box>
       </Box>
-
-      {/* Sidebar */}
+      {/* =======  Sidebar ======= */}
       <Box
         sx={{
           gridArea: 'sidebar',
