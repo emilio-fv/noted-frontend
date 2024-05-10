@@ -9,9 +9,8 @@ import Link from '@mui/material/Link';
 const ArtistCard = ({ artist }) => {
   return (
     <Link
-      // TODO link to artist page
       component={RouterLink}
-      to={null}
+      to={`/${artist.id}/artist`}
     >    
       <Paper
         elevation={4}

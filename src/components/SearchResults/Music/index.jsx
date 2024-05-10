@@ -63,9 +63,7 @@ const MusicSearchResults = ({ querySpotifyResults, clearQuerySpotifyResults, off
         {querySpotifyResults.artists.map((artist, key) => {
           return (
             <Grid item xs={12} sm={6} md={2} key={key} zeroMinWidth maxHeight={'300px'}>
-              <CardLink path={null} >
                 <ArtistCard artist={artist}/>
-              </CardLink>
             </Grid>
           )
         })}
