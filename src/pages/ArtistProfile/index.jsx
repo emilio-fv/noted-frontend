@@ -5,8 +5,21 @@ import Typography from '@mui/material/Typography';
 import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import AlbumCard from '../../components/Cards/Music/Album';
 import ArtistProfileReviewCard from '../../components/Cards/Reviews/ArtistProfile';
+import { useGetArtistsDataQuery } from '../../services/music/musicService';
+import { useParams } from 'react-router-dom';
 
 const ArtistProfile = () => {
+  const { artistId } = useParams();
+  const { data: artist, isLoading, isError, } = useGetArtistsDataQuery(artistId);
+
+  if (isError) {
+    return null;
+  }
+
+  if (isLoading) {
+    return 'Loading';
+  }
+
   return (
     <Container
       maxWidth='md'
@@ -61,7 +74,7 @@ const ArtistProfile = () => {
               fontSize: '1.5rem'
             }}
           >
-            Artist Name
+            {artist.name}
           </Typography>
         </Box>
         {/* Stats */}
@@ -115,11 +128,11 @@ const ArtistProfile = () => {
             paddingY: 2,
           }}
         >
-          {sampleFavorites.map((favorite) => {
+          {/* {sampleFavorites.map((favorite) => {
             return (
               <AlbumCard profileCard={true} maxWidth={'150px'}/>
             )
-          })}
+          })} */}
         </Box>
       </Box>
       <Box
@@ -138,11 +151,11 @@ const ArtistProfile = () => {
             gap: 2,
           }}
         >
-          {sampleReviews.map((review) => {
+          {/* {sampleReviews.map((review) => {
             return (
               <ArtistProfileReviewCard />
             )
-          })}
+          })} */}
         </Box>
       </Box>
     </Container>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'; 
-// import ArtistProfile from './pages/ArtistProfile';
+import ArtistProfile from './pages/ArtistProfile';
 // import AlbumProfile from './pages/AlbumProfile';
 // import ConnectPage from './pages/Connect';
 import Dashboard from './pages/Dashboard';
@@ -20,10 +20,10 @@ const App = ({ loggedInUser }) => {
         <Route element={<ProtectedRoute loggedInUser={loggedInUser}/>}>
           <Route path='/home' element={<Dashboard />}/>
           <Route path='/music' element={<MusicPage />}/>
+          <Route path='/:artistId/artist' element={<ArtistProfile />}/>
           {/* <Route path='/connect' element={<ConnectPage />}/> */}
           {/* <Route path='/reviews' element={<ReviewsPage />}/> */}
           {/* <Route path='/user' element={<UserProfile />}/> */}
-          {/* <Route path='/artist' element={<ArtistProfile />}/> */}
           {/* <Route path='/album' element={<AlbumProfile />}/> */}
         </Route>
       </Route>
