@@ -81,9 +81,8 @@ const TracksTable = ({ tracks }) => {
                   align='left'
                 >
                   <Link
-                    // TODO link to album page
                     component={RouterLink}
-                    to={null}
+                    to={`/${track.album.id}/album`}
                   >
                     {track.album.name}
                   </Link>
@@ -97,9 +96,8 @@ const TracksTable = ({ tracks }) => {
                   align='left'
                 >
                   <Link
-                    // TODO link to artist page
                     component={RouterLink}
-                    to={null}
+                    to={`/${track.artist.id}/artist`}
                   >
                     {track.artist.name}
                   </Link>
