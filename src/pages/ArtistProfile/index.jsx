@@ -136,7 +136,7 @@ const ArtistProfile = () => {
         >
           {artist.discography.map((album) => {
             return (
-              <AlbumCard profileCard={true} album={album}/>
+              <AlbumCard width={'150px'} profileCard={true} album={album}/>
             )
           })}
         </Box>

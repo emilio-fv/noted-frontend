@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import AlbumProfileReviewCard from '../../components/Cards/Reviews/AlbumProfile';
-import { sampleFavorites } from '../../assets/data/constants';
+import { imagePlaceholderURL, sampleFavorites } from '../../assets/data/constants';
 import ActionButton from '../../components/Buttons/Action';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { useGetAlbumsDataQuery } from '../../services/music/musicService';
@@ -38,7 +38,7 @@ const AlbumProfile = () => {
         gap: 3,
       }}
     >
-      {/* Header */}
+      {/* ======= Header ======= */}
       <Box
           sx={{
             gridArea: 'header',
@@ -47,35 +47,35 @@ const AlbumProfile = () => {
             gap: 3,
           }}
       >
-        {/* Album Picture */}
+        {/* ======= Album Picture ======= */}
         <Box
+          sx={{
+            flex: 1,
+          }}
+        >
+          <Box 
+            component={'img'}
+            src={album.images?.length === 0 ? imagePlaceholderURL : album.images[0].url}
             sx={{
-              flex: 1,
+              height: '125px',
+              width: '125px',
+              backgroundColor: 'grey'
             }}
-          >
-            <Box 
-              // component={'img'}
-              // src={}
-              sx={{
-                height: '125px',
-                width: '125px',
-                backgroundColor: 'grey'
-              }}
-            />
-          </Box>
-        {/* Artist Name */}
+          />
+        </Box>
+        {/* ======= Album & Artist Name ======= */}
         <Box
           sx={{
             flex: 3,
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'start',
             justifyContent: 'center',
             flexDirection: 'column',
           }}
         >
           <Typography 
             sx={{
-              fontSize: '1.5rem',
+              fontSize: '1.25rem',
               fontStyle: 'italic'
             }}
           >
@@ -86,7 +86,7 @@ const AlbumProfile = () => {
               fontSize: '1rem'
             }}
           >
-            {album.artists[0].name}
+            {album.artist.name}
           </Typography>
           <ActionButton 
             handleClick={handleLogReviewButton}
@@ -100,10 +100,10 @@ const AlbumProfile = () => {
             text={'Log review'}
           />
         </Box>
-        {/* Stats */}
+        {/* ======= Stats ======= */}
         <Box
           sx={{
-            flex: 8, 
+            flex: 4, 
             display: 'flex',
             justifyContent: 'end',
             alignItems: 'center',
@@ -132,7 +132,7 @@ const AlbumProfile = () => {
           </Box>
         </Box>
       </Box>
-      {/* Sidebar */}
+      {/* ======= Sidebar ======= */}
       <Box
         sx={{
           gridArea: 'sidebar',
@@ -145,16 +145,24 @@ const AlbumProfile = () => {
             borderColor: 'text.light',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'start',
             gap: 2,
             paddingY: 2,
+            textAlign: 'left',
           }}
         >
-          {/* {sampleFavorites.map((favorite, index) => {
+          {album.tracks.map((track, index) => {
             return (
-              <Typography>Track {index++}</Typography>
+              <Typography
+                sx={{
+                  fontSize: '.75rem'
+                }}
+                key={index}
+                >
+                {track.name}
+              </Typography>
             )
-          })} */}
+          })}
         </Box>
       </Box>
       <Box
