@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -11,6 +11,14 @@ import { useParams } from 'react-router-dom';
 const ArtistProfile = () => {
   const { artistId } = useParams();
   const { data: artist, isLoading, isError, } = useGetArtistsDataQuery(artistId);
+
+  // Handle load more discography
+  // const [startIndex, setStartIndex] = useState(0);
+  // const [endIndex, setEndIndex] = useState(5);
+
+  // const loadMoreAlbums = (newEndIndex) => {
+  //   setEndIndex(endIndex + )
+  // }
 
   if (isError) {
     return null;
@@ -53,7 +61,8 @@ const ArtistProfile = () => {
               src={artist.images?.length === 0 ? imagePlaceholderURL : artist.images[0].url}
               sx={{
                 height: '125px',
-                width: '125px',
+                maxWidth: '125px',
+                objectFit: 'cover',
                 borderRadius: '50%',
                 backgroundColor: 'grey'
               }}
@@ -122,14 +131,14 @@ const ArtistProfile = () => {
             flexDirection: 'column',
             alignItems: 'center',
             gap: 2,
-            paddingY: 2,
+            paddingY: 4,
           }}
         >
-          {/* {sampleFavorites.map((favorite) => {
+          {artist.discography.map((album) => {
             return (
-              <AlbumCard profileCard={true} maxWidth={'150px'}/>
+              <AlbumCard profileCard={true} album={album}/>
             )
-          })} */}
+          })}
         </Box>
       </Box>
       <Box

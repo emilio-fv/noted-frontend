@@ -14,7 +14,7 @@ const AlbumCard = ({ album, profileCard=false }) => {
           backgroundColor: 'background.card',
           overflow: 'hidden',
           whiteSpace: 'nowrap',
-          maxWidth: '300px',
+          width: '150px',
           textAlign: 'center'
         }}
       >
