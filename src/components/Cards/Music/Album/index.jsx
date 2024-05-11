@@ -6,7 +6,7 @@ import { imagePlaceholderURL } from '../../../../assets/data/constants';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 
-const AlbumCard = ({ album, profileCard=false }) => {
+const AlbumCard = ({ album, profileCard=false, width }) => {
   return (
       <Paper
         elevation={4}
@@ -14,7 +14,7 @@ const AlbumCard = ({ album, profileCard=false }) => {
           backgroundColor: 'background.card',
           overflow: 'hidden',
           whiteSpace: 'nowrap',
-          width: '150px',
+          width: width,
           textAlign: 'center'
         }}
       >
