@@ -5,6 +5,7 @@ import { musicApi } from './services/music/musicService';
 import { reviewsApi } from './services/reviews/reviewsService';
 import authReducer from './features/auth/authSlice';
 import musicReducer from './features/music/musicSlice';
+import reviewsReducer from './features/reviews/reviewsSlice';
 import {
     persistStore,
     persistReducer,
@@ -25,8 +26,10 @@ const persistConfig = {
 const combinedReducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [musicApi.reducerPath]: musicApi.reducer,
+    [reviewsApi.reducerPath]: reviewsApi.reducer,
     auth: authReducer,
     music: musicReducer,
+    reviews: reviewsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers);
@@ -42,6 +45,7 @@ export const store = configureStore({
         }).concat(
             authApi.middleware, 
             musicApi.middleware,
+            reviewsApi.middleware,
         )
 });
 

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 import { musicApi } from "../../services/music/musicService";
 
 const initialState = {
@@ -12,7 +12,7 @@ export const musicSlice = createSlice({
     initialState, 
     reducers: {
         clearQuerySpotifyResults: (state) => {
-            state.querySpotifyResults = null;
+            state.querySpotifyResults = null
         }
     },
     extraReducers: builder => {

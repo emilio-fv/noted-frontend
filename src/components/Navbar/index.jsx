@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,16 +17,11 @@ import NavLink from '../Links/Nav';
 import NavButton from '../Buttons/Nav';
 import { useLogoutMutation } from '../../services/auth/authService';
 import { connect } from 'react-redux';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const pages = ['home', 'music', 'reviews', 'connect'];
 const settings = ['Profile', 'Logout'];
 
 const Navbar = ({ handleOpenModal, isLoggedIn }) => {
-  // Media query helper
-  const desktopScreenSize = useMediaQuery((theme) => theme.breakpoints.up('md'));
-
   // Auth helpers
   const [ logout ] = useLogoutMutation();
 
@@ -54,11 +49,6 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
   const handleLoginButton = () => {
     handleOpenModal('login');
   };
-
-  // Handle log review button 
-  const handleLogReviewButton = () => {
-    handleOpenModal('review');
-  }
 
   return (
     <>
@@ -158,21 +148,6 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
                     gap: 4, 
                   }}
                 >
-                  {/* Log review button */}
-                  {desktopScreenSize 
-                    ? <ActionButton 
-                        handleClick={handleLogReviewButton}
-                        sx={{
-                          fontSize: '.75rem',
-                          maxHeight: '20px',
-                        }}
-                        text={'Log Review'}
-                      />
-                    : <IconButton data-testid='log-review-button' onClick={handleLogReviewButton} sx={{ p: 0, marginRight: -1 }}>
-                      <AddCircleOutlineIcon fontSize='medium' htmlColor='white' />
-                    </IconButton>
-                  }
-
                   {/* Account menu button */}
                   <Tooltip title="Open settings">
                     <IconButton data-testid='account-button' onClick={handleOpenUserMenu} sx={{ p: 0 }}>

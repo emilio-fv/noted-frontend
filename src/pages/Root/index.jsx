@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Modal from '@mui/material/Modal';
 import LoginForm from '../../components/Forms/Login';
-import LogReviewForm from '../../components/Forms/LogReview';
+import CreateReviewForm from '../../components/Forms/CreateReview';
 import Navbar from '../../components/Navbar';
 import RegisterForm from '../../components/Forms/Register';
 
@@ -44,7 +44,7 @@ const Root = () => {
     </Box>
   } else if (openModal === 'review') {
     modal = <Box sx={modalStyles} >
-      <LogReviewForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
+      <CreateReviewForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
     </Box>
   } else {
     modal = null;
@@ -54,11 +54,10 @@ const Root = () => {
     <Box sx={{ height: '100vh', }} >
       <Navbar openModal={openModal} handleOpenModal={handleOpenModal}/>
       <Container maxWidth='md' sx={{ height: '85%' }}>
-        <Outlet context={[handleOpenModal, handleCloseModal]}/>
+        <Outlet context={[openModal, setOpenModal]}/>
       </Container>
       {modal
         ? <Modal
-
             open={openModal ? true : false}
             onClose={() => handleCloseModal()}
           >

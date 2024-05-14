@@ -7,13 +7,16 @@ import { imagePlaceholderURL, sampleFavorites } from '../../assets/data/constant
 import ActionButton from '../../components/Buttons/Action';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { useGetAlbumsDataQuery } from '../../services/music/musicService';
+import { setSelectedAlbumToReview } from '../../features/reviews/reviewsSlice';
+import { connect } from 'react-redux';
 
-const AlbumProfile = () => {
+const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   const { albumId } = useParams();
   const { data: album, isLoading, isError } = useGetAlbumsDataQuery(albumId);
-  const setOpenModal = useOutletContext();
+  const [ openModal, setOpenModal ] = useOutletContext();
 
   const handleLogReviewButton = () => {
+    setSelectedAlbumToReview(album);
     setOpenModal('review');
   };
 
@@ -192,4 +195,8 @@ const AlbumProfile = () => {
   )
 };
 
-export default AlbumProfile;
+const mapDispatchToProps = {
+  setSelectedAlbumToReview
+};
+
+export default connect(null, mapDispatchToProps)(AlbumProfile);
