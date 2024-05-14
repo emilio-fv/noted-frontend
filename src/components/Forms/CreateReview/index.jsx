@@ -1,4 +1,4 @@
-import { Box, Rating, TextField, Typography } from '@mui/material';
+import { Box, IconButton, Rating, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +6,8 @@ import TextInput from '../../Inputs/Text';
 import ActionButton from '../../Buttons/Action';
 import { connect } from 'react-redux';
 import { useCreateReviewMutation } from '../../../services/reviews/reviewsService';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const today = dayjs();
 
@@ -21,6 +23,7 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
   });
 
   const [reviewDate, setReviewDate] = useState(dayjs(Date.now()));
+  const [favorite, setFavorite] = useState(false);
   const [errors, setErrors] = useState(null);
 
   const [ createReview, { data, isSuccess, isError, error }] = useCreateReviewMutation();
@@ -57,6 +60,7 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
       createReview({
         ...formData,
         date: reviewDate.$d,
+        favorite: favorite,
       })
     }
   }
@@ -158,6 +162,12 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
             onChange={(event) => handleFormChanges(event)}
             precision={0.5}
           />
+          <IconButton size='small' onClick={() => setFavorite(!favorite)} sx={{ color: 'text.light' }} >
+            {favorite 
+              ? <FavoriteIcon />
+              : <FavoriteBorderIcon />
+            }
+          </IconButton>
         </Box>
         <TextInput 
           required
