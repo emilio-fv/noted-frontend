@@ -1,20 +1,39 @@
 import { Box, Rating, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextInput from '../../Inputs/Text';
 import ActionButton from '../../Buttons/Action';
-
-const initialState = {
-  rating: 0,
-  review: '',
-};
+import { connect } from 'react-redux';
+import { useCreateReviewMutation } from '../../../services/reviews/reviewsService';
 
 const today = dayjs();
 
-const LogReviewForm = ({ setOpenModal }) => {
-  const [formData, setFormData] = useState(initialState);
+const CreateReviewForm = ({ albumData, handleOpenModal }) => {
+  const [formData, setFormData] = useState({
+    album: albumData?.name,
+    albumId: albumData?.id,
+    artist: albumData?.artist.name,
+    artistId: albumData?.artist.id,
+    rating: 0,
+    reviewText: null,
+    albumImages: albumData?.images,
+  });
+
   const [reviewDate, setReviewDate] = useState(dayjs(Date.now()));
+  const [errors, setErrors] = useState(null);
+
+  const [ createReview, { data, isSuccess, isError, error }] = useCreateReviewMutation();
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+
+    if (isSuccess) {
+      handleOpenModal(false);
+    }
+  }, [isSuccess, isError])
 
   const handleFormChanges = (event) => {
     const { name, value } = event.target;
@@ -27,7 +46,19 @@ const LogReviewForm = ({ setOpenModal }) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(formData, reviewDate);
+
+    if (formData.reviewText === null) {
+      setErrors({
+        reviewText: 'Required field.'
+      })
+      return;
+    } else {
+      setErrors(null);
+      createReview({
+        ...formData,
+        date: reviewDate.$d,
+      })
+    }
   }
 
   return (
@@ -39,7 +70,7 @@ const LogReviewForm = ({ setOpenModal }) => {
           marginBottom: 1
         }}
       >
-        Log Review
+        Create Review
       </Typography>
       <Box
         component={'form'}
@@ -52,7 +83,6 @@ const LogReviewForm = ({ setOpenModal }) => {
         }}
         onSubmit={(event) => handleFormSubmit(event)}
       >
-        {/* display album info */}
         <Box
           sx={{
             display: 'flex',
@@ -61,9 +91,9 @@ const LogReviewForm = ({ setOpenModal }) => {
           }}
         >
           <Box 
-            // TODO:
-            // component={}
-            // src={}
+            // TODO: pass in album image url
+            component={'img'}
+            src={albumData?.images[0].url}
             sx={{
               height: '125px',
               width: '125px',
@@ -84,14 +114,14 @@ const LogReviewForm = ({ setOpenModal }) => {
                 fontStyle: 'italic'
               }}
             >
-              Album Name
+              {albumData?.name}
             </Typography>
             <Typography 
               sx={{
                 fontSize: '1rem'
               }}
             >
-              Artist Name
+              {albumData?.artist.name}
             </Typography>
           </Box>
         </Box>
@@ -130,19 +160,21 @@ const LogReviewForm = ({ setOpenModal }) => {
           />
         </Box>
         <TextInput 
+          required
           multiline={true}
           rows={4}
           label={'Review'}
-          name={'review'}
-          value={formData.review}
+          name={'reviewText'}
+          value={formData.reviewText}
           handleChange={handleFormChanges}
-          // error={}
+          error={errors?.reviewText ? errors.reviewText : false}
+          helperText={errors?.reviewText ? errors.reviewText : ''}
         />
         <ActionButton 
           text={'Submit'}
-          // handleClick={}
+          handleClick={handleFormSubmit}
           sx={{
-
+            // TODO update styling
           }}
         />
       </Box>
@@ -150,4 +182,10 @@ const LogReviewForm = ({ setOpenModal }) => {
   )
 };
 
-export default LogReviewForm;
+const mapStateToProps = (state) => {
+  return {
+    albumData: state.reviews.selectedAlbumToReview,
+  }
+};
+
+export default connect(mapStateToProps)(CreateReviewForm);
