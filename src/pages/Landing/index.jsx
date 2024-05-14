@@ -1,27 +1,17 @@
 import React from 'react';
 import Hero from '../../components/Hero';
-
-const fakeAlbumCovers = [
-  {
-    src: require('../../assets/images/album-demo.png'),
-  },
-  {
-    src: require('../../assets/images/album-demo.png'),
-  },
-  {
-    src: require('../../assets/images/album-demo.png'),
-  },
-  {
-    src: require('../../assets/images/album-demo.png'),
-  },
-  {
-    src: require('../../assets/images/album-demo.png'),
-  },
-]
+import { useGetFeaturedAlbumsQuery } from '../../services/music/musicService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const LandingPage = () => {
+  const { data, isLoading } = useGetFeaturedAlbumsQuery();
+
+  if (isLoading) {
+    return <LoadingScreen />
+  }
+
   return (
-    <Hero albumCovers={fakeAlbumCovers}/>
+    <Hero featuredAlbums={data}/>
   )
 };
 

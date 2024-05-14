@@ -150,6 +150,10 @@ const sampleReviews = [
   {},
 ]
 
+const spotifyQueryLimit = 6;
+
+const imagePlaceholderURL = 'https://placehold.co/300x300?text=No+Image+Available';
+
 module.exports = {
   sampleArtists,
   sampleAlbums,
@@ -160,4 +164,6 @@ module.exports = {
   sampleReviews,
   registerFormLabels,
   loginFormLabels,
+  spotifyQueryLimit,
+  imagePlaceholderURL
 };

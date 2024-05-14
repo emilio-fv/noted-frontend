@@ -24,7 +24,9 @@ const persistConfig = {
 
 const combinedReducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
+    [musicApi.reducerPath]: musicApi.reducer,
     auth: authReducer,
+    music: musicReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers);
@@ -39,7 +41,7 @@ export const store = configureStore({
               },
         }).concat(
             authApi.middleware, 
-            // musicApi.middleware,
+            musicApi.middleware,
         )
 });
 

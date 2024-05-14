@@ -8,23 +8,35 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import formatDuration from '../../../utils/formatDuration.js';
+import { imagePlaceholderURL } from '../../../assets/data/constants.js';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 const TracksTable = ({ tracks }) => {
   return (
     <TableContainer 
       component={Paper}
       sx={{
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
       }}
       elevation={0}
     >
-      <Table>
+      <Table sx={{ tableLayout: 'fixed' }}>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ textDecoration: 'underline' }} align='left' >Track</TableCell>
-            <TableCell sx={{ textDecoration: 'underline' }} align='left' >Album</TableCell>
-            <TableCell sx={{ textDecoration: 'underline' }} align='left' >Artist</TableCell>
-            <TableCell align='right' ><AccessTimeFilledIcon /></TableCell>
+            <TableCell width='40%' sx={{ textDecoration: 'underline', }} align='left'>
+              Track Name
+            </TableCell>
+            <TableCell width='25%'  sx={{ textDecoration: 'underline',  }} align='left'>
+              Album
+            </TableCell>
+            <TableCell width='25%'  sx={{ textDecoration: 'underline',  }} align='left' >
+              Artist
+            </TableCell>
+            <TableCell width='10%' align='right'>
+              <AccessTimeFilledIcon />
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -33,7 +45,7 @@ const TracksTable = ({ tracks }) => {
                 <TableRow
                 sx={{ 
                   '&:last-child td, &:last-child th': { 
-                    border: 0 
+                    border: 0,
                   },
                 }}
               >
@@ -42,7 +54,10 @@ const TracksTable = ({ tracks }) => {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
-                    gap: 2
+                    gap: 2,
+                    overflow: 'hidden', 
+                    whiteSpace: 'nowrap', 
+                    textOverflow: 'ellipsis',
                   }}
                 >
                   <Box
@@ -50,15 +65,48 @@ const TracksTable = ({ tracks }) => {
                     sx={{
                       maxHeight: '25px',
                       height: '100%',
-                      width: 'auto'
+                      width: 'auto',
+                      
                     }}
-                    src={require('../../../assets/data/constants')}
+                    src={track.images.length === 0 ? imagePlaceholderURL : track.images[0].url}
                   />
-                  Track Name
+                  {track.name}
                 </TableCell>
-                <TableCell align='left'>Album Name</TableCell>
-                <TableCell align='left'>Artist Name</TableCell>
-                <TableCell align='right'>Duration</TableCell>
+                <TableCell 
+                  sx={{ 
+                    overflow: 'hidden', 
+                    whiteSpace: 'nowrap', 
+                    textOverflow: 'ellipsis',
+                  }} 
+                  align='left'
+                >
+                  <Link
+                    component={RouterLink}
+                    to={`/${track.album.id}/album`}
+                  >
+                    {track.album.name}
+                  </Link>
+                </TableCell>
+                <TableCell 
+                  sx={{ 
+                    overflow: 'hidden', 
+                    whiteSpace: 'nowrap', 
+                    textOverflow: 'ellipsis',
+                  }} 
+                  align='left'
+                >
+                  <Link
+                    component={RouterLink}
+                    to={`/${track.artist.id}/artist`}
+                  >
+                    {track.artist.name}
+                  </Link>
+                </TableCell>
+                <TableCell 
+                  align='right'
+                >
+                  {formatDuration(track.duration)}
+                </TableCell>
               </TableRow>
             )
           })}

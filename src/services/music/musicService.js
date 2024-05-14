@@ -5,45 +5,98 @@ export const musicApi = createApi({
     reducerPath: 'musicApi',
     baseQuery: reauthBaseQuery,
     endpoints: builder => ({
-        requestSpotifyToken: builder.query({
+        getFeaturedAlbums: builder.query({
             query: () => ({
-                url: '/music/requestToken',
-                method: 'GET',
-            })
-        }),
-        getNewReleases: builder.query({
-            query: () => ({
-                url: '/music/newReleases',
+                url: '/music/getFeaturedAlbums',
                 method: 'GET'
-            })
+            }),
+            transformResponse: (response, meta, arg) => {
+                const featuredAlbums = response.featuredAlbums.albums.items;
+                return featuredAlbums;
+            }
         }),
-        searchSpotify: builder.query({
+        querySpotify: builder.mutation({
             query: data => ({
-                url: '/music/search',
+                url: '/music/querySpotify',
                 method: 'GET',
-                body: data,
-            })
+                params: {
+                    spotifyQuery: data.spotifyQuery,
+                    offset: data.offset,
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
         }),
-        getArtistData: builder.query({
+        getMoreArtists: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.currentQuery,
+                    offset: data.offset,
+                    type: 'artist',
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+        getMoreAlbums: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.currentQuery,
+                    offset: data.offset,
+                    type: 'album',
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+        getMoreTracks: builder.mutation({
+            query: data => ({
+                url: '/music/querySpotify',
+                method: 'GET',
+                params: {
+                    spotifyQuery: data.currentQuery,
+                    offset: data.offset,
+                    type: 'track',
+                }
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response;
+            }
+        }),
+        getArtistsData: builder.query({
             query: artistId => ({
-                url: `/music/${artistId}/artist`,
-                method: 'GET',
-                body: data,
-            })
+                url: `/music/${artistId}/getArtistsData`,
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.artistData;
+            }
         }),
-        getAlbumData: builder.query({
+        getAlbumsData: builder.query({
             query: albumId => ({
-                url: `/music/${albumId}/album`,
+                url: `/music/${albumId}/getAlbumsData`,
                 method: 'GET',
-                body: data,
-            })
-        })
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.albumData;
+            }
+        }),
     })
 });
 
 export const {
-    useRequestSpotifyTokenQuery,
-    useSearchSpotifyQuery,
-    useGetArtistDataQuery,
-    useGetAlbumDataQuery
+    useGetFeaturedAlbumsQuery,
+    useQuerySpotifyMutation,
+    useGetMoreArtistsMutation,
+    useGetMoreAlbumsMutation,
+    useGetMoreTracksMutation,
+    useGetArtistsDataQuery,
+    useGetAlbumsDataQuery,
 } = musicApi;

@@ -7,7 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe("Unit tests for register form component", () => {
     test("If component renders correctly.", async () => {
-        const { getByLabelText, getByText } = render(
+        const { getByLabelText, getByText, getAllByText } = render(
             <Provider store={store}>
                 <RegisterForm />
             </Provider>
@@ -19,19 +19,21 @@ describe("Unit tests for register form component", () => {
         expect(getByLabelText('Email')).toBeInTheDocument();
         expect(getByLabelText('Password')).toBeInTheDocument();
         expect(getByLabelText('Confirm Password')).toBeInTheDocument();
-        expect(getByText('Create Account')).toBeInTheDocument();
+        const createAccountButton = getAllByText('Create Account')[1]
+        expect(createAccountButton).toBeInTheDocument();
         expect(getByText('Already have an account?')).toBeInTheDocument();
         expect(getByText('Login here.')).toBeInTheDocument();
     });
 
     test("If validation error messages render correctly when user submits form with missing fields.", async () => {
-        const { getByText } = render(
+        const { getByText, getAllByText } = render(
             <Provider store={store}>
                 <RegisterForm />
             </Provider>
         );
 
-        fireEvent.click(getByText('Create Account'));
+        const createAccountButton = getAllByText('Create Account');
+        fireEvent.click(createAccountButton[1]);
 
         expect(getByText('First Name required.')).toBeInTheDocument();
         expect(getByText('Last Name required.')).toBeInTheDocument();
@@ -42,27 +44,29 @@ describe("Unit tests for register form component", () => {
     });
 
     test("If validation error messages render correctly when user submits form with invalid email format", async () => {
-        const { getByLabelText, getByText } = render(
+        const { getByLabelText, getAllByText, getByText } = render(
             <Provider store={store}>
                 <RegisterForm />
             </Provider>
         );
 
         fireEvent.change(getByLabelText('Email'), { target: { value: 'invalidEmail' } });
-        fireEvent.click(getByText('Create Account'));
+        const createAccountButton = getAllByText('Create Account');
+        fireEvent.click(createAccountButton[1]);
 
         expect(getByText('Invalid email.')).toBeInTheDocument();
     });
 
     test("If validation error messages render correctly when user submits form with password that doesn't meet security requirements", async () => {
-        const { getByLabelText, getByText } = render(
+        const { getByLabelText, getAllByText, getByText } = render(
             <Provider store={store}>
                 <RegisterForm />
             </Provider>
         );
 
         fireEvent.change(getByLabelText('Password'), { target: { value: 'passwor' } });
-        fireEvent.click(getByText('Create Account'));
+        const createAccountButton = getAllByText('Create Account');
+        fireEvent.click(createAccountButton[1]);
 
         expect(getByText('Password must be at least 8 characters.')).toBeInTheDocument();
     });
@@ -77,7 +81,9 @@ describe("Unit tests for register form component", () => {
 
         fireEvent.change(getByLabelText('Password'), { target: { value: 'password' } });
         fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password1' } });
-        fireEvent.click(getByText('Create Account'));
+
+        const createAccountButton = getAllByText('Create Account');
+        fireEvent.click(createAccountButton[1]);
 
         await waitFor(() => {
             expect(getByText('Passwords must match.')).toBeInTheDocument();
@@ -85,7 +91,7 @@ describe("Unit tests for register form component", () => {
     });
 
     test("If validation error messages render correctly when user submits form with registered email and username", async () => {
-        const { getByLabelText, getByText } = render(
+        const { getByLabelText, getAllByText, getByText } = render(
             <Provider store={store}>
                 <RegisterForm />
             </Provider> 
@@ -97,7 +103,9 @@ describe("Unit tests for register form component", () => {
         fireEvent.change(getByLabelText('Email'), { target: { value: 'test@test.com' } });
         fireEvent.change(getByLabelText('Password'), { target: { value: 'password' } });
         fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' } });
-        fireEvent.click(getByText('Create Account'));
+        
+        const createAccountButton = getAllByText('Create Account');
+        fireEvent.click(createAccountButton[1]);
 
         await waitFor(() => {
             expect(getByText('Email already registered.')).toBeInTheDocument();
@@ -109,7 +117,7 @@ describe("Unit tests for register form component", () => {
         const mockHandleOpenModal = jest.fn((x) => console.log('mock handle open modal function called with ', x));
         const mockHandleCloseModal = jest.fn(() => console.log('mock handle close modal function called.'));
 
-        const { getByLabelText, getByText } = render(
+        const { getByLabelText, getAllByText } = render(
             <MemoryRouter initialEntries={['/']}>
                 <Provider store={store}>
                     <RegisterForm handleCloseModal={mockHandleCloseModal} handleOpenModal={mockHandleOpenModal}/>
@@ -124,7 +132,8 @@ describe("Unit tests for register form component", () => {
         fireEvent.change(getByLabelText('Password'), { target: { value: 'password' } });
         fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' } });
 
-        fireEvent.click(getByText('Create Account'));
+        const createAccountButton = getAllByText('Create Account');
+        fireEvent.click(createAccountButton[1]);
 
         await waitFor(() => {
             const authState = store.getState().auth;

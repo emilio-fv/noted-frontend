@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import TextInput from "../../Inputs/Text";
+import { useQuerySpotifyMutation } from "../../../services/music/musicService";
 
-const MusicSearchForm = () => {
+const MusicSearchForm = ({ }) => {
+  const [ querySpotify, { isLoading, reset }] = useQuerySpotifyMutation();
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  }, []);
 
   const handleChanges = (event) => {
     const { value } = event.target;
@@ -12,7 +20,10 @@ const MusicSearchForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: api call
+    querySpotify({
+      spotifyQuery: searchQuery,
+      offset: 0,
+    });
   };
 
   return (
