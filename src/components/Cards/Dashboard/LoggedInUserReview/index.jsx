@@ -24,11 +24,11 @@ const LoggedInUserReviewCard = ({ review }) => {
           width: '100%',
           height: 'auto'
         }}
-        src={require('../../../../assets/images/album-demo.png')}
+        src={review.albumImages[0].url} // TODO update to include actual album cover
       />
       <Typography
         sx={{
-          fontSize: { md: '1rem'},
+          fontSize: { md: '.75rem'},
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           fontStyle: 'italic',
@@ -59,7 +59,7 @@ const LoggedInUserReviewCard = ({ review }) => {
             fontSize: { md: '.75rem'},
           }}
         >
-          {review.createdAt}
+          {review.date}
         </Typography>
         <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
           <EditIcon fontSize='inherit'/>
