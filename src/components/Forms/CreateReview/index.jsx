@@ -56,10 +56,12 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
       })
       return;
     } else {
+      const formattedDate = dayjs(reviewDate).format('MM/DD/YYYY')
+
       setErrors(null);
       createReview({
         ...formData,
-        date: reviewDate.$d,
+        date: formattedDate,
         favorite: favorite,
       })
     }

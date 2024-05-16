@@ -37,12 +37,15 @@ export const reviewsApi = createApi({
         //         method: 'GET'
         //     })
         // }),
-        // getReviewsByLoggedInUser: builder.query({
-        //     query: () => ({
-        //         url: '/reviews/byLoggedInUser',
-        //         method: 'GET'
-        //     })
-        // }),
+        getReviewsByLoggedInUser: builder.query({
+            query: () => ({
+                url: '/reviews/loggedInUser',
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.reviewsData;
+            }
+        }),
         // getReviewsByAlbum: builder.query({
         //     query: (albumId) => ({
         //         url: `/reviews/${albumId}/byAlbum`,
@@ -62,8 +65,9 @@ export const reviewsApi = createApi({
         //     })
         // })
     })
-})
+});
 
 export const {
     useCreateReviewMutation,
+    useGetReviewsByLoggedInUserQuery,
 } = reviewsApi;
