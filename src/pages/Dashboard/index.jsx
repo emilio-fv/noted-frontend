@@ -8,7 +8,6 @@ import { welcomeMessage } from '../../utils/welcomeMessage';
 import { useOutletContext } from 'react-router-dom';
 import { useGetReviewsByLoggedInUserQuery } from '../../services/reviews/reviewsService';
 import CircularProgress from '@mui/material/CircularProgress';
-import DashboardReviewCardsDisplay from '../../components/CardDisplays/DashboardReviews';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { IconButton } from '@mui/material';
