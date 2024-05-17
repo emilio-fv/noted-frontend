@@ -76,10 +76,10 @@ const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete, setSelected
         >
           {review.date}
         </Typography>
-        <IconButton onClick={handleEditButtonClick} sx={{ fontSize: '.75rem', color: 'text.light' }}>
+        <IconButton onClick={handleEditButtonClick} sx={{ fontSize: '.70rem', color: 'text.light', marginRight: -.75 }}>
           <EditIcon fontSize='inherit'/>
         </IconButton>
-        <IconButton onClick={handleDeleteButtonClick} sx={{ fontSize: '.75rem', color: 'text.light' }}>
+        <IconButton onClick={handleDeleteButtonClick} sx={{ fontSize: '.70rem', color: 'text.light' }}>
           <DeleteIcon fontSize='inherit'/>
         </IconButton>
       </Box>
