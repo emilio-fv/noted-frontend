@@ -135,7 +135,7 @@ const Dashboard = ({ loggedInUser }) => {
             color: 'white'
           }}
           onClick={handleLoggedInUserNext} 
-          disabled={currentLoggedInUserPage === totalLoggedInUserPages ? true : false}
+          disabled={currentLoggedInUserReviews.length > 6 && currentLoggedInUserPage !== totalLoggedInUserPages ? false : true}
         >
           <ArrowRightIcon />
         </IconButton>

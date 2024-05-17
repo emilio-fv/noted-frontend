@@ -7,6 +7,7 @@ import LoginForm from '../../components/Forms/Login';
 import CreateReviewForm from '../../components/Forms/CreateReview';
 import Navbar from '../../components/Navbar';
 import RegisterForm from '../../components/Forms/Register';
+import DeleteReviewForm from '../../components/Forms/DeleteReview';
 
 const modalStyles = {
   position: 'absolute',
@@ -46,7 +47,12 @@ const Root = () => {
     modal = <Box sx={modalStyles} >
       <CreateReviewForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
     </Box>
-  } else {
+  } else if (openModal === 'deleteReview') {
+    modal = <Box sx={modalStyles}>
+      <DeleteReviewForm handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
+    </Box>
+  }
+  else {
     modal = null;
   }
 

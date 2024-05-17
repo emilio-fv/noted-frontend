@@ -10,8 +10,17 @@ export const reviewsApi = createApi({
                 url: '/reviews/createReview',
                 method: 'POST',
                 body: data,
-            })
+            }),
         }),
+        deleteReview: builder.mutation({
+            query: (reviewId) => ({
+                url: `/reviews/${reviewId}/delete`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['loggedInUserReviews']
+        }),
+
+
         // editReview: builder.mutation({
         //     query: (data) => ({
         //         url: `/reviews/${data.id}/edit`,
@@ -19,12 +28,7 @@ export const reviewsApi = createApi({
         //         body: data,
         //     })
         // }),
-        // deleteReview: builder.mutation({
-        //     query: (reviewId) => ({
-        //         url: `/reviews/${reviewId}/delete`,
-        //         method: 'DELETE',
-        //     })
-        // }),
+
         // getReviewsByFriends: builder.query({
         //     query: () => ({
         //         url: '/reviews/byFriends',
@@ -44,7 +48,8 @@ export const reviewsApi = createApi({
             }),
             transformResponse: (response, meta, arg) => {
                 return response.reviewsData;
-            }
+            },
+            providesTags: ['loggedInUserReviews']
         }),
         // getReviewsByAlbum: builder.query({
         //     query: (albumId) => ({
@@ -70,4 +75,5 @@ export const reviewsApi = createApi({
 export const {
     useCreateReviewMutation,
     useGetReviewsByLoggedInUserQuery,
+    useDeleteReviewMutation,
 } = reviewsApi;
