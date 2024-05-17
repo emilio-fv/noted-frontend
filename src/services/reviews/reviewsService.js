@@ -11,6 +11,7 @@ export const reviewsApi = createApi({
                 method: 'POST',
                 body: data,
             }),
+            invalidatesTags: ['albumReviews', 'loggedInUserReviews']
         }),
         getReviewsByLoggedInUser: builder.query({
             query: () => ({
@@ -18,9 +19,19 @@ export const reviewsApi = createApi({
                 method: 'GET'
             }),
             transformResponse: (response, meta, arg) => {
-                return response.reviewsData;
+                return response.reviewsData
             },
             providesTags: ['loggedInUserReviews']
+        }),
+        getReviewsByAlbum: builder.query({
+            query: (albumId) => ({
+                url: `/reviews/${albumId}/album`,
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.reviewsData
+            },
+            providesTags: ['albumReviews']
         }),
         updateReview: builder.mutation({
             query: (data) => ({
@@ -28,14 +39,14 @@ export const reviewsApi = createApi({
                 method: 'PUT',
                 body: data.reviewData,
             }),
-            invalidatesTags: ['loggedInUserReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews']
         }),
         deleteReview: builder.mutation({
             query: (reviewId) => ({
                 url: `/reviews/${reviewId}/delete`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['loggedInUserReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews']
         }),
 
         // getReviewsByFriends: builder.query({
@@ -51,12 +62,7 @@ export const reviewsApi = createApi({
         //     })
         // }),
 
-        // getReviewsByAlbum: builder.query({
-        //     query: (albumId) => ({
-        //         url: `/reviews/${albumId}/byAlbum`,
-        //         method: 'GET'
-        //     })
-        // }),
+
         // getReviewsByArtist: builder.query({
         //     query: (artistId) => ({
         //         url: `/reviews/${artistId}/byArtist`,
@@ -75,6 +81,7 @@ export const reviewsApi = createApi({
 export const {
     useCreateReviewMutation,
     useGetReviewsByLoggedInUserQuery,
+    useGetReviewsByAlbumQuery,
     useUpdateReviewMutation,
     useDeleteReviewMutation,
 } = reviewsApi;

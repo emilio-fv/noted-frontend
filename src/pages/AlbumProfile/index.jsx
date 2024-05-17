@@ -9,10 +9,13 @@ import { useOutletContext, useParams } from 'react-router-dom';
 import { useGetAlbumsDataQuery } from '../../services/music/musicService';
 import { setSelectedAlbumToReview } from '../../features/reviews/reviewsSlice';
 import { connect } from 'react-redux';
+import { useGetReviewsByAlbumQuery } from '../../services/reviews/reviewsService';
 
 const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   const { albumId } = useParams();
-  const { data: album, isLoading, isError } = useGetAlbumsDataQuery(albumId);
+  const { data: album, isLoading: isLoadingAlbumData, isError: isErrorAlbumData } = useGetAlbumsDataQuery(albumId);
+  const { data: reviews, isLoading: isLoadingReviewsData, isError: isErrorReviewsData } = useGetReviewsByAlbumQuery(albumId);
+
   const [ openModal, setOpenModal ] = useOutletContext();
 
   const handleLogReviewButton = () => {
@@ -20,11 +23,11 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
     setOpenModal('review');
   };
 
-  if (isLoading) {
+  if (isLoadingAlbumData || isLoadingReviewsData) {
     return 'Loading';
   }
 
-  if (isError) {
+  if (isErrorAlbumData || isErrorReviewsData) {
     return 'Error loading page...';
   }
 
@@ -184,11 +187,11 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
             gap: 2,
           }}
         >
-          {/* {sampleFavorites.map((review) => {
+          {reviews.map((review, index) => {
             return (
-              <AlbumProfileReviewCard />
+              <AlbumProfileReviewCard review={review} key={index}/>
             )
-          })} */}
+          })}
         </Box>
       </Box>
     </Container>
