@@ -4,6 +4,7 @@ import { reviewsApi } from '../../services/reviews/reviewsService';
 const initialState = {
     selectedAlbumToReview: null,
     selectedReviewToDelete: null,
+    selectedReviewToUpdate: null,
 };
 
 export const reviewsSlice = createSlice({
@@ -15,6 +16,9 @@ export const reviewsSlice = createSlice({
         },
         setSelectedReviewToDelete: (state, action) => {
             state.selectedReviewToDelete = action.payload
+        },
+        setSelectedReviewToUpdate: (state, action) => {
+            state.selectedReviewToUpdate = action.payload
         }
     }, 
     extraReducers: builder => {
@@ -27,7 +31,8 @@ export const reviewsSlice = createSlice({
 
 export const {
     setSelectedAlbumToReview,
-    setSelectedReviewToDelete
+    setSelectedReviewToDelete,
+    setSelectedReviewToUpdate,
 } = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;
