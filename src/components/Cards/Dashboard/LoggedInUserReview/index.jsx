@@ -4,8 +4,18 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useOutletContext } from 'react-router-dom';
+import { setSelectedReviewToDelete } from '../../../../features/reviews/reviewsSlice';
+import { connect } from 'react-redux';
 
-const LoggedInUserReviewCard = ({ review }) => {
+const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete }) => {
+  const [ openModal, setOpenModal ] = useOutletContext();
+
+  const handleDeleteButtonClick = () => {
+    setSelectedReviewToDelete(review._id);
+    setOpenModal('deleteReview');
+  };
+
   return (
     <Box
       sx={{
@@ -64,7 +74,7 @@ const LoggedInUserReviewCard = ({ review }) => {
         <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
           <EditIcon fontSize='inherit'/>
         </IconButton>
-        <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
+        <IconButton onClick={handleDeleteButtonClick} sx={{ fontSize: '.75rem', color: 'text.light' }}>
           <DeleteIcon fontSize='inherit'/>
         </IconButton>
       </Box>
@@ -72,4 +82,8 @@ const LoggedInUserReviewCard = ({ review }) => {
   )
 };
 
-export default LoggedInUserReviewCard;
+const mapDispatchToProps = {
+  setSelectedReviewToDelete
+};
+
+export default connect(null, mapDispatchToProps)(LoggedInUserReviewCard);
