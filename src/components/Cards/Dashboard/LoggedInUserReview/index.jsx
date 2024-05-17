@@ -5,11 +5,16 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useOutletContext } from 'react-router-dom';
-import { setSelectedReviewToDelete } from '../../../../features/reviews/reviewsSlice';
+import { setSelectedReviewToDelete, setSelectedReviewToUpdate } from '../../../../features/reviews/reviewsSlice';
 import { connect } from 'react-redux';
 
-const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete }) => {
+const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete, setSelectedReviewToUpdate }) => {
   const [ openModal, setOpenModal ] = useOutletContext();
+
+  const handleEditButtonClick = () => {
+    setSelectedReviewToUpdate(review);
+    setOpenModal('editReview');
+  };
 
   const handleDeleteButtonClick = () => {
     setSelectedReviewToDelete(review._id);
@@ -71,7 +76,7 @@ const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete }) => {
         >
           {review.date}
         </Typography>
-        <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
+        <IconButton onClick={handleEditButtonClick} sx={{ fontSize: '.75rem', color: 'text.light' }}>
           <EditIcon fontSize='inherit'/>
         </IconButton>
         <IconButton onClick={handleDeleteButtonClick} sx={{ fontSize: '.75rem', color: 'text.light' }}>
@@ -83,7 +88,8 @@ const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete }) => {
 };
 
 const mapDispatchToProps = {
-  setSelectedReviewToDelete
+  setSelectedReviewToDelete,
+  setSelectedReviewToUpdate,
 };
 
 export default connect(null, mapDispatchToProps)(LoggedInUserReviewCard);

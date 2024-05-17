@@ -12,6 +12,24 @@ export const reviewsApi = createApi({
                 body: data,
             }),
         }),
+        getReviewsByLoggedInUser: builder.query({
+            query: () => ({
+                url: '/reviews/loggedInUser',
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.reviewsData;
+            },
+            providesTags: ['loggedInUserReviews']
+        }),
+        updateReview: builder.mutation({
+            query: (data) => ({
+                url: `/reviews/${data.reviewId}/update`,
+                method: 'PUT',
+                body: data.reviewData,
+            }),
+            invalidatesTags: ['loggedInUserReviews']
+        }),
         deleteReview: builder.mutation({
             query: (reviewId) => ({
                 url: `/reviews/${reviewId}/delete`,
@@ -19,15 +37,6 @@ export const reviewsApi = createApi({
             }),
             invalidatesTags: ['loggedInUserReviews']
         }),
-
-
-        // editReview: builder.mutation({
-        //     query: (data) => ({
-        //         url: `/reviews/${data.id}/edit`,
-        //         method: 'PUT',
-        //         body: data,
-        //     })
-        // }),
 
         // getReviewsByFriends: builder.query({
         //     query: () => ({
@@ -41,16 +50,7 @@ export const reviewsApi = createApi({
         //         method: 'GET'
         //     })
         // }),
-        getReviewsByLoggedInUser: builder.query({
-            query: () => ({
-                url: '/reviews/loggedInUser',
-                method: 'GET'
-            }),
-            transformResponse: (response, meta, arg) => {
-                return response.reviewsData;
-            },
-            providesTags: ['loggedInUserReviews']
-        }),
+
         // getReviewsByAlbum: builder.query({
         //     query: (albumId) => ({
         //         url: `/reviews/${albumId}/byAlbum`,
@@ -75,5 +75,6 @@ export const reviewsApi = createApi({
 export const {
     useCreateReviewMutation,
     useGetReviewsByLoggedInUserQuery,
+    useUpdateReviewMutation,
     useDeleteReviewMutation,
 } = reviewsApi;
