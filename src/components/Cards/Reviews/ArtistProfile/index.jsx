@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const ArtistProfileReviewCard = () => {
+const ArtistProfileReviewCard = ({ review }) => {
   const [likes, setLikes] = useState(0);
 
   const incrementLikes = () => {
@@ -27,8 +27,8 @@ const ArtistProfileReviewCard = () => {
         }}
       >
         <Box 
-          // component='img'
-          // src={}
+          component='img'
+          src={review.albumImages[0].url}
           sx={{
             borderRadius: '50%',
             height: '25px',
@@ -38,7 +38,6 @@ const ArtistProfileReviewCard = () => {
         />
       </Box>
       <Box
-        // className='border-check'
         sx={{
           flex: '90%',
           paddingTop: 1,
@@ -58,7 +57,7 @@ const ArtistProfileReviewCard = () => {
               fontStyle: 'italic',
             }}
           >
-            Album Name
+            {review.album}
           </Typography>
         </Box>
         <Box
@@ -74,14 +73,14 @@ const ArtistProfileReviewCard = () => {
               marginRight: 2
             }}
           >
-            Review by username
+            Review by {review.author.username}
           </Typography>
           <Typography
             sx={{
               fontSize: '.8rem'
             }}
           >
-            5
+            {review.rating}
           </Typography>
           <StarIcon 
             sx={{ 
@@ -91,13 +90,16 @@ const ArtistProfileReviewCard = () => {
               fontSize: '1rem' 
             }}
           />
-          <FavoriteIcon 
-            sx={{ 
-              color: 'text.light', 
-              fontSize: '.8rem',
-              marginBottom: .4 
-            }}
-          />
+          {review.favorite 
+            ? <FavoriteIcon 
+                sx={{ 
+                  color: 'text.light', 
+                  fontSize: '.8rem',
+                  marginBottom: .4 
+                }}
+              />
+            : null
+          }
         </Box>
         {/* middle */}
         <Box>
@@ -106,7 +108,7 @@ const ArtistProfileReviewCard = () => {
               fontSize: '.9rem'
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pharetra in ex at eleifend. Donec ut arcu eros. Vestibulum vulputate tempus tristique.
+            {review.reviewText}
           </Typography>
         </Box>
         {/* bottom */}
