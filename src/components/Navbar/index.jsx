@@ -18,7 +18,12 @@ import NavButton from '../Buttons/Nav';
 import { useLogoutMutation } from '../../services/auth/authService';
 import { connect } from 'react-redux';
 
-const pages = ['home', 'music', 'reviews', 'connect'];
+const pages = [
+  'home', 
+  'music', 
+  // 'reviews', 
+  // 'connect'
+];
 const settings = ['Profile', 'Logout'];
 
 const Navbar = ({ handleOpenModal, isLoggedIn }) => {

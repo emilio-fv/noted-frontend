@@ -112,7 +112,7 @@ const Dashboard = ({ loggedInUser }) => {
           onClick={handleLoggedInUserPrevious}
           disabled={currentLoggedInUserPage > 0 ? false : true}
         >
-          <ArrowLeftIcon />
+          <ArrowLeftIcon sx={{ color: currentLoggedInUserPage > 0 ? 'white' : 'transparent' }}/>
         </IconButton>
         <Box
           sx={{
@@ -137,7 +137,7 @@ const Dashboard = ({ loggedInUser }) => {
           onClick={handleLoggedInUserNext} 
           disabled={currentLoggedInUserReviews.length > 6 && currentLoggedInUserPage !== totalLoggedInUserPages ? false : true}
         >
-          <ArrowRightIcon />
+          <ArrowRightIcon sx={{ color: currentLoggedInUserReviews.length > 6 && currentLoggedInUserPage !== totalLoggedInUserPages ? 'white' : 'transparent'}}/>
         </IconButton>
       </Box>
     </>

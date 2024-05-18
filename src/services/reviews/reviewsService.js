@@ -11,7 +11,7 @@ export const reviewsApi = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: ['albumReviews', 'loggedInUserReviews']
+            invalidatesTags: ['albumReviews', 'loggedInUserReviews', 'artistReviews']
         }),
         getReviewsByLoggedInUser: builder.query({
             query: () => ({
@@ -33,48 +33,31 @@ export const reviewsApi = createApi({
             },
             providesTags: ['albumReviews']
         }),
+        getReviewsByArtist: builder.query({
+            query: (artistId) => ({
+                url: `/reviews/${artistId}/artist`,
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.reviewsData
+            },
+            providesTags: ['artistReviews']
+        }),
         updateReview: builder.mutation({
             query: (data) => ({
                 url: `/reviews/${data.reviewId}/update`,
                 method: 'PUT',
                 body: data.reviewData,
             }),
-            invalidatesTags: ['loggedInUserReviews', 'albumReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews']
         }),
         deleteReview: builder.mutation({
             query: (reviewId) => ({
                 url: `/reviews/${reviewId}/delete`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['loggedInUserReviews', 'albumReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews']
         }),
-
-        // getReviewsByFriends: builder.query({
-        //     query: () => ({
-        //         url: '/reviews/byFriends',
-        //         method: 'GET'
-        //     })
-        // }),
-        // getPopularReviews: builder.query({
-        //     query: () => ({
-        //         url: '/reviews/popularReviews',
-        //         method: 'GET'
-        //     })
-        // }),
-
-
-        // getReviewsByArtist: builder.query({
-        //     query: (artistId) => ({
-        //         url: `/reviews/${artistId}/byArtist`,
-        //         method: 'GET'
-        //     })
-        // }),
-        // getReviewsByUsername: builder.query({
-        //     query: (username) => ({
-        //         url: `/reviews/${username}/byUsername`,
-        //         method: 'GET'
-        //     })
-        // })
     })
 });
 
@@ -82,6 +65,7 @@ export const {
     useCreateReviewMutation,
     useGetReviewsByLoggedInUserQuery,
     useGetReviewsByAlbumQuery,
+    useGetReviewsByArtistQuery,
     useUpdateReviewMutation,
     useDeleteReviewMutation,
 } = reviewsApi;

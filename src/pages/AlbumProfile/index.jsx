@@ -123,7 +123,7 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
               alignItems: 'center'
             }}
           >
-            <Typography>134</Typography>
+            <Typography>{reviews?.length}</Typography>
             <Typography>Reviews</Typography>
           </Box>
           <Box
@@ -133,8 +133,9 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
               alignItems: 'center'
             }}
           >
-            <Typography>4.5 &#9733;</Typography>
-            <Typography>Average Rating</Typography>
+            {/* TODO average rating */}
+            {/* <Typography>4.5 &#9733;</Typography>
+            <Typography>Average Rating</Typography> */}
           </Box>
         </Box>
       </Box>
