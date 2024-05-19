@@ -10,7 +10,6 @@ const ActionButton = ({ handleClick, sx, text, fullWidth=false }) => {
       size='small'
       fullWidth={fullWidth}
       sx={{
-        // paddingX: 1,
         color: 'text.dark',
         fontWeight: 600,
         '&:hover': {

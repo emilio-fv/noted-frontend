@@ -7,24 +7,18 @@ import AlbumCard from '../../components/Cards/Music/Album';
 import ArtistProfileReviewCard from '../../components/Cards/Reviews/ArtistProfile';
 import { useGetArtistsDataQuery } from '../../services/music/musicService';
 import { useParams } from 'react-router-dom';
+import { useGetReviewsByArtistQuery } from '../../services/reviews/reviewsService';
 
 const ArtistProfile = () => {
   const { artistId } = useParams();
-  const { data: artist, isLoading, isError, } = useGetArtistsDataQuery(artistId);
+  const { data: artist, isLoading: isLoadingArtist, isError: isErrorArtist, } = useGetArtistsDataQuery(artistId);
+  const { data: reviews, isLoading: isLoadingReviews, isError: isErrorReviews } = useGetReviewsByArtistQuery(artistId);
 
-  // Handle load more discography
-  // const [startIndex, setStartIndex] = useState(0);
-  // const [endIndex, setEndIndex] = useState(5);
-
-  // const loadMoreAlbums = (newEndIndex) => {
-  //   setEndIndex(endIndex + )
-  // }
-
-  if (isError) {
+  if (isErrorArtist || isErrorArtist) {
     return null;
   }
 
-  if (isLoading) {
+  if (isLoadingArtist || isLoadingArtist) {
     return 'Loading';
   }
 
@@ -101,7 +95,7 @@ const ArtistProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography>134</Typography>
+            <Typography>{reviews?.length}</Typography>
             <Typography>Reviews</Typography>
           </Box>
           <Box
@@ -111,8 +105,9 @@ const ArtistProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography>4.5 &#9733;</Typography>
-            <Typography>Average Rating</Typography>
+            {/* TODO average rating */}
+            {/* <Typography>4.5 &#9733;</Typography>
+            <Typography>Average Rating</Typography> */}
           </Box>
         </Box>
       </Box>
@@ -157,11 +152,11 @@ const ArtistProfile = () => {
             gap: 2,
           }}
         >
-          {/* {sampleReviews.map((review) => {
+          {reviews?.map((review, index) => {
             return (
-              <ArtistProfileReviewCard />
+              <ArtistProfileReviewCard key={index} review={review}/>
             )
-          })} */}
+          })}
         </Box>
       </Box>
     </Container>

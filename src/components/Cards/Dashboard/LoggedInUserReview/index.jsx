@@ -4,8 +4,23 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useOutletContext } from 'react-router-dom';
+import { setSelectedReviewToDelete, setSelectedReviewToUpdate } from '../../../../features/reviews/reviewsSlice';
+import { connect } from 'react-redux';
 
-const LoggedInUserReviewCard = ({ review }) => {
+const LoggedInUserReviewCard = ({ review, setSelectedReviewToDelete, setSelectedReviewToUpdate }) => {
+  const [ openModal, setOpenModal ] = useOutletContext();
+
+  const handleEditButtonClick = () => {
+    setSelectedReviewToUpdate(review);
+    setOpenModal('editReview');
+  };
+
+  const handleDeleteButtonClick = () => {
+    setSelectedReviewToDelete(review._id);
+    setOpenModal('deleteReview');
+  };
+
   return (
     <Box
       sx={{
@@ -24,11 +39,11 @@ const LoggedInUserReviewCard = ({ review }) => {
           width: '100%',
           height: 'auto'
         }}
-        src={require('../../../../assets/images/album-demo.png')}
+        src={review.albumImages[0].url} // TODO update to include actual album cover
       />
       <Typography
         sx={{
-          fontSize: { md: '1rem'},
+          fontSize: { md: '.75rem'},
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           fontStyle: 'italic',
@@ -59,12 +74,12 @@ const LoggedInUserReviewCard = ({ review }) => {
             fontSize: { md: '.75rem'},
           }}
         >
-          {review.createdAt}
+          {review.date}
         </Typography>
-        <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
+        <IconButton onClick={handleEditButtonClick} sx={{ fontSize: '.70rem', color: 'text.light', marginRight: -.75 }}>
           <EditIcon fontSize='inherit'/>
         </IconButton>
-        <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
+        <IconButton onClick={handleDeleteButtonClick} sx={{ fontSize: '.70rem', color: 'text.light' }}>
           <DeleteIcon fontSize='inherit'/>
         </IconButton>
       </Box>
@@ -72,4 +87,9 @@ const LoggedInUserReviewCard = ({ review }) => {
   )
 };
 
-export default LoggedInUserReviewCard;
+const mapDispatchToProps = {
+  setSelectedReviewToDelete,
+  setSelectedReviewToUpdate,
+};
+
+export default connect(null, mapDispatchToProps)(LoggedInUserReviewCard);

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const AlbumProfileReviewCard = () => {
+const AlbumProfileReviewCard = ({ review }) => {
   const [likes, setLikes] = useState(0);
 
   const incrementLikes = () => {
@@ -27,8 +27,8 @@ const AlbumProfileReviewCard = () => {
         }}
       >
         <Box 
-          // component='img'
-          // src={}
+          component='img'
+          src={review.albumImages[0].url}
           sx={{
             borderRadius: '50%',
             height: '25px',
@@ -38,36 +38,14 @@ const AlbumProfileReviewCard = () => {
         />
       </Box>
       <Box
-        // className='border-check'
         sx={{
           flex: '90%',
           paddingTop: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1
         }}
       >
-        <Box
-          sx={{
-            flexDirection: 'row',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: '1rem',
-              fontStyle: 'italic',
-            }}
-          >
-            Album Name
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: '1rem',
-            }}
-          >
-            Artist Name
-          </Typography>
-        </Box>
         <Box
           sx={{ 
             flexDirection: 'row',
@@ -77,18 +55,19 @@ const AlbumProfileReviewCard = () => {
         >
           <Typography
             sx={{
-              fontSize: '.8rem',
-              marginRight: 2
+              fontSize: '1rem',
+              marginRight: 2,
+              fontStyle: 'italic'
             }}
           >
-            Review by username
+            {review.author.username}
           </Typography>
           <Typography
             sx={{
               fontSize: '.8rem'
             }}
           >
-            5
+            {review.rating}
           </Typography>
           <StarIcon 
             sx={{ 
@@ -102,7 +81,7 @@ const AlbumProfileReviewCard = () => {
             sx={{ 
               color: 'text.light', 
               fontSize: '.8rem',
-              marginBottom: .4 
+              marginBottom: .2
             }}
           />
         </Box>
@@ -113,7 +92,7 @@ const AlbumProfileReviewCard = () => {
               fontSize: '.9rem'
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pharetra in ex at eleifend. Donec ut arcu eros. Vestibulum vulputate tempus tristique.
+            {review.reviewText}
           </Typography>
         </Box>
         {/* bottom */}
@@ -124,8 +103,8 @@ const AlbumProfileReviewCard = () => {
             alignItems: 'center',
           }}
         >
-          {/* Like Button */}
-          <IconButton 
+          {/* TODO Like Button */}
+          {/* <IconButton 
             onClick={() => incrementLikes()}
           >
             <FavoriteIcon 
@@ -135,13 +114,15 @@ const AlbumProfileReviewCard = () => {
                 marginBottom: .4 
               }}
             />
-          </IconButton>
-          {/* # of Likes */}
-          <Typography
+          </IconButton> */}
+          {/* TODO # of Likes */}
+          {/* <Typography
             sx={{
               fontSize: '.8rem'
             }}
-          >{likes} {likes === 1 ? 'like' : 'likes'}</Typography>
+          >
+            {likes} {likes === 1 ? 'like' : 'likes'}
+          </Typography> */}
         </Box>
       </Box>
     </Box>
