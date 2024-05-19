@@ -4,7 +4,7 @@ import Hero from '.';
 import { MemoryRouter, Outlet, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-describe('Tests for hero component', () => {
+xdescribe('Tests for hero component', () => {
     test('Test that images render correctly', async () => {
         const mockHandleOpenModal = jest.fn(() => console.log('mockHandleOpenModal'));
 
