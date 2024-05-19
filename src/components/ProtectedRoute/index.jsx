@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useOutletContext } from "react-router-dom";
 
 const ProtectedRoute = ({ loggedInUser }) => {
-    return loggedInUser ? <Outlet /> : <Navigate to='/' />;
+    const [ openModal, setOpenModal ] = useOutletContext();
+    return loggedInUser ? <Outlet context={[ openModal, setOpenModal]}/> : <Navigate to='/' />;
 }
 
 const mapPropsToState = (state) => {

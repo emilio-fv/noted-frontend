@@ -7,21 +7,27 @@ import { imagePlaceholderURL, sampleFavorites } from '../../assets/data/constant
 import ActionButton from '../../components/Buttons/Action';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { useGetAlbumsDataQuery } from '../../services/music/musicService';
+import { setSelectedAlbumToReview } from '../../features/reviews/reviewsSlice';
+import { connect } from 'react-redux';
+import { useGetReviewsByAlbumQuery } from '../../services/reviews/reviewsService';
 
-const AlbumProfile = () => {
+const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   const { albumId } = useParams();
-  const { data: album, isLoading, isError } = useGetAlbumsDataQuery(albumId);
-  const setOpenModal = useOutletContext();
+  const { data: album, isLoading: isLoadingAlbumData, isError: isErrorAlbumData } = useGetAlbumsDataQuery(albumId);
+  const { data: reviews, isLoading: isLoadingReviewsData, isError: isErrorReviewsData } = useGetReviewsByAlbumQuery(albumId);
+
+  const [ openModal, setOpenModal ] = useOutletContext();
 
   const handleLogReviewButton = () => {
+    setSelectedAlbumToReview(album);
     setOpenModal('review');
   };
 
-  if (isLoading) {
+  if (isLoadingAlbumData || isLoadingReviewsData) {
     return 'Loading';
   }
 
-  if (isError) {
+  if (isErrorAlbumData || isErrorReviewsData) {
     return 'Error loading page...';
   }
 
@@ -117,7 +123,7 @@ const AlbumProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography>134</Typography>
+            <Typography>{reviews?.length}</Typography>
             <Typography>Reviews</Typography>
           </Box>
           <Box
@@ -127,8 +133,9 @@ const AlbumProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography>4.5 &#9733;</Typography>
-            <Typography>Average Rating</Typography>
+            {/* TODO average rating */}
+            {/* <Typography>4.5 &#9733;</Typography>
+            <Typography>Average Rating</Typography> */}
           </Box>
         </Box>
       </Box>
@@ -181,15 +188,19 @@ const AlbumProfile = () => {
             gap: 2,
           }}
         >
-          {/* {sampleFavorites.map((review) => {
+          {reviews.map((review, index) => {
             return (
-              <AlbumProfileReviewCard />
+              <AlbumProfileReviewCard review={review} key={index}/>
             )
-          })} */}
+          })}
         </Box>
       </Box>
     </Container>
   )
 };
 
-export default AlbumProfile;
+const mapDispatchToProps = {
+  setSelectedAlbumToReview
+};
+
+export default connect(null, mapDispatchToProps)(AlbumProfile);

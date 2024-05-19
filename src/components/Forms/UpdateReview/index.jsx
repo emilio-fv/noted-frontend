@@ -1,24 +1,46 @@
-import { Box, Rating, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, Rating, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextInput from '../../Inputs/Text';
 import ActionButton from '../../Buttons/Action';
-
-const initialState = {
-  rating: 0,
-  review: '',
-};
+import { connect } from 'react-redux';
+import { useUpdateReviewMutation } from '../../../services/reviews/reviewsService';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const today = dayjs();
 
-const LogReviewForm = ({ setOpenModal }) => {
-  const [formData, setFormData] = useState(initialState);
-  const [reviewDate, setReviewDate] = useState(dayjs(Date.now()));
+const UpdateReviewForm = ({ reviewData, handleOpenModal, handleCloseModal }) => {
+  const [formData, setFormData] = useState({
+    album: reviewData.album,
+    albumId: reviewData.albumId,
+    artist: reviewData.artist,
+    artistId: reviewData.artistId,
+    rating: reviewData.rating,
+    reviewText: reviewData.reviewText,
+    albumImages: reviewData.albumImages,
+  });
+
+  const [reviewDate, setReviewDate] = useState(dayjs(reviewData.date, 'MM/DD/YYYY'));
+  const [favorite, setFavorite] = useState(reviewData.favorite);
+  const [errors, setErrors] = useState(null);
+
+  const [ updateReview, { isSuccess, isError, error }] = useUpdateReviewMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleOpenModal(false);
+    }
+  }, [isSuccess, isError])
 
   const handleFormChanges = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCancelButtonClick = () => {
+    handleCloseModal();
   };
 
   const handleDateChange = (value) => {
@@ -27,7 +49,32 @@ const LogReviewForm = ({ setOpenModal }) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(formData, reviewDate);
+
+    if (formData.reviewText === null) {
+      setErrors({
+        reviewText: 'Required field.'
+      })
+      return;
+    } else {
+      const formattedDate = dayjs(reviewDate).format('MM/DD/YYYY')
+
+      setErrors(null);
+
+      console.log({
+        ...formData,
+        date: formattedDate,
+        favorite: favorite,
+      });
+
+      updateReview({
+        reviewId: reviewData._id,
+        reviewData: {
+          ...formData,
+          date: formattedDate,
+          favorite: favorite,
+        }
+      })
+    }
   }
 
   return (
@@ -39,7 +86,7 @@ const LogReviewForm = ({ setOpenModal }) => {
           marginBottom: 1
         }}
       >
-        Log Review
+        Create Review
       </Typography>
       <Box
         component={'form'}
@@ -52,7 +99,6 @@ const LogReviewForm = ({ setOpenModal }) => {
         }}
         onSubmit={(event) => handleFormSubmit(event)}
       >
-        {/* display album info */}
         <Box
           sx={{
             display: 'flex',
@@ -61,9 +107,9 @@ const LogReviewForm = ({ setOpenModal }) => {
           }}
         >
           <Box 
-            // TODO:
-            // component={}
-            // src={}
+            // TODO: pass in album image url
+            component={'img'}
+            src={reviewData?.albumImages[0].url}
             sx={{
               height: '125px',
               width: '125px',
@@ -84,14 +130,14 @@ const LogReviewForm = ({ setOpenModal }) => {
                 fontStyle: 'italic'
               }}
             >
-              Album Name
+              {reviewData?.albumName}
             </Typography>
             <Typography 
               sx={{
                 fontSize: '1rem'
               }}
             >
-              Artist Name
+              {reviewData?.artist.name}
             </Typography>
           </Box>
         </Box>
@@ -128,26 +174,48 @@ const LogReviewForm = ({ setOpenModal }) => {
             onChange={(event) => handleFormChanges(event)}
             precision={0.5}
           />
+          <IconButton size='small' onClick={() => setFavorite(!favorite)} sx={{ color: 'text.light' }} >
+            {favorite 
+              ? <FavoriteIcon />
+              : <FavoriteBorderIcon />
+            }
+          </IconButton>
         </Box>
         <TextInput 
+          required
           multiline={true}
           rows={4}
           label={'Review'}
-          name={'review'}
-          value={formData.review}
+          name={'reviewText'}
+          value={formData.reviewText}
           handleChange={handleFormChanges}
-          // error={}
+          error={errors?.reviewText ? errors.reviewText : false}
+          helperText={errors?.reviewText ? errors.reviewText : ''}
         />
         <ActionButton 
           text={'Submit'}
-          // handleClick={}
+          handleClick={handleFormSubmit}
           sx={{
-
+            // TODO update styling
           }}
         />
+        <Button 
+            variant='contained' 
+            color='secondary'
+            size='small'
+            onClick={handleCancelButtonClick}
+        >
+            Cancel
+        </Button>
       </Box>
     </>
   )
 };
 
-export default LogReviewForm;
+const mapStateToProps = (state) => {
+  return {
+    reviewData: state.reviews.selectedReviewToUpdate,
+  }
+};
+
+export default connect(mapStateToProps)(UpdateReviewForm);
