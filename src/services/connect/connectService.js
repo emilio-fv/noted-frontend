@@ -3,12 +3,20 @@ import { reauthBaseQuery } from '../config';
 
 export const connectApi = createApi({
     reducerPath: 'connectApi',
-    baseQuery: reauthBaseQuery, // TODO base query
+    baseQuery: reauthBaseQuery,
     endpoints: builder => ({
-        // TODO connect API endpoints
+        queryUsers: builder.mutation({
+            query: data => ({
+                url: '/connect/queryUsers',
+                method: 'GET',
+                params: {
+                    searchQuery: data
+                }
+            }),
+        })
     })
 })
 
 export const {
-
+    useQueryUsersMutation
 } = connectApi;
