@@ -6,12 +6,20 @@ import ActionButton from '../../components/Buttons/Action';
 import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import FavoriteCard from '../../components/Cards/Favorite';
 import UserProfileReviewCard from '../../components/Cards/Reviews/UserProfile';
+import { useGetUsersProfileDataQuery } from '../../services/connect/connectService';
+import { useParams } from 'react-router-dom';
 
 const UserProfile = () => {
-  const [followingStatus, setFollowingStatus]= useState(false);
+  const { username } = useParams();
+  const { data: user, isLoading } = useGetUsersProfileDataQuery(username);
+  // const [followingStatus, setFollowingStatus]= useState(false);
 
-  const handleFollowButtonClick = () => {
-    setFollowingStatus(!followingStatus);
+  // const handleFollowButtonClick = () => {
+  //   setFollowingStatus(!followingStatus);
+  // }
+
+  if (isLoading) {
+    return 'Loading';
   }
 
   return (
@@ -80,16 +88,16 @@ const UserProfile = () => {
                 fontSize: '1rem'
               }}
             >
-              Username
+              {user?.username}
             </Typography>
             <Typography
               sx={{
                 fontSize: '.75rem'
               }}
             >
-              Member since Aug 2023
+              Member since {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' }).format(new Date(user?.createdAt))}
             </Typography>
-            <ActionButton 
+            {/* <ActionButton 
               handleClick={handleFollowButtonClick}
               sx={{
                 maxWidth: '20%',
@@ -99,7 +107,7 @@ const UserProfile = () => {
                 alignItems: 'center',
                 marginLeft: 2,
               }}
-              text={ followingStatus ? 'Unfollow' : 'Follow' }/>
+              text={ followingStatus ? 'Unfollow' : 'Follow' }/> */}
           </Box>
         </Box>
         {/* Profile stats */}
@@ -120,7 +128,7 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>TBD</Typography>
             <Typography sx={{ fontSize: '.75rem' }}>Reviews</Typography>
           </Box>
           <Box
@@ -131,7 +139,7 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>TBD</Typography>
             <Typography sx={{ fontSize: '.75rem' }}>This Year</Typography>
           </Box>
           <Box
@@ -142,7 +150,7 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>TBD</Typography>
             <Typography sx={{ fontSize: '.75rem' }}>Followers</Typography>
           </Box>
           <Box
@@ -153,7 +161,7 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>TBD</Typography>
             <Typography sx={{ fontSize: '.75rem' }}>Following</Typography>
           </Box>
         </Box>
@@ -175,7 +183,7 @@ const UserProfile = () => {
             paddingY: 2,
           }}
         >
-          {sampleFavorites.map((favorite) => {
+          {user?.favorites?.map((favorite) => {
             return (
               <FavoriteCard />
             )
@@ -198,11 +206,11 @@ const UserProfile = () => {
             gap: 2,
           }}
         >
-          {sampleReviews.map((review) => {
+          {/* {sampleReviews.map((review) => {
             return (
               <UserProfileReviewCard />
             )
-          })}
+          })} */}
         </Box>
       </Box>
     </Container>

@@ -2,6 +2,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 const UserCard = ({ maxWidth, user }) => {
   return (
@@ -16,22 +18,27 @@ const UserCard = ({ maxWidth, user }) => {
         textAlign: 'center'
       }}
     >
-      <Box 
-        component='img'
-        sx={{
-          width: '70%',
-          height: 'auto',
-          borderRadius: '50%'
-        }}
-        src={require('../../../assets/images/blank-profile.png')}
-      />
-      <Typography
-        sx={{
-          marginTop: 2,
-        }}
+      <Link
+        component={RouterLink}
+        to={`/${user.username}/profile`}
       >
-        {user.username}
-      </Typography>
+        <Box 
+          component='img'
+          sx={{
+            width: '70%',
+            height: 'auto',
+            borderRadius: '50%'
+          }}
+          src={require('../../../assets/images/blank-profile.png')}
+        />
+        <Typography
+          sx={{
+            marginTop: 2,
+          }}
+        >
+          {user.username}
+        </Typography>
+      </Link>
     </Paper>
   )
 };

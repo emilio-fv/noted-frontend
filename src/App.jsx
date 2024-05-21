@@ -8,7 +8,7 @@ import LandingPage from './pages/Landing';
 import MusicPage from './pages/Music';
 // import ReviewsPage from './pages/Reviews';
 import Root from './pages/Root';
-// import UserProfile from './pages/UserProfile';
+import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import { connect } from 'react-redux';
 
@@ -23,8 +23,8 @@ const App = ({ loggedInUser }) => {
           <Route path='/:artistId/artist' element={<ArtistProfile />}/>
           <Route path='/:albumId/album' element={<AlbumProfile />}/>
           <Route path='/connect' element={<ConnectPage />}/>
+          <Route path='/:username/profile' element={<UserProfile />}/>
           {/* <Route path='/reviews' element={<ReviewsPage />}/> */}
-          {/* <Route path='/user' element={<UserProfile />}/> */}
         </Route>
       </Route>
     )

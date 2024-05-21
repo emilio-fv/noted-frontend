@@ -13,10 +13,20 @@ export const connectApi = createApi({
                     searchQuery: data
                 }
             }),
+        }),
+        getUsersProfileData: builder.query({
+            query: data => ({
+                url: `/connect/${data}/profile`,
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.result;
+            }
         })
     })
 })
 
 export const {
-    useQueryUsersMutation
+    useQueryUsersMutation,
+    useGetUsersProfileDataQuery,
 } = connectApi;
