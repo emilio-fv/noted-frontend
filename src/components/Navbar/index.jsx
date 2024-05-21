@@ -22,7 +22,7 @@ const pages = [
   'home', 
   'music', 
   // 'reviews', 
-  // 'connect'
+  'connect'
 ];
 const settings = ['Profile', 'Logout'];
 

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-const UserCard = ({ maxWidth }) => {
+const UserCard = ({ maxWidth, user }) => {
   return (
     <Paper
       elevation={4}
@@ -23,14 +23,14 @@ const UserCard = ({ maxWidth }) => {
           height: 'auto',
           borderRadius: '50%'
         }}
-        src={require('../../../assets/images/album-demo.png')}
+        src={require('../../../assets/images/blank-profile.png')}
       />
       <Typography
         sx={{
           marginTop: 2,
         }}
       >
-        Username
+        {user.username}
       </Typography>
     </Paper>
   )
