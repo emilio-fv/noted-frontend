@@ -6,17 +6,29 @@ import ActionButton from '../../components/Buttons/Action';
 import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import FavoriteCard from '../../components/Cards/Favorite';
 import UserProfileReviewCard from '../../components/Cards/Reviews/UserProfile';
-import { useGetUsersProfileDataQuery } from '../../services/connect/connectService';
+import { useFollowUserMutation, useGetUsersProfileDataQuery } from '../../services/connect/connectService';
 import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addUserToFollowing } from '../../features/auth/authSlice';
 
-const UserProfile = () => {
+const UserProfile = ({ loggedInUser }) => {
   const { username } = useParams();
-  const { data: user, isLoading } = useGetUsersProfileDataQuery(username);
-  // const [followingStatus, setFollowingStatus]= useState(false);
+  const { data: user, isLoading, refetch } = useGetUsersProfileDataQuery(username);
+  const [ followUser ] = useFollowUserMutation();
+  const [followingStatus, setFollowingStatus] = useState(user?.followers?.includes(loggedInUser._id));
 
-  // const handleFollowButtonClick = () => {
-  //   setFollowingStatus(!followingStatus);
-  // }
+  const handleFollowButtonClick = () => {
+    if (followingStatus) {
+      // TODO unfollow
+      // setFollowingStatus(false);
+      // refetch();
+    } else {
+      followUser(user._id);
+      addUserToFollowing(user._id);
+      setFollowingStatus(true);
+      refetch();
+    }
+  };
 
   if (isLoading) {
     return 'Loading';
@@ -97,7 +109,7 @@ const UserProfile = () => {
             >
               Member since {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' }).format(new Date(user?.createdAt))}
             </Typography>
-            {/* <ActionButton 
+            <ActionButton 
               handleClick={handleFollowButtonClick}
               sx={{
                 maxWidth: '20%',
@@ -107,7 +119,7 @@ const UserProfile = () => {
                 alignItems: 'center',
                 marginLeft: 2,
               }}
-              text={ followingStatus ? 'Unfollow' : 'Follow' }/> */}
+              text={ followingStatus ? 'Unfollow' : 'Follow' }/>
           </Box>
         </Box>
         {/* Profile stats */}
@@ -150,7 +162,7 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>TBD</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>{user.followers.length}</Typography>
             <Typography sx={{ fontSize: '.75rem' }}>Followers</Typography>
           </Box>
           <Box
@@ -161,7 +173,7 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>TBD</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>{user.following.length}</Typography>
             <Typography sx={{ fontSize: '.75rem' }}>Following</Typography>
           </Box>
         </Box>
@@ -217,4 +229,10 @@ const UserProfile = () => {
   )
 };
 
-export default UserProfile;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUser: state.auth.loggedInUser,
+  }
+};
+
+export default connect(mapStateToProps)(UserProfile);
