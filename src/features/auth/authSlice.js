@@ -9,7 +9,11 @@ const initialState = {
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        addUserToFollowing: (state, action) => {
+            state.loggedInUser.following = state.loggedInUser.following.filter((userId) => userId != action.payload)
+        },
+    },
     extraReducers: builder => {
         builder
             .addMatcher(authApi.endpoints.register.matchFulfilled, (state, action) => {
@@ -29,6 +33,8 @@ export const authSlice = createSlice({
     }
 });
 
-export const {  } = authSlice.actions;
+export const { 
+    addUserToFollowing
+ } = authSlice.actions;
 
 export default authSlice.reducer;

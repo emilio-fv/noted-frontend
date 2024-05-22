@@ -21,7 +21,14 @@ export const connectApi = createApi({
             }),
             transformResponse: (response, meta, arg) => {
                 return response.result;
-            }
+            },
+            
+        }),
+        followUser: builder.mutation({
+            query: data => ({
+                url: `/connect/${data}/follow`,
+                method: 'PUT'
+            }),
         })
     })
 })
@@ -29,4 +36,5 @@ export const connectApi = createApi({
 export const {
     useQueryUsersMutation,
     useGetUsersProfileDataQuery,
+    useFollowUserMutation,
 } = connectApi;
