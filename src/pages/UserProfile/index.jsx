@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -6,27 +6,37 @@ import ActionButton from '../../components/Buttons/Action';
 import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import FavoriteCard from '../../components/Cards/Favorite';
 import UserProfileReviewCard from '../../components/Cards/Reviews/UserProfile';
-import { useFollowUserMutation, useGetUsersProfileDataQuery } from '../../services/connect/connectService';
+import { useFollowUserMutation, useGetUsersProfileDataQuery, useUnfollowUserMutation } from '../../services/connect/connectService';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addUserToFollowing } from '../../features/auth/authSlice';
+import { addUserToFollowing, removeUserFromFollowing } from '../../features/auth/authSlice';
 
 const UserProfile = ({ loggedInUser }) => {
   const { username } = useParams();
-  const { data: user, isLoading, refetch } = useGetUsersProfileDataQuery(username);
+  const { data: user, isLoading, isSuccess, refetch } = useGetUsersProfileDataQuery(username, { 
+    refetchOnMountOrArgChange: true,
+    
+  });
   const [ followUser ] = useFollowUserMutation();
-  const [followingStatus, setFollowingStatus] = useState(user?.followers?.includes(loggedInUser._id));
+  const [ unfollowUser ] = useUnfollowUserMutation();
+  const [followingStatus, setFollowingStatus] = useState(false);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(user?.followers?.includes(loggedInUser._id));
+      setFollowingStatus(user?.followers?.includes(loggedInUser._id));
+    }
+  }, [isSuccess]);
 
   const handleFollowButtonClick = () => {
     if (followingStatus) {
-      // TODO unfollow
-      // setFollowingStatus(false);
+      unfollowUser(user._id);
+      setFollowingStatus(false);
       // refetch();
     } else {
       followUser(user._id);
-      addUserToFollowing(user._id);
       setFollowingStatus(true);
-      refetch();
+      // refetch();
     }
   };
 
@@ -107,19 +117,23 @@ const UserProfile = ({ loggedInUser }) => {
                 fontSize: '.75rem'
               }}
             >
-              Member since {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' }).format(new Date(user?.createdAt))}
+              Joined {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' }).format(new Date(user?.createdAt))}
             </Typography>
-            <ActionButton 
-              handleClick={handleFollowButtonClick}
-              sx={{
-                maxWidth: '20%',
-                fontSize: '.6rem',
-                maxHeight: '18px',
-                display: 'flex',
-                alignItems: 'center',
-                marginLeft: 2,
-              }}
-              text={ followingStatus ? 'Unfollow' : 'Follow' }/>
+            {loggedInUser._id !== user._id
+              ? <ActionButton 
+                handleClick={handleFollowButtonClick}
+                sx={{
+                  maxWidth: '20%',
+                  fontSize: '.6rem',
+                  maxHeight: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: 2,
+                }}
+                text={ followingStatus ? 'Unfollow' : 'Follow' }
+              />
+              : null
+            }
           </Box>
         </Box>
         {/* Profile stats */}

@@ -26,7 +26,7 @@ const pages = [
 ];
 const settings = ['Profile', 'Logout'];
 
-const Navbar = ({ handleOpenModal, isLoggedIn }) => {
+const Navbar = ({ handleOpenModal, isLoggedIn, loggedInUser }) => {
   // Auth helpers
   const [ logout ] = useLogoutMutation();
 
@@ -42,6 +42,7 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
   const handleCloseUserMenu = (setting) => {
     switch (setting) {
       case 'Profile':
+        navigate(`/${loggedInUser.username}/profile`);
         break;
       case 'Logout':
         logout();
@@ -197,6 +198,7 @@ const Navbar = ({ handleOpenModal, isLoggedIn }) => {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.auth.isLoggedIn,
+    loggedInUser: state.auth.loggedInUser,
   }
 };
 
