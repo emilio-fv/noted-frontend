@@ -47,11 +47,11 @@ const albumCoverStyling = [
 
 const Hero = ({ featuredAlbums }) => {
   // Model helpers
-  const [ handleOpenModal ] = useOutletContext();
+  const [ openModal, setOpenModal ] = useOutletContext();
 
   // Join Noted button click handler
   const handleJoinNotedClick = () => {
-    handleOpenModal('register');
+    setOpenModal('register');
   };
 
   return (
