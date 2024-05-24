@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 import React from 'react';
 
-const FavoriteCard = () => {
+const FavoriteCard = ({ favorite }) => {
   return (
     <Paper
       sx={{
@@ -21,7 +21,7 @@ const FavoriteCard = () => {
       {/* Album cover */}
       <Box 
         component='img'
-        src={require('../../../assets/images/album-demo.png')}
+        src={favorite.albumImages[0].url}
         sx={{
           maxWidth: { xs: '50px', md: '100px'},
         }}
@@ -35,7 +35,7 @@ const FavoriteCard = () => {
           marginTop: 1,
         }}
       >
-        Album Name
+        {favorite.album}
       </Typography>
       <Typography
         sx={{
@@ -44,14 +44,14 @@ const FavoriteCard = () => {
           textOverflow: 'ellipsis',
         }}
       >
-        Artist Name
+        {favorite.artist}
       </Typography>
       <Typography
         sx={{
           fontSize: '.75rem',
         }}
       >
-        4 &#9733;
+        {favorite.rating} &#9733;
       </Typography>
     </Paper>
   )
