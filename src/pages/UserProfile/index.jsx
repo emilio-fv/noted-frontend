@@ -1,17 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import ActionButton from '../../components/Buttons/Action';
-import { sampleFavorites, sampleReviews } from '../../assets/data/constants';
 import FavoriteCard from '../../components/Cards/Favorite';
 import UserProfileReviewCard from '../../components/Cards/Reviews/UserProfile';
+import { useFollowUserMutation, useGetUsersProfileDataQuery, useUnfollowUserMutation } from '../../services/connect/connectService';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useGetReviewsByUsernameQuery } from '../../services/reviews/reviewsService';
 
-const UserProfile = () => {
-  const [followingStatus, setFollowingStatus]= useState(false);
+const UserProfile = ({ loggedInUser }) => {
+  const currentYear = String(new Date().getFullYear());
+  const { username } = useParams();
+  const { data: user, isLoading: userIsLoading, isSuccess: userIsSuccess } = useGetUsersProfileDataQuery(username, { refetchOnMountOrArgChange: true });
+  const { data: reviews, isLoading: reviewsIsLoading } = useGetReviewsByUsernameQuery(username, { refetchOnMountOrArgChange: true });
+  const [ followUser ] = useFollowUserMutation();
+  const [ unfollowUser ] = useUnfollowUserMutation();
+  const [followingStatus, setFollowingStatus] = useState(false);
+
+  useEffect(() => {
+    if (userIsSuccess) {
+      setFollowingStatus(user?.followers?.includes(loggedInUser._id));
+    }
+  }, [userIsSuccess]);
+
+  console.log(currentYear);
 
   const handleFollowButtonClick = () => {
-    setFollowingStatus(!followingStatus);
+    if (followingStatus) {
+      unfollowUser(user._id);
+      setFollowingStatus(false);
+    } else {
+      followUser(user._id);
+      setFollowingStatus(true);
+    }
+  };
+
+  if (userIsLoading || reviewsIsLoading) {
+    return 'Loading';
   }
 
   return (
@@ -80,26 +107,30 @@ const UserProfile = () => {
                 fontSize: '1rem'
               }}
             >
-              Username
+              {user?.username}
             </Typography>
             <Typography
               sx={{
                 fontSize: '.75rem'
               }}
             >
-              Member since Aug 2023
+              Joined {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short' }).format(new Date(user?.createdAt))}
             </Typography>
-            <ActionButton 
-              handleClick={handleFollowButtonClick}
-              sx={{
-                maxWidth: '20%',
-                fontSize: '.6rem',
-                maxHeight: '18px',
-                display: 'flex',
-                alignItems: 'center',
-                marginLeft: 2,
-              }}
-              text={ followingStatus ? 'Unfollow' : 'Follow' }/>
+            {loggedInUser?._id !== user?._id
+              ? <ActionButton 
+                handleClick={handleFollowButtonClick}
+                sx={{
+                  maxWidth: '20%',
+                  fontSize: '.6rem',
+                  maxHeight: '18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: 2,
+                }}
+                text={ followingStatus ? 'Unfollow' : 'Follow' }
+              />
+              : null
+            }
           </Box>
         </Box>
         {/* Profile stats */}
@@ -120,8 +151,12 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
-            <Typography sx={{ fontSize: '.75rem' }}>Reviews</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              {user?.reviewStats.lifetime}
+            </Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              Reviews
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -131,7 +166,9 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              {user.reviewStats.byYear.hasOwnProperty(currentYear) ? user.reviewStats.byYear[currentYear] : 0}
+            </Typography>
             <Typography sx={{ fontSize: '.75rem' }}>This Year</Typography>
           </Box>
           <Box
@@ -142,8 +179,12 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
-            <Typography sx={{ fontSize: '.75rem' }}>Followers</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              {user?.followers.length}
+            </Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              Followers
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -153,8 +194,12 @@ const UserProfile = () => {
               alignItems: 'center'
             }}
           >
-            <Typography sx={{ fontSize: '.75rem' }}>23</Typography>
-            <Typography sx={{ fontSize: '.75rem' }}>Following</Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              {user?.following.length}
+            </Typography>
+            <Typography sx={{ fontSize: '.75rem' }}>
+              Following
+            </Typography>
           </Box>
         </Box>
       </Box>
@@ -175,9 +220,9 @@ const UserProfile = () => {
             paddingY: 2,
           }}
         >
-          {sampleFavorites.map((favorite) => {
+          {user?.favorites?.map((favorite) => {
             return (
-              <FavoriteCard />
+              <FavoriteCard favorite={favorite}/>
             )
           })}
         </Box>
@@ -198,9 +243,9 @@ const UserProfile = () => {
             gap: 2,
           }}
         >
-          {sampleReviews.map((review) => {
+          {reviews.map((review) => {
             return (
-              <UserProfileReviewCard />
+              <UserProfileReviewCard review={review} isAuthor={loggedInUser._id === review.author.userId}/>
             )
           })}
         </Box>
@@ -209,4 +254,10 @@ const UserProfile = () => {
   )
 };
 
-export default UserProfile;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUser: state.auth.loggedInUser,
+  }
+};
+
+export default connect(mapStateToProps)(UserProfile);

@@ -43,6 +43,16 @@ export const reviewsApi = createApi({
             },
             providesTags: ['artistReviews']
         }),
+        getReviewsByUsername: builder.query({
+            query: (username) => ({
+                url: `/reviews/${username}/profile`,
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.results
+            },
+            providesTags: ['profileReviews']
+        }),
         updateReview: builder.mutation({
             query: (data) => ({
                 url: `/reviews/${data.reviewId}/update`,
@@ -66,6 +76,7 @@ export const {
     useGetReviewsByLoggedInUserQuery,
     useGetReviewsByAlbumQuery,
     useGetReviewsByArtistQuery,
+    useGetReviewsByUsernameQuery,
     useUpdateReviewMutation,
     useDeleteReviewMutation,
 } = reviewsApi;

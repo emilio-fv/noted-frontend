@@ -4,9 +4,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const UserProfileReviewCard = () => {
-  const [isReviewCreator, setIsReviewCreator] = useState(true); 
-  const [likes, setLikes] = useState(0);
+const UserProfileReviewCard = ({ review, isAuthor }) => { 
+  const [ likes, setLikes ] = useState(0);
 
   const incrementLikes = () => {
     setLikes((likes) => likes+1);
@@ -27,8 +26,8 @@ const UserProfileReviewCard = () => {
         }}
       >
         <Box 
-          // component='img'
-          // src={}
+          component='img'
+          src={review.albumImages[0].url}
           sx={{
             height: '50px',
             width: '50px',
@@ -64,7 +63,7 @@ const UserProfileReviewCard = () => {
                 fontSize: '.85rem'
               }}
             >
-              Album Name
+              {review.album}
             </Typography>
             <Typography
               sx={{
@@ -72,14 +71,14 @@ const UserProfileReviewCard = () => {
                 marginRight: 1
               }}
             >
-              Artist Name
+              {review.artist}
             </Typography>
             <Typography
               sx={{
                 fontSize: '.75rem',
               }}
             >
-              4 &#9733;
+              {review.rating} &#9733;
             </Typography>
             <FavoriteIcon 
               sx={{ 
@@ -97,7 +96,7 @@ const UserProfileReviewCard = () => {
               justifyContent: 'space-around'
             }}
           >
-            {isReviewCreator 
+            {/* {isAuthor 
               ? <>
                 <IconButton onClick={null} sx={{ fontSize: '.75rem', color: 'text.light' }}>
                   <EditIcon fontSize='inherit' />
@@ -107,7 +106,7 @@ const UserProfileReviewCard = () => {
                 </IconButton>
               </>
               : null
-            }
+            } */}
           </Box>
         </Box>
         <Typography
@@ -115,7 +114,7 @@ const UserProfileReviewCard = () => {
             fontSize: '.9rem',
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pharetra in ex at eleifend. Donec ut arcu eros. Vestibulum vulputate tempus tristique.
+          {review.reviewText}
         </Typography>
         <Box
           sx={{
@@ -143,7 +142,6 @@ const UserProfileReviewCard = () => {
             }}
           >{likes} {likes === 1 ? 'like' : 'likes'}</Typography>
         </Box>
-        <Box></Box>
       </Box>
     </Box>
   )

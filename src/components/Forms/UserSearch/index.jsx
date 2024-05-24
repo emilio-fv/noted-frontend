@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextInput from "../../Inputs/Text";
+import { useQueryUsersMutation } from '../../../services/connect/connectService';
 
 const UserSearchForm = () => {
+  const [ queryUsers, { isLoading, reset }] = useQueryUsersMutation();
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    return () => {
+      reset();
+    }
+  }, []);
 
   const handleChanges = (event) => {
     const { value } = event.target;
@@ -12,7 +20,7 @@ const UserSearchForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO api call
+    queryUsers(searchQuery);
   };
 
   return (
@@ -31,7 +39,7 @@ const UserSearchForm = () => {
           maxWidth: '50%',
         }}
         name={'searchQuery'}
-        label={'Search Music'}
+        label={'Search Users'}
         value={searchQuery}
         handleChange={handleChanges}
       />
