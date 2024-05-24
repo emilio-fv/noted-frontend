@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import UserCard from '../../Cards/User';
-import { sampleUsers } from '../../../assets/data/constants';
+import { connect } from 'react-redux';
+import { clearQueryUsersResults } from '../../../features/connect/connectSlice';
 
-const UserSearchResults = () => {
+const UserSearchResults = ({ queryUsersResults, clearQueryUsersResults }) => {
+  useEffect(() => {
+    return () => {
+      clearQueryUsersResults();
+    }
+  }, []);
+
+  if (!queryUsersResults) {
+    return null;
+  }
+
   return (
     <Box
       sx={{ 
@@ -11,7 +22,7 @@ const UserSearchResults = () => {
         gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)', md: 'repeat(6, 1fr)' },
       }}
     >
-      {sampleUsers.map((user) => {
+      {queryUsersResults?.map((user) => {
         return (
           <Box
             sx={{
@@ -23,7 +34,7 @@ const UserSearchResults = () => {
               textAlign: 'center',
             }}
           >
-            <UserCard />
+            <UserCard user={user}/>
           </Box>
         )
       })}
@@ -31,4 +42,14 @@ const UserSearchResults = () => {
   )
 };
 
-export default UserSearchResults;
+const mapStateToProps = (state) => {
+  return {
+    queryUsersResults: state.connect.queryUsersResults,
+  }
+};
+
+const mapDispatchToProps = {
+  clearQueryUsersResults
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserSearchResults);
