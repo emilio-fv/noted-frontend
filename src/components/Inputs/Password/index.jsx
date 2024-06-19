@@ -77,7 +77,7 @@ const PasswordInput = ({ sx=null, name, label, value, handleChange, error }) => 
         }
       />
       {error 
-        ? <FormHelperText sx={{ color: 'error.main' }}>{error}</FormHelperText> 
+        ? <FormHelperText sx={{ color: 'error.main', marginTop: 1.5 }}>{error}</FormHelperText> 
         : null
       }
     </FormControl>

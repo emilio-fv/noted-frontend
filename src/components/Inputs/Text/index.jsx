@@ -21,6 +21,11 @@ const TextInput = ({ sx=null, name, label, value, multiline=false, rows=1, place
       onChange={(event) => handleChange(event)}
       error={error ? true : false}
       helperText={error ? error : ''}
+      FormHelperTextProps={{
+        sx: {
+          marginTop: 1.5,
+        }
+      }}
     />
   )
 };

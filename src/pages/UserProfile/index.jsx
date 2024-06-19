@@ -9,6 +9,7 @@ import { useFollowUserMutation, useGetUsersProfileDataQuery, useUnfollowUserMuta
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useGetReviewsByUsernameQuery } from '../../services/reviews/reviewsService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const UserProfile = ({ loggedInUser }) => {
   const currentYear = String(new Date().getFullYear());
@@ -25,8 +26,6 @@ const UserProfile = ({ loggedInUser }) => {
     }
   }, [userIsSuccess]);
 
-  console.log(currentYear);
-
   const handleFollowButtonClick = () => {
     if (followingStatus) {
       unfollowUser(user._id);
@@ -38,8 +37,10 @@ const UserProfile = ({ loggedInUser }) => {
   };
 
   if (userIsLoading || reviewsIsLoading) {
-    return 'Loading';
+    return <LoadingScreen />
   }
+
+  // TODO handle errors
 
   return (
     <Container

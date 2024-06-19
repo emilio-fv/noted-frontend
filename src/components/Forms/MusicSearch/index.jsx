@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import TextInput from "../../Inputs/Text";
 import { useQuerySpotifyMutation } from "../../../services/music/musicService";
 
-const MusicSearchForm = ({ }) => {
-  const [ querySpotify, { isLoading, reset }] = useQuerySpotifyMutation();
+const MusicSearchForm = ({ setLoadingState }) => {
+  const [ querySpotify, { isLoading, isSuccess, reset }] = useQuerySpotifyMutation();
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
