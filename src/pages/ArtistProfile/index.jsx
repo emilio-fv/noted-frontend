@@ -8,18 +8,19 @@ import ArtistProfileReviewCard from '../../components/Cards/Reviews/ArtistProfil
 import { useGetArtistsDataQuery } from '../../services/music/musicService';
 import { useParams } from 'react-router-dom';
 import { useGetReviewsByArtistQuery } from '../../services/reviews/reviewsService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const ArtistProfile = () => {
   const { artistId } = useParams();
   const { data: artist, isLoading: isLoadingArtist, isError: isErrorArtist, } = useGetArtistsDataQuery(artistId);
   const { data: reviews, isLoading: isLoadingReviews, isError: isErrorReviews } = useGetReviewsByArtistQuery(artistId);
 
-  if (isErrorArtist || isErrorArtist) {
-    return null;
+  if (isLoadingArtist || isLoadingReviews) {
+    return <LoadingScreen />
   }
 
-  if (isLoadingArtist || isLoadingArtist) {
-    return 'Loading';
+  if (isErrorArtist || isErrorReviews) {
+    return 'Error...';
   }
 
   return (

@@ -10,6 +10,7 @@ import { useGetAlbumsDataQuery } from '../../services/music/musicService';
 import { setSelectedAlbumToReview } from '../../features/reviews/reviewsSlice';
 import { connect } from 'react-redux';
 import { useGetReviewsByAlbumQuery } from '../../services/reviews/reviewsService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   const { albumId } = useParams();
@@ -24,7 +25,7 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   };
 
   if (isLoadingAlbumData || isLoadingReviewsData) {
-    return 'Loading';
+    return <LoadingScreen />
   }
 
   if (isErrorAlbumData || isErrorReviewsData) {

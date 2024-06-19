@@ -90,26 +90,34 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
           }}
           onSubmit={(event) => handleFormSubmit(event)}
         >
-          <TextInput 
-            name={'firstName'}
-            label={registerFormLabels.firstName}
-            value={formData.firstName}
-            handleChange={handleFormChanges}
-            error={formErrors?.firstName}
+          <Box
             sx={{
-              marginBottom: formErrors?.firstName ? 1 : 2
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 2
             }}
-          />
-          <TextInput 
-            name={'lastName'}
-            label={registerFormLabels.lastName}
-            value={formData.lastName}
-            handleChange={handleFormChanges}
-            error={formErrors?.lastName}
-            sx={{
-              marginBottom: formErrors?.lastName ? 1 : 2
-            }}
-          />
+          >
+            <TextInput 
+              name={'firstName'}
+              label={registerFormLabels.firstName}
+              value={formData.firstName}
+              handleChange={handleFormChanges}
+              error={formErrors?.firstName}
+              sx={{
+                marginBottom: formErrors?.firstName ? 1 : 2
+              }}
+            />
+            <TextInput 
+              name={'lastName'}
+              label={registerFormLabels.lastName}
+              value={formData.lastName}
+              handleChange={handleFormChanges}
+              error={formErrors?.lastName}
+              sx={{
+                marginBottom: formErrors?.lastName ? 1 : 2
+              }}
+            />
+          </Box>
           <TextInput 
             name={'username'}
             label={registerFormLabels.username}
@@ -137,7 +145,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.password}
             sx={{
-              marginBottom: formErrors?.password ? 1 : 2
+              marginBottom: formErrors?.password ? 1.5 : 2
             }}
           />
           <PasswordInput 
@@ -147,7 +155,7 @@ const RegisterForm = ({ handleOpenModal, handleCloseModal}) => {
             handleChange={handleFormChanges}
             error={formErrors?.confirmPassword}
             sx={{
-              marginBottom: formErrors?.confirmPassword ? 1 : 2
+              marginBottom: formErrors?.confirmPassword ? 1.5 : 2
             }}
           />
           <ActionButton

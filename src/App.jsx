@@ -11,12 +11,23 @@ import Root from './pages/Root';
 import UserProfile from './pages/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import { connect } from 'react-redux';
+import { store } from './store';
+import { musicApi } from './services/music/musicService';
 
 const App = ({ loggedInUser }) => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Root />}>
-        <Route index element={<LandingPage />}/>
+        <Route 
+          index 
+          element={<LandingPage />}
+          loader={async () => {
+            // call rtk query hook
+            const response = await store.dispatch(musicApi.endpoints.getFeaturedAlbums.initiate());
+            // return data
+            return response.data;
+          }} 
+        />
         <Route element={<ProtectedRoute loggedInUser={loggedInUser}/>}>
           <Route path='/home' element={<Dashboard />}/>
           <Route path='/music' element={<MusicPage />}/>

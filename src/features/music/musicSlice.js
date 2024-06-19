@@ -5,7 +5,8 @@ const initialState = {
     querySpotifyResults: null,
     offsets: null,
     currentQuery: null,
-}
+    queryState: 'idle',
+};
 
 export const musicSlice = createSlice({
     name: 'music',
@@ -13,10 +14,14 @@ export const musicSlice = createSlice({
     reducers: {
         clearQuerySpotifyResults: (state) => {
             state.querySpotifyResults = null
+            state.queryState = 'idle'
         }
     },
     extraReducers: builder => {
         builder
+            .addMatcher(musicApi.endpoints.querySpotify.matchPending, (state) => {
+                state.queryState = 'pending'
+            })
             .addMatcher(musicApi.endpoints.querySpotify.matchFulfilled, (state, action) => {
                 state.querySpotifyResults = action.payload.results
                 state.offsets = {
@@ -25,6 +30,7 @@ export const musicSlice = createSlice({
                     tracks: 0,
                 }
                 state.currentQuery = action.payload.currentQuery
+                state.queryState = 'fulfilled'
             })
             .addMatcher(musicApi.endpoints.getMoreArtists.matchFulfilled, (state, action) => {
                 state.querySpotifyResults.artists = state.querySpotifyResults.artists.concat(action.payload.results.artists)
