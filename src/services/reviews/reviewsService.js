@@ -11,7 +11,7 @@ export const reviewsApi = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: ['albumReviews', 'loggedInUserReviews', 'artistReviews']
+            invalidatesTags: ['albumReviews', 'loggedInUserReviews', 'artistReviews', 'followingUsersReviews']
         }),
         getReviewsByLoggedInUser: builder.query({
             query: () => ({
@@ -22,6 +22,16 @@ export const reviewsApi = createApi({
                 return response.reviewsData
             },
             providesTags: ['loggedInUserReviews']
+        }),
+        getReviewsByFollowingUsers: builder.query({
+            query: () => ({
+                url: `/reviews/following`,
+                method: 'GET'
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.reviewsData
+            },
+            providesTags: ['followingUsersReviews']
         }),
         getReviewsByAlbum: builder.query({
             query: (albumId) => ({
@@ -59,14 +69,14 @@ export const reviewsApi = createApi({
                 method: 'PUT',
                 body: data.reviewData,
             }),
-            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews']
         }),
         deleteReview: builder.mutation({
             query: (reviewId) => ({
                 url: `/reviews/${reviewId}/delete`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews']
         }),
     })
 });
@@ -74,6 +84,7 @@ export const reviewsApi = createApi({
 export const {
     useCreateReviewMutation,
     useGetReviewsByLoggedInUserQuery,
+    useGetReviewsByFollowingUsersQuery,
     useGetReviewsByAlbumQuery,
     useGetReviewsByArtistQuery,
     useGetReviewsByUsernameQuery,

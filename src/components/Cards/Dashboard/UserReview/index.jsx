@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
 
-const UserReviewCard = () => {
+const UserReviewCard = ({ review }) => {
   return (
     <Box
       sx={{
@@ -21,7 +21,7 @@ const UserReviewCard = () => {
           width: '100%',
           height: 'auto'
         }}
-        src={require('../../../../assets/images/album-demo.png')}
+        src={review.albumImages[0].url}
       />
       <Typography
         sx={{
@@ -32,7 +32,7 @@ const UserReviewCard = () => {
           marginTop: 1,
         }}
       >
-        Renaissance
+        {review.album}
       </Typography>
       <Typography
         sx={{
@@ -41,7 +41,7 @@ const UserReviewCard = () => {
           textOverflow: 'ellipsis',
         }}
       >
-        Beyoncé
+        {review.artist}
       </Typography>
       <Box
         sx={{
@@ -56,7 +56,7 @@ const UserReviewCard = () => {
             fontSize: { md: '.75rem'},
           }}
         >
-          username
+          {review.author.username}
         </Typography>
         <Box
           sx={{
@@ -67,7 +67,7 @@ const UserReviewCard = () => {
           }}
         >
           <Typography>
-            4
+            {review.rating}
           </Typography>
           <StarIcon 
             sx={{ 
