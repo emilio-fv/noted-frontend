@@ -8,6 +8,7 @@ const DeleteReviewForm = ({ handleOpenModal, handleCloseModal, selectedReviewToD
 
     useEffect(() => {
         if (isSuccess) {
+            console.log('successfully deleted, should close now');
             handleCloseModal();
         }
     }, [isSuccess]);
