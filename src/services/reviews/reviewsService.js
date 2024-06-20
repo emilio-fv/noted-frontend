@@ -69,14 +69,28 @@ export const reviewsApi = createApi({
                 method: 'PUT',
                 body: data.reviewData,
             }),
-            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews', 'profileReviews']
+        }),
+        likeReview: builder.mutation({
+            query: (data) => ({
+                url: `/reviews/${data}/like`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews', 'profileReviews']
+        }),
+        unlikeReview: builder.mutation({
+            query: (data) => ({
+                url: `/reviews/${data}/unlike`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews', 'profileReviews']
         }),
         deleteReview: builder.mutation({
             query: (reviewId) => ({
                 url: `/reviews/${reviewId}/delete`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews']
+            invalidatesTags: ['loggedInUserReviews', 'albumReviews', 'artistReviews', 'followingUsersReviews', 'profileReviews']
         }),
     })
 });
@@ -89,5 +103,7 @@ export const {
     useGetReviewsByArtistQuery,
     useGetReviewsByUsernameQuery,
     useUpdateReviewMutation,
+    useLikeReviewMutation,
+    useUnlikeReviewMutation,
     useDeleteReviewMutation,
 } = reviewsApi;
