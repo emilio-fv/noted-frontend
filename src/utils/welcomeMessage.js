@@ -1,8 +1,6 @@
 export const welcomeMessage = () => {
   let time = new Date();
   time = time.getHours();
-  console.log(time);
-
   let message;
 
   if (time >= 6 && time < 12) {
