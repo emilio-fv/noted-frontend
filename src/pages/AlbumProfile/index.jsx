@@ -179,22 +179,38 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
         }}
       >
         <Typography>Recent Reviews</Typography>
-        <Box
-          sx={{ 
-            borderTop: '1px solid',
-            borderColor: 'text.light',
-            display: 'flex',
-            flexDirection: 'column',
-            paddingY: 2,
-            gap: 2,
-          }}
-        >
-          {reviews.map((review, index) => {
-            return (
-              <AlbumProfileReviewCard review={review} key={index}/>
-            )
-          })}
-        </Box>
+        {reviews.length === 0
+          ? <Box
+              sx={{
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 2,
+                paddingY: 6,
+              }}
+            >
+              <Typography>No reviews yet!</Typography>
+            </Box>
+          : <Box
+              sx={{ 
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                paddingY: 2,
+                gap: 2,
+              }}
+            >
+              {reviews.map((review, index) => {
+                return (
+                  <AlbumProfileReviewCard review={review} key={index}/>
+                )
+              })}
+            </Box>
+        }
       </Box>
     </Container>
   )
