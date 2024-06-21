@@ -10,6 +10,7 @@ import { useGetAlbumsDataQuery } from '../../services/music/musicService';
 import { setSelectedAlbumToReview } from '../../features/reviews/reviewsSlice';
 import { connect } from 'react-redux';
 import { useGetReviewsByAlbumQuery } from '../../services/reviews/reviewsService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   const { albumId } = useParams();
@@ -24,7 +25,7 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
   };
 
   if (isLoadingAlbumData || isLoadingReviewsData) {
-    return 'Loading';
+    return <LoadingScreen />
   }
 
   if (isErrorAlbumData || isErrorReviewsData) {
@@ -178,22 +179,38 @@ const AlbumProfile = ({ setSelectedAlbumToReview }) => {
         }}
       >
         <Typography>Recent Reviews</Typography>
-        <Box
-          sx={{ 
-            borderTop: '1px solid',
-            borderColor: 'text.light',
-            display: 'flex',
-            flexDirection: 'column',
-            paddingY: 2,
-            gap: 2,
-          }}
-        >
-          {reviews.map((review, index) => {
-            return (
-              <AlbumProfileReviewCard review={review} key={index}/>
-            )
-          })}
-        </Box>
+        {reviews.length === 0
+          ? <Box
+              sx={{
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 2,
+                paddingY: 6,
+              }}
+            >
+              <Typography>No reviews yet!</Typography>
+            </Box>
+          : <Box
+              sx={{ 
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                paddingY: 2,
+                gap: 2,
+              }}
+            >
+              {reviews.map((review, index) => {
+                return (
+                  <AlbumProfileReviewCard review={review} key={index}/>
+                )
+              })}
+            </Box>
+        }
       </Box>
     </Container>
   )

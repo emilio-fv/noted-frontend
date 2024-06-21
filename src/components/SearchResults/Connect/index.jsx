@@ -3,16 +3,21 @@ import Box from '@mui/material/Box';
 import UserCard from '../../Cards/User';
 import { connect } from 'react-redux';
 import { clearQueryUsersResults } from '../../../features/connect/connectSlice';
+import LoadingScreen from '../../LoadingScreen';
 
-const UserSearchResults = ({ queryUsersResults, clearQueryUsersResults }) => {
+const UserSearchResults = ({ queryUsersResults, clearQueryUsersResults, queryState }) => {
   useEffect(() => {
     return () => {
       clearQueryUsersResults();
     }
   }, []);
 
-  if (!queryUsersResults) {
+  if (queryState === 'idle') {
     return null;
+  }
+
+  if (queryState === 'pending') {
+    return <LoadingScreen />
   }
 
   return (
@@ -45,6 +50,7 @@ const UserSearchResults = ({ queryUsersResults, clearQueryUsersResults }) => {
 const mapStateToProps = (state) => {
   return {
     queryUsersResults: state.connect.queryUsersResults,
+    queryState: state.connect.queryState,
   }
 };
 

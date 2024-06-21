@@ -11,7 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const today = dayjs();
 
-const CreateReviewForm = ({ albumData, handleOpenModal }) => {
+const CreateReviewForm = ({ albumData, handleOpenModal, handleCloseModal }) => {
   const [formData, setFormData] = useState({
     album: albumData?.name,
     albumId: albumData?.id,
@@ -26,7 +26,7 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
   const [favorite, setFavorite] = useState(false);
   const [errors, setErrors] = useState(null);
 
-  const [ createReview, { data, isSuccess, isError, error }] = useCreateReviewMutation();
+  const [ createReview, { isSuccess, isError, error }] = useCreateReviewMutation();
 
   useEffect(() => {
     if (isError) {
@@ -34,7 +34,8 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
     }
 
     if (isSuccess) {
-      handleOpenModal(false);
+      console.log('should close now')
+      handleCloseModal();
     }
   }, [isSuccess, isError])
 
@@ -132,7 +133,7 @@ const CreateReviewForm = ({ albumData, handleOpenModal }) => {
           </Box>
         </Box>
         {/* Date */}
-        <Box
+        <Box 
           sx={{
             display: 'flex',
             flexDirection: 'row',

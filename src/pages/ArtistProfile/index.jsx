@@ -8,18 +8,19 @@ import ArtistProfileReviewCard from '../../components/Cards/Reviews/ArtistProfil
 import { useGetArtistsDataQuery } from '../../services/music/musicService';
 import { useParams } from 'react-router-dom';
 import { useGetReviewsByArtistQuery } from '../../services/reviews/reviewsService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const ArtistProfile = () => {
   const { artistId } = useParams();
   const { data: artist, isLoading: isLoadingArtist, isError: isErrorArtist, } = useGetArtistsDataQuery(artistId);
   const { data: reviews, isLoading: isLoadingReviews, isError: isErrorReviews } = useGetReviewsByArtistQuery(artistId);
 
-  if (isErrorArtist || isErrorArtist) {
-    return null;
+  if (isLoadingArtist || isLoadingReviews) {
+    return <LoadingScreen />
   }
 
-  if (isLoadingArtist || isLoadingArtist) {
-    return 'Loading';
+  if (isErrorArtist || isErrorReviews) {
+    return 'Error...';
   }
 
   return (
@@ -142,22 +143,38 @@ const ArtistProfile = () => {
         }}
       >
         <Typography>Recent Reviews</Typography>
-        <Box
-          sx={{ 
-            borderTop: '1px solid',
-            borderColor: 'text.light',
-            display: 'flex',
-            flexDirection: 'column',
-            paddingY: 2,
-            gap: 2,
-          }}
-        >
-          {reviews?.map((review, index) => {
-            return (
-              <ArtistProfileReviewCard key={index} review={review}/>
-            )
-          })}
-        </Box>
+        {reviews.length === 0
+          ? <Box
+              sx={{
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 2,
+                paddingY: 6,
+              }}
+            >
+              <Typography>No reviews yet!</Typography>
+            </Box>
+          : <Box
+              sx={{ 
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                paddingY: 2,
+                gap: 2,
+              }}
+            >
+              {reviews?.map((review, index) => {
+                return (
+                  <ArtistProfileReviewCard key={index} review={review}/>
+                )
+              })}
+            </Box>
+        }
       </Box>
     </Container>
   )
