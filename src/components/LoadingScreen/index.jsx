@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 
+import CircularProgress from '@mui/material/CircularProgress';
+
 const LoadingScreen = () => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('loading...')
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Box 
         sx={{
-            width: '100vw',
-            height: '100vh',
-            bgcolor: 'inherit'
+            height: '100%',
+            bgcolor: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
         }}
     >
-        {/* TODO: logo maybe? */}
+        <CircularProgress />
     </Box>
   )
 }

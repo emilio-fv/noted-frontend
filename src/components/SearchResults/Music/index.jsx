@@ -10,8 +10,9 @@ import ActionButton from '../../Buttons/Action';
 import { spotifyQueryLimit } from '../../../assets/data/constants';
 import { useGetMoreArtistsMutation, useGetMoreAlbumsMutation, useGetMoreTracksMutation } from '../../../services/music/musicService';
 import { Grid } from '@mui/material';
+import LoadingScreen from '../../LoadingScreen';
 
-const MusicSearchResults = ({ querySpotifyResults, clearQuerySpotifyResults, offsets, currentQuery }) => {
+const MusicSearchResults = ({ querySpotifyResults, clearQuerySpotifyResults, offsets, currentQuery, queryState }) => {
   const [ getMoreArtists ] = useGetMoreArtistsMutation();
   const [ getMoreAlbums ] = useGetMoreAlbumsMutation();
   const [ getMoreTracks ] = useGetMoreTracksMutation();
@@ -22,9 +23,7 @@ const MusicSearchResults = ({ querySpotifyResults, clearQuerySpotifyResults, off
     }
   }, []);
 
-  if (!querySpotifyResults) {
-    return null;
-  }
+
 
   const handleLoadMoreArtistsClick = (event) => {
     event.preventDefault();
@@ -50,6 +49,14 @@ const MusicSearchResults = ({ querySpotifyResults, clearQuerySpotifyResults, off
     });
   }
 
+
+  if (queryState === 'idle') {
+    return null;
+  }
+
+  if (queryState === 'pending') {
+    return <LoadingScreen />
+  }
 
   return (
     <>
@@ -127,6 +134,7 @@ const mapStateToProps = (state) => {
     querySpotifyResults: state.music.querySpotifyResults,
     offsets: state.music.offsets,
     currentQuery: state.music.currentQuery,
+    queryState: state.music.queryState,
   }
 };
 

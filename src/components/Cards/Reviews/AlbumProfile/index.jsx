@@ -2,13 +2,21 @@ import { Box, IconButton, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useLikeReviewMutation, useUnlikeReviewMutation } from '../../../../services/reviews/reviewsService';
+import { connect } from 'react-redux';
 
-const AlbumProfileReviewCard = ({ review }) => {
-  const [likes, setLikes] = useState(0);
+const AlbumProfileReviewCard = ({ review, loggedInUsersUsername }) => {
+  const [ likeReview, ] = useLikeReviewMutation();
+  const [ unlikeReview, ] = useUnlikeReviewMutation();
 
-  const incrementLikes = () => {
-    setLikes((likes) => likes+1);
-  }
+  const handleLikeReviewButton = () => {
+    likeReview(review._id);
+  };
+  
+  const handleUnlikeReviewButton = () => {
+    unlikeReview(review._id);
+  };
 
   return (
     <Box
@@ -103,30 +111,49 @@ const AlbumProfileReviewCard = ({ review }) => {
             alignItems: 'center',
           }}
         >
-          {/* TODO Like Button */}
-          {/* <IconButton 
-            onClick={() => incrementLikes()}
-          >
-            <FavoriteIcon 
-              sx={{ 
-                color: 'text.light', 
-                fontSize: '.8rem',
-                marginBottom: .4 
-              }}
-            />
-          </IconButton> */}
-          {/* TODO # of Likes */}
-          {/* <Typography
+          {/* Like/Unlike Button */}
+          {review.likes.includes(loggedInUsersUsername)
+            ? <IconButton 
+                onClick={() => handleUnlikeReviewButton()}
+              >
+                <FavoriteIcon 
+                  sx={{ 
+                    color: 'text.light', 
+                    fontSize: '.8rem',
+                    marginBottom: .4 
+                  }}
+                />
+              </IconButton>
+            : <IconButton 
+                onClick={() => handleLikeReviewButton()}
+              >
+                <FavoriteBorderIcon 
+                  sx={{ 
+                    color: 'text.light', 
+                    fontSize: '.8rem',
+                    marginBottom: .4 
+                  }}
+                />
+              </IconButton>
+          }
+          {/* # of Likes */}
+          <Typography
             sx={{
               fontSize: '.8rem'
             }}
           >
-            {likes} {likes === 1 ? 'like' : 'likes'}
-          </Typography> */}
+            {review.likes.length} {review.likes.length === 1 ? 'like' : 'likes'}
+          </Typography>
         </Box>
       </Box>
     </Box>
   )
 };
 
-export default AlbumProfileReviewCard;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUsersUsername: state.auth.loggedInUser.username
+  }
+}
+
+export default connect(mapStateToProps)(AlbumProfileReviewCard);

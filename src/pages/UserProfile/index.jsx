@@ -9,6 +9,7 @@ import { useFollowUserMutation, useGetUsersProfileDataQuery, useUnfollowUserMuta
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useGetReviewsByUsernameQuery } from '../../services/reviews/reviewsService';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const UserProfile = ({ loggedInUser }) => {
   const currentYear = String(new Date().getFullYear());
@@ -25,8 +26,6 @@ const UserProfile = ({ loggedInUser }) => {
     }
   }, [userIsSuccess]);
 
-  console.log(currentYear);
-
   const handleFollowButtonClick = () => {
     if (followingStatus) {
       unfollowUser(user._id);
@@ -38,8 +37,10 @@ const UserProfile = ({ loggedInUser }) => {
   };
 
   if (userIsLoading || reviewsIsLoading) {
-    return 'Loading';
+    return <LoadingScreen />
   }
+
+  // TODO handle errors
 
   return (
     <Container
@@ -209,23 +210,39 @@ const UserProfile = ({ loggedInUser }) => {
         }}
       >
         <Typography>Favorites</Typography>
-        <Box
-          sx={{ 
-            borderTop: '1px solid',
-            borderColor: 'text.light',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 2,
-            paddingY: 2,
-          }}
-        >
-          {user?.favorites?.map((favorite) => {
-            return (
-              <FavoriteCard favorite={favorite}/>
-            )
-          })}
-        </Box>
+        {user?.favorites?.length === 0
+          ? <Box
+              sx={{
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 2,
+                paddingY: 6,
+              }}
+            >
+              <Typography>No favorites yet!</Typography>
+            </Box>
+          : <Box
+              sx={{ 
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 2,
+                paddingY: 2,
+              }}
+            >
+              {user?.favorites?.map((favorite) => {
+                return (
+                  <FavoriteCard favorite={favorite}/>
+                )
+              })}
+            </Box>
+        }
       </Box>
       <Box
         sx={{
@@ -233,22 +250,38 @@ const UserProfile = ({ loggedInUser }) => {
         }}
       >
         <Typography>Recent Reviews</Typography>
-        <Box
-          sx={{ 
-            borderTop: '1px solid',
-            borderColor: 'text.light',
-            display: 'flex',
-            flexDirection: 'column',
-            paddingY: 2,
-            gap: 2,
-          }}
-        >
-          {reviews.map((review) => {
-            return (
-              <UserProfileReviewCard review={review} isAuthor={loggedInUser._id === review.author.userId}/>
-            )
-          })}
-        </Box>
+        {reviews.length === 0
+          ? <Box
+              sx={{
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: 2,
+                paddingY: 6,
+              }}
+            >
+              <Typography>No reviews yet!</Typography>
+            </Box>
+          : <Box
+              sx={{ 
+                borderTop: '1px solid',
+                borderColor: 'text.light',
+                display: 'flex',
+                flexDirection: 'column',
+                paddingY: 2,
+                gap: 2,
+              }}
+            >
+              {reviews.map((review) => {
+                return (
+                  <UserProfileReviewCard review={review} isAuthor={loggedInUser._id === review.author.userId}/>
+                )
+              })}
+            </Box>
+        }
       </Box>
     </Container>
   )

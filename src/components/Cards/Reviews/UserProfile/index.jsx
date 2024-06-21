@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useLikeReviewMutation, useUnlikeReviewMutation } from '../../../../services/reviews/reviewsService';
+import { connect } from 'react-redux';
 
-const UserProfileReviewCard = ({ review, isAuthor }) => { 
-  const [ likes, setLikes ] = useState(0);
+const UserProfileReviewCard = ({ review, isAuthor, loggedInUsersUsername }) => { 
+  const [ likeReview ] = useLikeReviewMutation();
+  const [ unlikeReview ] = useUnlikeReviewMutation();
 
-  const incrementLikes = () => {
-    setLikes((likes) => likes+1);
-  }
+  const handleLikeReviewButton = () => {
+    likeReview(review._id);
+  };
+  
+  const handleUnlikeReviewButton = () => {
+    unlikeReview(review._id);
+  };
 
   return (
     <Box
@@ -123,28 +131,49 @@ const UserProfileReviewCard = ({ review, isAuthor }) => {
             alignItems: 'center',
           }}
         >
-          {/* Like Button */}
-          <IconButton 
-            onClick={() => incrementLikes()}
-          >
-            <FavoriteIcon 
-              sx={{ 
-                color: 'text.light', 
-                fontSize: '.8rem',
-                marginBottom: .4 
-              }}
-            />
-          </IconButton>
+          {/* Like/Unlike Button */}
+          {review.likes.includes(loggedInUsersUsername)
+            ? <IconButton 
+                onClick={() => handleUnlikeReviewButton()}
+              >
+                <FavoriteIcon 
+                  sx={{ 
+                    color: 'text.light', 
+                    fontSize: '.8rem',
+                    marginBottom: .4 
+                  }}
+                />
+              </IconButton>
+            : <IconButton 
+                onClick={() => handleLikeReviewButton()}
+              >
+                <FavoriteBorderIcon 
+                  sx={{ 
+                    color: 'text.light', 
+                    fontSize: '.8rem',
+                    marginBottom: .4 
+                  }}
+                />
+              </IconButton>
+          }
           {/* # of Likes */}
           <Typography
             sx={{
               fontSize: '.8rem'
             }}
-          >{likes} {likes === 1 ? 'like' : 'likes'}</Typography>
+          >
+            {review.likes.length} {review.likes.length === 1 ? 'like' : 'likes'}
+          </Typography>
         </Box>
       </Box>
     </Box>
   )
 };
 
-export default UserProfileReviewCard;
+const mapStateToProps = (state) => {
+  return {
+    loggedInUsersUsername: state.auth.loggedInUser.username
+  }
+};
+
+export default connect(mapStateToProps)(UserProfileReviewCard);
