@@ -9,8 +9,6 @@ import { Provider } from 'react-redux';
 import { persistor, store } from '../src/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-
 let theme = createTheme({
   typography: {
     fontFamily: ['Aldrich', 'sans-serif'].join(','),
@@ -71,6 +69,8 @@ let theme = createTheme({
 
 theme = responsiveFontSizes(theme);
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <StrictMode>
     <ThemeProvider theme={theme}>
@@ -87,8 +87,8 @@ root.render(
 
 if (module.hot) {
   module.hot.accept();
-}
+};
 
 export {
   theme,
-}
+};

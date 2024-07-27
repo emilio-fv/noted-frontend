@@ -20,7 +20,7 @@ const App = ({ loggedInUser }) => {
     createRoutesFromElements(
       <Route path='/' element={<Root />} errorElement={<ErrorBoundary />}>
         <Route 
-          index 
+          index
           element={<LandingPage />}
           loader={async () => {
             const response = await store.dispatch(musicApi.endpoints.getFeaturedAlbums.initiate());
@@ -40,9 +40,7 @@ const App = ({ loggedInUser }) => {
     )
   );
 
-  return (
-    <RouterProvider router={router}/>
-  )
+  return <RouterProvider router={router}/>
 };
 
 const mapStateToProps = (state) => {
